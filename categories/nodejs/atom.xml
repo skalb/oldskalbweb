@@ -4,7 +4,7 @@
   <title><![CDATA[Category: NodeJS | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/nodejs/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-04T17:13:16-07:00</updated>
+  <updated>2013-07-04T17:22:02-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Simpleshop: simple browser based photo editing]]></title>
-    <link href="http://www.skalb.com/2013/07/04/simpleshop-browser-based-photo-editing-using/"/>
+    <title type="html"><![CDATA[Simpleshop: pure JavaScript photo editing]]></title>
+    <link href="http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing/"/>
     <updated>2013-07-04T17:00:00-07:00</updated>
-    <id>http://www.skalb.com/2013/07/04/simpleshop-browser-based-photo-editing-using</id>
+    <id>http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing</id>
     <content type="html"><![CDATA[<p>Even as a developer, it amazes me what you can build with no (at least required) knowledge of anything beyond javascript and Heroku.</p>
 
 <p><a href="http://simpleshop.heroku.com/">Simpleshop</a></p>
