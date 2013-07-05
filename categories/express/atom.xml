@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: NodeJS | skalb.com]]></title>
-  <link href="http://www.skalb.com/categories/nodejs/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Express | skalb.com]]></title>
+  <link href="http://www.skalb.com/categories/express/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
   <updated>2013-07-04T17:13:16-07:00</updated>
   <id>http://www.skalb.com/</id>
