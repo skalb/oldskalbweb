@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sinon | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/sinon/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-06T20:36:05-07:00</updated>
+  <updated>2013-07-07T15:07:35-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -31,14 +31,14 @@
 npm install sinon
 </code></p>
 
-<p>Here's how to use the spy:</p>
+<p>Here&rsquo;s how to use the spy:</p>
 
 <p><code>coffeescript lib/sample_router_factory.coffee
 items =
   find: sinon.spy()
 </code></p>
 
-<p>Now, let's write our test:</p>
+<p>Now, let&rsquo;s write our test:</p>
 
 <p><code>coffeescript tests/sample_router_factory_test.coffee
 it "should retrieve all items", -&gt;
@@ -52,9 +52,9 @@ it "should retrieve all items", -&gt;
 root = exports ? this</p>
 
 <p>class SampleRouterFactory
-  constructor: (@Backbone, @Items) -></p>
+  constructor: (@Backbone, @Items) &ndash;></p>
 
-<p>  getRouter: () -></p>
+<p>  getRouter: () &ndash;></p>
 
 <pre><code>SampleRouter = @Backbone.Router.extend(
   routes:
@@ -69,7 +69,7 @@ new SampleRouter
 <p>root.SampleRouterFactory = SampleRouterFactory
 ```</p>
 
-<p>This <em>should</em> pass, but yet doesn't. Why? Thinking about the assumption our test is making when using the a Backbone router, it likely depends on Backbone initialization. We can try this in our test, also:</p>
+<p>This <em>should</em> pass, but yet doesn&rsquo;t. Why? Thinking about the assumption our test is making when using the a Backbone router, it likely depends on Backbone initialization. We can try this in our test, also:</p>
 
 <p><code>coffeescript
 Backbone.history.start
@@ -77,18 +77,18 @@ Backbone.history.start
   pushState: true
 </code></p>
 
-<p>This doesn't work either because Backbone assumes we are in the browser when accessing <strong>window</strong>. I'm pretty sure this is not the approach I want. We don't need to add a dependency on Backbone's internal behavior to test a method of my Router. My previous test verifies that the root path will call an index method, so now I only need to call that index method and validate that behavior. This has the added benefit of simplifying the test.</p>
+<p>This doesn&rsquo;t work either because Backbone assumes we are in the browser when accessing <strong>window</strong>. I&rsquo;m pretty sure this is not the approach I want. We don&rsquo;t need to add a dependency on Backbone&rsquo;s internal behavior to test a method of my Router. My previous test verifies that the root path will call an index method, so now I only need to call that index method and validate that behavior. This has the added benefit of simplifying the test.</p>
 
-<p>Here's the final version of my tests:</p>
+<p>Here&rsquo;s the final version of my tests:</p>
 
 <p>``` coffeescript tests/sample_router_factory_test.coffee
-util = require('util')
-should = require('should')
-Backbone = require('backbone')
-sinon = require('sinon')
-SampleRouterFactory = require('../client/lib/sample_router_factory').SampleRouterFactory</p>
+util = require(&lsquo;util&rsquo;)
+should = require(&lsquo;should&rsquo;)
+Backbone = require(&lsquo;backbone&rsquo;)
+sinon = require(&lsquo;sinon&rsquo;)
+SampleRouterFactory = require(&lsquo;../client/lib/sample_router_factory&rsquo;).SampleRouterFactory</p>
 
-<p>describe "SampleRouter", ->
+<p>describe &ldquo;SampleRouter&rdquo;, &ndash;>
   items =</p>
 
 <pre><code>find: sinon.spy()
@@ -97,12 +97,12 @@ SampleRouterFactory = require('../client/lib/sample_router_factory').SampleRoute
 <p>  factory = new SampleRouterFactory(Backbone, items)
   router = factory.getRouter(Backbone)</p>
 
-<p>  it "should have an index route", -></p>
+<p>  it &ldquo;should have an index route&rdquo;, &ndash;></p>
 
 <pre><code>router.routes[''].should.equal('index')
 </code></pre>
 
-<p>  it "should retrieve all items when navigating to index", -></p>
+<p>  it &ldquo;should retrieve all items when navigating to index&rdquo;, &ndash;></p>
 
 <pre><code>router.index()
 items.find.called.should.equal true

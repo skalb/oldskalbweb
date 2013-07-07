@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Meteor | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/meteor/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-06T20:36:05-07:00</updated>
+  <updated>2013-07-07T15:07:35-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -31,14 +31,14 @@
 npm install sinon
 </code></p>
 
-<p>Here's how to use the spy:</p>
+<p>Here&rsquo;s how to use the spy:</p>
 
 <p><code>coffeescript lib/sample_router_factory.coffee
 items =
   find: sinon.spy()
 </code></p>
 
-<p>Now, let's write our test:</p>
+<p>Now, let&rsquo;s write our test:</p>
 
 <p><code>coffeescript tests/sample_router_factory_test.coffee
 it "should retrieve all items", -&gt;
@@ -52,9 +52,9 @@ it "should retrieve all items", -&gt;
 root = exports ? this</p>
 
 <p>class SampleRouterFactory
-  constructor: (@Backbone, @Items) -></p>
+  constructor: (@Backbone, @Items) &ndash;></p>
 
-<p>  getRouter: () -></p>
+<p>  getRouter: () &ndash;></p>
 
 <pre><code>SampleRouter = @Backbone.Router.extend(
   routes:
@@ -69,7 +69,7 @@ new SampleRouter
 <p>root.SampleRouterFactory = SampleRouterFactory
 ```</p>
 
-<p>This <em>should</em> pass, but yet doesn't. Why? Thinking about the assumption our test is making when using the a Backbone router, it likely depends on Backbone initialization. We can try this in our test, also:</p>
+<p>This <em>should</em> pass, but yet doesn&rsquo;t. Why? Thinking about the assumption our test is making when using the a Backbone router, it likely depends on Backbone initialization. We can try this in our test, also:</p>
 
 <p><code>coffeescript
 Backbone.history.start
@@ -77,18 +77,18 @@ Backbone.history.start
   pushState: true
 </code></p>
 
-<p>This doesn't work either because Backbone assumes we are in the browser when accessing <strong>window</strong>. I'm pretty sure this is not the approach I want. We don't need to add a dependency on Backbone's internal behavior to test a method of my Router. My previous test verifies that the root path will call an index method, so now I only need to call that index method and validate that behavior. This has the added benefit of simplifying the test.</p>
+<p>This doesn&rsquo;t work either because Backbone assumes we are in the browser when accessing <strong>window</strong>. I&rsquo;m pretty sure this is not the approach I want. We don&rsquo;t need to add a dependency on Backbone&rsquo;s internal behavior to test a method of my Router. My previous test verifies that the root path will call an index method, so now I only need to call that index method and validate that behavior. This has the added benefit of simplifying the test.</p>
 
-<p>Here's the final version of my tests:</p>
+<p>Here&rsquo;s the final version of my tests:</p>
 
 <p>``` coffeescript tests/sample_router_factory_test.coffee
-util = require('util')
-should = require('should')
-Backbone = require('backbone')
-sinon = require('sinon')
-SampleRouterFactory = require('../client/lib/sample_router_factory').SampleRouterFactory</p>
+util = require(&lsquo;util&rsquo;)
+should = require(&lsquo;should&rsquo;)
+Backbone = require(&lsquo;backbone&rsquo;)
+sinon = require(&lsquo;sinon&rsquo;)
+SampleRouterFactory = require(&lsquo;../client/lib/sample_router_factory&rsquo;).SampleRouterFactory</p>
 
-<p>describe "SampleRouter", ->
+<p>describe &ldquo;SampleRouter&rdquo;, &ndash;>
   items =</p>
 
 <pre><code>find: sinon.spy()
@@ -97,12 +97,12 @@ SampleRouterFactory = require('../client/lib/sample_router_factory').SampleRoute
 <p>  factory = new SampleRouterFactory(Backbone, items)
   router = factory.getRouter(Backbone)</p>
 
-<p>  it "should have an index route", -></p>
+<p>  it &ldquo;should have an index route&rdquo;, &ndash;></p>
 
 <pre><code>router.routes[''].should.equal('index')
 </code></pre>
 
-<p>  it "should retrieve all items when navigating to index", -></p>
+<p>  it &ldquo;should retrieve all items when navigating to index&rdquo;, &ndash;></p>
 
 <pre><code>router.index()
 items.find.called.should.equal true
@@ -119,12 +119,12 @@ items.find.called.should.equal true
     <link href="http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/"/>
     <updated>2012-08-20T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha</id>
-    <content type="html"><![CDATA[<p>One of the downsides of Meteor and perhaps strongest complaint is that it doesn't play nicely with existing NodeJS modules. You're forced to use the available SmartPackages (or build one). This is a problem since the Mocha environment runs without the browser and doesn't have access to the libraries included by the SmartPackage.</p>
+    <content type="html"><![CDATA[<p>One of the downsides of Meteor and perhaps strongest complaint is that it doesn&rsquo;t play nicely with existing NodeJS modules. You&rsquo;re forced to use the available SmartPackages (or build one). This is a problem since the Mocha environment runs without the browser and doesn&rsquo;t have access to the libraries included by the SmartPackage.</p>
 
 <!--more-->
 
 
-<p><em>Here's a previous <a title="Testing with Meteor, CoffeeScript and Mocha" href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
+<p><em>Here&rsquo;s a previous <a title="Testing with Meteor, CoffeeScript and Mocha" href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
 
 <p>Creating the project:</p>
 
@@ -148,7 +148,7 @@ npm install backbone
 mocha *.coffee --compilers coffee:coffee-script
 </code></p>
 
-<p>My goal was to create a very basic Backbone router test. Normally, I'd define the router like so:</p>
+<p>My goal was to create a very basic Backbone router test. Normally, I&rsquo;d define the router like so:</p>
 
 <p>``` coffeescript
 SampleRouter = @Backbone.Router.extend(
@@ -157,12 +157,12 @@ SampleRouter = @Backbone.Router.extend(
 <pre><code>"": "index"
 </code></pre>
 
-<p>  index: ->
+<p>  index: &ndash;>
 )
 new SampleRouter
 ```</p>
 
-<p>This won't work when running the Mocha tests because it assumes the Meteor framework is present to load Backbone. I solved this by creating a factory for the router and injecting the Backbone module.</p>
+<p>This won&rsquo;t work when running the Mocha tests because it assumes the Meteor framework is present to load Backbone. I solved this by creating a factory for the router and injecting the Backbone module.</p>
 
 <p>Note, I need to put this module in tests/lib so Meteor will make sure to load it first</p>
 
@@ -171,9 +171,9 @@ new SampleRouter
 root = exports ? this</p>
 
 <p>class SampleRouterFactory
-  constructor: (@Backbone) -></p>
+  constructor: (@Backbone) &ndash;></p>
 
-<p>  getRouter: () -></p>
+<p>  getRouter: () &ndash;></p>
 
 <pre><code>SampleRouter = @Backbone.Router.extend(
   routes:
@@ -192,18 +192,18 @@ new SampleRouter
 
 <p>This module will now create a class that will return a new instance of the SampleRouter.</p>
 
-<p>Now, let's look at the test case:</p>
+<p>Now, let&rsquo;s look at the test case:</p>
 
 <p>tests/sample_router_factory_test.coffee
 ``` coffeescript
-should = require('should')
-Backbone = require('backbone')
-SampleRouterFactory = require('../client/lib/sample_router_factory').SampleRouterFactory</p>
+should = require(&lsquo;should&rsquo;)
+Backbone = require(&lsquo;backbone&rsquo;)
+SampleRouterFactory = require(&lsquo;../client/lib/sample_router_factory&rsquo;).SampleRouterFactory</p>
 
-<p>describe "SampleRouter", ->
+<p>describe &ldquo;SampleRouter&rdquo;, &ndash;>
   factory = new SampleRouterFactory(Backbone)
   router = factory.getRouter(Backbone)
-  it "should have an index router", -></p>
+  it &ldquo;should have an index router&rdquo;, &ndash;></p>
 
 <pre><code>router.routes[''].should.equal('index')
 </code></pre>
@@ -219,7 +219,7 @@ Meteor.startup -&gt;
   router = factory.getRouter(Backbone)
 </code></p>
 
-<p>Again, there's no need to require either Backbone (loaded as a SmartPackage) or the actual SampleRouterFactory because Meteor treats all of your CoffeeScript files as a single file and consequently scope.</p>
+<p>Again, there&rsquo;s no need to require either Backbone (loaded as a SmartPackage) or the actual SampleRouterFactory because Meteor treats all of your CoffeeScript files as a single file and consequently scope.</p>
 
 <p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">Source code here.</a></p>
 ]]></content>
@@ -230,12 +230,12 @@ Meteor.startup -&gt;
     <link href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/"/>
     <updated>2012-08-19T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha</id>
-    <content type="html"><![CDATA[<p>Despite no mention in the official <a href="http://docs.meteor.com/">Meteor docs</a>, adding unit tests is fairly easy. For some reason, they don't mention this but any files in the tests/ folder will be ignored by the Meteor server.</p>
+    <content type="html"><![CDATA[<p>Despite no mention in the official <a href="http://docs.meteor.com/">Meteor docs</a>, adding unit tests is fairly easy. For some reason, they don&rsquo;t mention this but any files in the tests/ folder will be ignored by the Meteor server.</p>
 
 <!--more-->
 
 
-<p>What you'll need:</p>
+<p>What you&rsquo;ll need:</p>
 
 <ul>
     <li><a href="https://github.com/meteor/meteor">Meteor</a></li>
@@ -267,15 +267,15 @@ meteor add coffeescript
 
 <p>``` bash</p>
 
-<p>mocha tests/*.coffee -w -G --compilers coffee:coffee-script</p>
+<p>mocha tests/*.coffee -w -G &mdash;compilers coffee:coffee-script</p>
 
 <p>```</p>
 
 <p>Now to create a sample test:</p>
 
 <p>``` coffeescript test.coffee
-describe "Array", ->
-  describe "#indexOf()", -></p>
+describe &ldquo;Array&rdquo;, &ndash;>
+  describe &ldquo;#indexOf()&rdquo;, &ndash;></p>
 
 <pre><code>it "should return -1 when the value is not present", -&gt;
   assert.equal -1, [1, 2, 3].indexOf(1)
@@ -306,8 +306,8 @@ describe "Array", ->
     <id>http://www.skalb.com/2012/04/16/creating-a-document-sharing-site-with-meteor-js</id>
     <content type="html"><![CDATA[<p><strong>Background:</strong></p>
 
-<p>“Meteor is a set of new technologies for building top-quality web apps in a fraction of the time, whether you're an expert developer or just getting started.”
-- <a href="http://www.meteor.com">Meteor.com</a></p>
+<p>“Meteor is a set of new technologies for building top-quality web apps in a fraction of the time, whether you&rsquo;re an expert developer or just getting started.”
+&ndash; <a href="http://www.meteor.com">Meteor.com</a></p>
 
 <p><strong>Goal:</strong></p>
 
@@ -316,7 +316,7 @@ describe "Array", ->
 <!--more-->
 
 
-<p><strong>Updated: Source code at <a href="https://github.com/skalb/docshare-tutorial">https://github.com/skalb/docshare-tutorial</a></strong></p>
+<p><strong>Updated: Source code at <a href="https://github.com/skalb/docshare-tutorial"><a href="https://github.com/skalb/docshare-tutorial">https://github.com/skalb/docshare-tutorial</a></a></strong></p>
 
 <p><strong>Spec:</strong></p>
 
@@ -364,7 +364,7 @@ cd docshare-tutorial
 meteor
 </code></p>
 
-<p>You should see the default site at <a href="http://localhost:3000/">http://localhost:3000</a>:</p>
+<p>You should see the default site at <a href="http://localhost:3000/"><a href="http://localhost:3000">http://localhost:3000</a></a>:</p>
 
 <p>Lastly, add the other packages we are going to use</p>
 
@@ -392,14 +392,14 @@ meteor add backbone
 <p>Collections in Meteor are schemaless. We want our documents collection to be available to both the server and the client so we’ll add it to the root level.</p>
 
 <p>``` coffeescript docshare-tutorial.coffee
- @Documents = new Meteor.Collection("documents")</p>
+ @Documents = new Meteor.Collection(&ldquo;documents&rdquo;)</p>
 
 <p>```</p>
 
 <p>Our document object will have two fields: name and text. Let’s create a sample document on startup.</p>
 
 <p>``` coffeescript server.coffee
-Meteor.startup ->
+Meteor.startup &ndash;>
   if Documents.find().count() is 0</p>
 
 <pre><code>Documents.insert
@@ -505,12 +505,12 @@ DocumentsRouter = Backbone.Router.extend(
 <pre><code>":document_id": "main"
 </code></pre>
 
-<p>  main: (document_id) -></p>
+<p>  main: (document_id) &ndash;></p>
 
 <pre><code>Session.set "document_id", document_id
 </code></pre>
 
-<p>  setDocument: (document_id) -></p>
+<p>  setDocument: (document_id) &ndash;></p>
 
 <pre><code>@navigate(document_id, true)
 </code></pre>
@@ -519,18 +519,18 @@ DocumentsRouter = Backbone.Router.extend(
 
 <p>Router = new DocumentsRouter</p>
 
-<p>Meteor.startup ->
+<p>Meteor.startup &ndash;>
   Backbone.history.start pushState: true
 ```</p>
 
-<p>Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at <a href="http://backbonejs.org/">http://backbonejs.org/</a></p>
+<p>Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at <a href="http://backbonejs.org/"><a href="http://backbonejs.org/">http://backbonejs.org/</a></a></p>
 
 <p>We are also using Meteor.startup again here but for a different purpose. On the client side it will run after DOM is loaded every time. I think it would be more clear if this method didn’t mean different things based on context.</p>
 
 <p>Next, we need to define where the documentList template gets its data and handle the create new button</p>
 
 <p>``` coffeescript client.coffee
-Template.documentList.documents = ->
+Template.documentList.documents = &ndash;>
   Documents.find({},</p>
 
 <pre><code>sort:
@@ -540,7 +540,7 @@ Template.documentList.documents = ->
 <p>  )</p>
 
 <p>Template.documentList.events =
-  'click #new-document': (e) -></p>
+  &lsquo;click #new-document&rsquo;: (e) &ndash;></p>
 
 <pre><code>name = $('#new-document-name').val()
 if name
@@ -560,18 +560,18 @@ if name
 
 <p>``` coffeescript client.coffee
 Template.document.events =
-  'click #delete-document': (e) -></p>
+  &lsquo;click #delete-document&rsquo;: (e) &ndash;></p>
 
 <pre><code>Documents.remove(@_id)
 </code></pre>
 
-<p>  'click #edit-document': (e) -></p>
+<p>  &lsquo;click #edit-document&rsquo;: (e) &ndash;></p>
 
 <pre><code>Router.setDocument(@_id)
 </code></pre>
 
-<p>Template.document.selected = ->
-  if Session.equals("document_id", @_id) then "selected" else ""
+<p>Template.document.selected = &ndash;>
+  if Session.equals(&ldquo;document_id&rdquo;, @_id) then &ldquo;selected&rdquo; else &ldquo;&rdquo;
 ```</p>
 
 <p>Note that in handlers for events the this object is the actual Document object.</p>
@@ -579,8 +579,8 @@ Template.document.events =
 <p>Next, define the selectedDocument using the id stored in the session and update the text of that document when the user presses a key.</p>
 
 <p>``` coffeescript client.coffee
-Template.documentView.selectedDocument = ->
-  document_id = Session.get("document_id")
+Template.documentView.selectedDocument = &ndash;>
+  document_id = Session.get(&ldquo;document_id&rdquo;)
   Documents.findOne(</p>
 
 <pre><code>_id: document_id
@@ -589,7 +589,7 @@ Template.documentView.selectedDocument = ->
 <p>  )</p>
 
 <p>Template.documentView.events =
-  'keyup #document-text': (e) -></p>
+  &lsquo;keyup #document-text&rsquo;: (e) &ndash;></p>
 
 <pre><code># @_id should work here, but it doesn't
 sel = _id: Session.get("document_id")

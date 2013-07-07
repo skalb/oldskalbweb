@@ -116,12 +116,12 @@
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" >previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn&#8217;t share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.</p>
+      <p>In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" >previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn&rsquo;t share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.</p>
 
 <!--more-->
 
 
-<p>For example, here&#8217;s Project vs Feature Index Templates:</p>
+<p>For example, here&rsquo;s Project vs Feature Index Templates:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -313,7 +313,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>First thing to note is that this View has an initialize method. But that method will never be called automatically because we&#8217;re going to extend this View into a new class and create an instance of the subclass instead. Also note that we&#8217;re calling a function getView() that isn&#8217;t defined in this class.</p>
+<p>First thing to note is that this View has an initialize method. But that method will never be called automatically because we&rsquo;re going to extend this View into a new class and create an instance of the subclass instead. Also note that we&rsquo;re calling a function getView() that isn&rsquo;t defined in this class.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -340,7 +340,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>We can call the into the parent class by using super in this view&#8217;s initialize. This is just a <a href="http://coffeescript.org/#classes">CoffeeScript shortcut</a> to apply the same arguments to the parent&#8217;s constructor. I&#8217;ve also explicitly required the parent View class since Rails does not guarantee which order JavaScript files will be loaded in the browser. The getView function here creates the correct ItemView based off the Project model.</p>
+<p>We can call the into the parent class by using super in this view&rsquo;s initialize. This is just a <a href="http://coffeescript.org/#classes">CoffeeScript shortcut</a> to apply the same arguments to the parent&rsquo;s constructor. I&rsquo;ve also explicitly required the parent View class since Rails does not guarantee which order JavaScript files will be loaded in the browser. The getView function here creates the correct ItemView based off the Project model.</p>
 
 <p>The New item View shown below is generic enough that it did not need to be extended for each model.</p>
 
@@ -485,7 +485,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now the actual Project view only had to define how to render it&#8217;s children.</p>
+<p>Now the actual Project view only had to define how to render it&rsquo;s children.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -524,9 +524,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Again, here&#8217;s the <a href="http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone/tree/version2">source</a>.</p>
+<p>Again, here&rsquo;s the <a href="http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone/tree/version2">source</a>.</p>
 
-<p>I think this is a big improvement over the first version, though it&#8217;s not quite as good as it could be. Having the loadChildren logic in the views doesn&#8217;t really make sense, but I&#8217;m leaving those changes for when I implement permalinks.</p>
+<p>I think this is a big improvement over the first version, though it&rsquo;s not quite as good as it could be. Having the loadChildren logic in the views doesn&rsquo;t really make sense, but I&rsquo;m leaving those changes for when I implement permalinks.</p>
 
     </div>
   </div>

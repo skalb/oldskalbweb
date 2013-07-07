@@ -9,7 +9,7 @@
   <meta name="author" content="Sameer Kalburgi">
 
   
-  <meta name="description" content="How to (Easily) Handle Model Relationships in Rails and Backbone.js Apr 23rd, 2012 While playing around with Backbone.js, I couldn&#8217;t find an &hellip;">
+  <meta name="description" content="How to (Easily) Handle Model Relationships in Rails and Backbone.js Apr 23rd, 2012 While playing around with Backbone.js, I couldn&rsquo;t find an &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -116,11 +116,11 @@
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>While playing around with Backbone.js, I couldn&#8217;t find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine&#8217;s</a> implementation is fairly straightforward.</p>
+      <p>While playing around with Backbone.js, I couldn&rsquo;t find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine&rsquo;s</a> implementation is fairly straightforward.</p>
 
-<p>I did find a relevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&#8217;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
+<p>I did find a relevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
 
-<p>I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I&#8217;ll walk through in this post.</p>
+<p>I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I&rsquo;ll walk through in this post.</p>
 
 <!--more-->
 
@@ -139,7 +139,7 @@
 
 <p><strong>Rails backend:</strong></p>
 
-<p>Rails controllers provide the REST API for our Backbone app. I haven&#8217;t inlined them here since they only have a few modifications post-scaffolding, but you can view them <a href="https://github.com/skalb/trackbone/tree/version1/app/controllers">here</a></p>
+<p>Rails controllers provide the REST API for our Backbone app. I haven&rsquo;t inlined them here since they only have a few modifications post-scaffolding, but you can view them <a href="https://github.com/skalb/trackbone/tree/version1/app/controllers">here</a></p>
 
 <p>Modifications:</p>
 
@@ -175,7 +175,7 @@
 
 <p>For setting up Backbone, the rails-backbone gem provides a good <a href="https://github.com/codebrew/backbone-rails/blob/master/README.md">guide</a>.</p>
 
-<p>Originally, I scaffolded Backbone here as well. On review, I&#8217;m not sure I would do that again. I think you&#8217;ll end at a better design if you start from scratch.</p>
+<p>Originally, I scaffolded Backbone here as well. On review, I&rsquo;m not sure I would do that again. I think you&rsquo;ll end at a better design if you start from scratch.</p>
 
 <p><strong>Creating Backbone Models:</strong></p>
 
@@ -208,7 +208,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>On reflection, loadFeatures is poorly named. It&#8217;s really more of an &#8216;initialize&#8217;, but anyways, calling that method will create a FeaturesCollection and pass in the Url for this project. You can see how this is used in the Features model</p>
+<p>On reflection, loadFeatures is poorly named. It&rsquo;s really more of an &lsquo;initialize&rsquo;, but anyways, calling that method will create a FeaturesCollection and pass in the Url for this project. You can see how this is used in the Features model</p>
 
 <figure class='code'><figcaption><span>javascripts/backbone/models/feature.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -303,7 +303,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Because we&#8217;re not worrying about permalinks (yet! I&#8217;ve started looking into this, and hope to create a follow-up post), we only need one catch-all route. We then pass in the respective models to our views.</p>
+<p>Because we&rsquo;re not worrying about permalinks (yet! I&rsquo;ve started looking into this, and hope to create a follow-up post), we only need one catch-all route. We then pass in the respective models to our views.</p>
 
 <p><strong>Listing projects:</strong></p>
 
@@ -596,13 +596,13 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This view is really the heart of the app. Every time a Project is selected, we&#8217;ll display the Features for that Project by calling fetch() and binding to success().</p>
+<p>This view is really the heart of the app. Every time a Project is selected, we&rsquo;ll display the Features for that Project by calling fetch() and binding to success().</p>
 
-<p>I&#8217;m not going to inline the templates and views for Features and Bugs since they are more or less identical, but feel free to browse through all the <a href="https://github.com/skalb/trackbone/tree/version1/app/assets/javascripts/backbone">client side code</a></p>
+<p>I&rsquo;m not going to inline the templates and views for Features and Bugs since they are more or less identical, but feel free to browse through all the <a href="https://github.com/skalb/trackbone/tree/version1/app/assets/javascripts/backbone">client side code</a></p>
 
-<p>Again, here&#8217;s a working <a href="http://young-flower-9677.herokuapp.com/">demo</a>.</p>
+<p>Again, here&rsquo;s a working <a href="http://young-flower-9677.herokuapp.com/">demo</a>.</p>
 
-<p>Please provide any feedback you have in the comments. Was this useful? Too long? Too much/too little code inline? I&#8217;m currently working on a couple more entires that will build on this one as I&#8217;m learning more about Backbone.js, so feedback is definitely useful.</p>
+<p>Please provide any feedback you have in the comments. Was this useful? Too long? Too much/too little code inline? I&rsquo;m currently working on a couple more entires that will build on this one as I&rsquo;m learning more about Backbone.js, so feedback is definitely useful.</p>
 
     </div>
   </div>

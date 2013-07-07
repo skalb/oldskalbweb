@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Visualizations | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/visualizations/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-06T20:36:05-07:00</updated>
+  <updated>2013-07-07T15:07:35-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -67,7 +67,7 @@ $(document).ready(function(){
 
 <p>```</p>
 
-<p>Here's a working <a href="http://www.skalb.com/assets/jquery-data-heat-map.html">example</a>.</p>
+<p>Here&rsquo;s a working <a href="http://www.skalb.com/assets/jquery-data-heat-map.html">example</a>.</p>
 ]]></content>
   </entry>
   

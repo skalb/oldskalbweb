@@ -4,7 +4,7 @@
   <title><![CDATA[Category: JavaScript | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/javascript/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-06T20:36:05-07:00</updated>
+  <updated>2013-07-07T15:07:35-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -81,13 +81,13 @@ script(src='/javascripts/index.js')
 <p>  body!= body
 ```</p>
 
-<p>node-autocomplete and other necessary libraries can be added to package.json. Note: I'm required to use older verions of some packages because Heroku does not support the latest version of Express.</p>
+<p>node-autocomplete and other necessary libraries can be added to package.json. Note: I&rsquo;m required to use older verions of some packages because Heroku does not support the latest version of Express.</p>
 
 <p>``` json package.json
 {
-  "name": "airport-autocomplete",
-  "version": "0.0.1",
-  "dependencies": {</p>
+  &ldquo;name&rdquo;: &ldquo;airport-autocomplete&rdquo;,
+  &ldquo;version&rdquo;: &ldquo;0.0.1&rdquo;,
+  &ldquo;dependencies&rdquo;: {</p>
 
 <pre><code>"express": "2.5.x",
 "jade": "*",
@@ -97,7 +97,7 @@ script(src='/javascripts/index.js')
 </code></pre>
 
 <p>  },
-  "engines": {</p>
+  &ldquo;engines&rdquo;: {</p>
 
 <pre><code>"node": "0.8.x",
 "npm": "1.1.x"
@@ -109,7 +109,7 @@ script(src='/javascripts/index.js')
 
 <p>The dataset for this example is going to be airports and their codes. I wanted to be able to intelligently handle for the case where the user enters either the airport code or the name since most travel sites operate this way.</p>
 
-<p><a href="/assets/airports.dat">Airports.dat</a> - format name|code</p>
+<p><a href="/assets/airports.dat">Airports.dat</a> &ndash; format name|code</p>
 
 <p>We need to keep lookups in memory to present the user with the properly capitalized airport name. During the actual autocomplete search, we will only use lowercased entries and input. Therefore, we need to keep track of three things:</p>
 
@@ -121,10 +121,10 @@ script(src='/javascripts/index.js')
 
 
 <p>``` javascript routes/index.js
-fs.readFile('data/airport-codes.dat', function(err, data) {
+fs.readFile(&lsquo;data/airport-codes.dat&rsquo;, function(err, data) {
   var airports = [];</p>
 
-<p>  _.each(data.toString().split('\n'), function(a) {</p>
+<p>  _.each(data.toString().split(&lsquo;\n&rsquo;), function(a) {</p>
 
 <pre><code>var parts = a.trim().split("|"),
     airportName = parts[0],
@@ -151,11 +151,11 @@ airports.push(airportCodeLower);
 });
 ```</p>
 
-<p>In the nodeJS route that returns the airport data, we'll use the input to test if it matched either an airport name or an aiport code and return those results.</p>
+<p>In the nodeJS route that returns the airport data, we&rsquo;ll use the input to test if it matched either an airport name or an aiport code and return those results.</p>
 
 <p>``` javascript routes/index.js
 exports.airports = function(req, res) {
-  var airport = req.query["term"].toLowerCase(),</p>
+  var airport = req.query[&ldquo;term&rdquo;].toLowerCase(),</p>
 
 <pre><code>  results = namesAC.search(airport);
 </code></pre>
@@ -170,7 +170,7 @@ exports.airports = function(req, res) {
 <p>  res.send(airportResults);
 };
 ```
-Here's what a <a href="http://airport-autocomplete.herokuapp.com/airports?term=RIO">sample request</a> for RIO would return:</p>
+Here&rsquo;s what a <a href="http://airport-autocomplete.herokuapp.com/airports?term=RIO">sample request</a> for RIO would return:</p>
 
 <p>``` json
 [</p>
@@ -189,11 +189,11 @@ Here's what a <a href="http://airport-autocomplete.herokuapp.com/airports?term=R
 <p>]
 ```</p>
 
-<p>The last part is to wire up the actual jQuery UI autocomplete. I've also added a handler on the open to highlight the term from the search.</p>
+<p>The last part is to wire up the actual jQuery UI autocomplete. I&rsquo;ve also added a handler on the open to highlight the term from the search.</p>
 
 <p>``` javascript public/javascripts/index.js
 (function () {
-  var termTemplate = "<span class='ui-autocomplete-term'>$1</span>";</p>
+  var termTemplate = &ldquo;<span class='ui-autocomplete-term'>$1</span>&rdquo;;</p>
 
 <p>  $(document).ready(function() {</p>
 
@@ -275,7 +275,7 @@ $(document).ready(function(){
 
 <p>```</p>
 
-<p>Here's a working <a href="http://www.skalb.com/assets/jquery-data-heat-map.html">example</a>.</p>
+<p>Here&rsquo;s a working <a href="http://www.skalb.com/assets/jquery-data-heat-map.html">example</a>.</p>
 ]]></content>
   </entry>
   
@@ -297,14 +297,14 @@ $(document).ready(function(){
 npm install sinon
 </code></p>
 
-<p>Here's how to use the spy:</p>
+<p>Here&rsquo;s how to use the spy:</p>
 
 <p><code>coffeescript lib/sample_router_factory.coffee
 items =
   find: sinon.spy()
 </code></p>
 
-<p>Now, let's write our test:</p>
+<p>Now, let&rsquo;s write our test:</p>
 
 <p><code>coffeescript tests/sample_router_factory_test.coffee
 it "should retrieve all items", -&gt;
@@ -318,9 +318,9 @@ it "should retrieve all items", -&gt;
 root = exports ? this</p>
 
 <p>class SampleRouterFactory
-  constructor: (@Backbone, @Items) -></p>
+  constructor: (@Backbone, @Items) &ndash;></p>
 
-<p>  getRouter: () -></p>
+<p>  getRouter: () &ndash;></p>
 
 <pre><code>SampleRouter = @Backbone.Router.extend(
   routes:
@@ -335,7 +335,7 @@ new SampleRouter
 <p>root.SampleRouterFactory = SampleRouterFactory
 ```</p>
 
-<p>This <em>should</em> pass, but yet doesn't. Why? Thinking about the assumption our test is making when using the a Backbone router, it likely depends on Backbone initialization. We can try this in our test, also:</p>
+<p>This <em>should</em> pass, but yet doesn&rsquo;t. Why? Thinking about the assumption our test is making when using the a Backbone router, it likely depends on Backbone initialization. We can try this in our test, also:</p>
 
 <p><code>coffeescript
 Backbone.history.start
@@ -343,18 +343,18 @@ Backbone.history.start
   pushState: true
 </code></p>
 
-<p>This doesn't work either because Backbone assumes we are in the browser when accessing <strong>window</strong>. I'm pretty sure this is not the approach I want. We don't need to add a dependency on Backbone's internal behavior to test a method of my Router. My previous test verifies that the root path will call an index method, so now I only need to call that index method and validate that behavior. This has the added benefit of simplifying the test.</p>
+<p>This doesn&rsquo;t work either because Backbone assumes we are in the browser when accessing <strong>window</strong>. I&rsquo;m pretty sure this is not the approach I want. We don&rsquo;t need to add a dependency on Backbone&rsquo;s internal behavior to test a method of my Router. My previous test verifies that the root path will call an index method, so now I only need to call that index method and validate that behavior. This has the added benefit of simplifying the test.</p>
 
-<p>Here's the final version of my tests:</p>
+<p>Here&rsquo;s the final version of my tests:</p>
 
 <p>``` coffeescript tests/sample_router_factory_test.coffee
-util = require('util')
-should = require('should')
-Backbone = require('backbone')
-sinon = require('sinon')
-SampleRouterFactory = require('../client/lib/sample_router_factory').SampleRouterFactory</p>
+util = require(&lsquo;util&rsquo;)
+should = require(&lsquo;should&rsquo;)
+Backbone = require(&lsquo;backbone&rsquo;)
+sinon = require(&lsquo;sinon&rsquo;)
+SampleRouterFactory = require(&lsquo;../client/lib/sample_router_factory&rsquo;).SampleRouterFactory</p>
 
-<p>describe "SampleRouter", ->
+<p>describe &ldquo;SampleRouter&rdquo;, &ndash;>
   items =</p>
 
 <pre><code>find: sinon.spy()
@@ -363,12 +363,12 @@ SampleRouterFactory = require('../client/lib/sample_router_factory').SampleRoute
 <p>  factory = new SampleRouterFactory(Backbone, items)
   router = factory.getRouter(Backbone)</p>
 
-<p>  it "should have an index route", -></p>
+<p>  it &ldquo;should have an index route&rdquo;, &ndash;></p>
 
 <pre><code>router.routes[''].should.equal('index')
 </code></pre>
 
-<p>  it "should retrieve all items when navigating to index", -></p>
+<p>  it &ldquo;should retrieve all items when navigating to index&rdquo;, &ndash;></p>
 
 <pre><code>router.index()
 items.find.called.should.equal true
@@ -385,12 +385,12 @@ items.find.called.should.equal true
     <link href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/"/>
     <updated>2012-08-19T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha</id>
-    <content type="html"><![CDATA[<p>Despite no mention in the official <a href="http://docs.meteor.com/">Meteor docs</a>, adding unit tests is fairly easy. For some reason, they don't mention this but any files in the tests/ folder will be ignored by the Meteor server.</p>
+    <content type="html"><![CDATA[<p>Despite no mention in the official <a href="http://docs.meteor.com/">Meteor docs</a>, adding unit tests is fairly easy. For some reason, they don&rsquo;t mention this but any files in the tests/ folder will be ignored by the Meteor server.</p>
 
 <!--more-->
 
 
-<p>What you'll need:</p>
+<p>What you&rsquo;ll need:</p>
 
 <ul>
     <li><a href="https://github.com/meteor/meteor">Meteor</a></li>
@@ -422,15 +422,15 @@ meteor add coffeescript
 
 <p>``` bash</p>
 
-<p>mocha tests/*.coffee -w -G --compilers coffee:coffee-script</p>
+<p>mocha tests/*.coffee -w -G &mdash;compilers coffee:coffee-script</p>
 
 <p>```</p>
 
 <p>Now to create a sample test:</p>
 
 <p>``` coffeescript test.coffee
-describe "Array", ->
-  describe "#indexOf()", -></p>
+describe &ldquo;Array&rdquo;, &ndash;>
+  describe &ldquo;#indexOf()&rdquo;, &ndash;></p>
 
 <pre><code>it "should return -1 when the value is not present", -&gt;
   assert.equal -1, [1, 2, 3].indexOf(1)

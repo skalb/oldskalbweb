@@ -4,7 +4,7 @@
   <title><![CDATA[Category: CoffeeScript | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/coffeescript/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-06T20:36:05-07:00</updated>
+  <updated>2013-07-07T15:07:35-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -18,12 +18,12 @@
     <link href="http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/"/>
     <updated>2012-08-20T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha</id>
-    <content type="html"><![CDATA[<p>One of the downsides of Meteor and perhaps strongest complaint is that it doesn't play nicely with existing NodeJS modules. You're forced to use the available SmartPackages (or build one). This is a problem since the Mocha environment runs without the browser and doesn't have access to the libraries included by the SmartPackage.</p>
+    <content type="html"><![CDATA[<p>One of the downsides of Meteor and perhaps strongest complaint is that it doesn&rsquo;t play nicely with existing NodeJS modules. You&rsquo;re forced to use the available SmartPackages (or build one). This is a problem since the Mocha environment runs without the browser and doesn&rsquo;t have access to the libraries included by the SmartPackage.</p>
 
 <!--more-->
 
 
-<p><em>Here's a previous <a title="Testing with Meteor, CoffeeScript and Mocha" href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
+<p><em>Here&rsquo;s a previous <a title="Testing with Meteor, CoffeeScript and Mocha" href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
 
 <p>Creating the project:</p>
 
@@ -47,7 +47,7 @@ npm install backbone
 mocha *.coffee --compilers coffee:coffee-script
 </code></p>
 
-<p>My goal was to create a very basic Backbone router test. Normally, I'd define the router like so:</p>
+<p>My goal was to create a very basic Backbone router test. Normally, I&rsquo;d define the router like so:</p>
 
 <p>``` coffeescript
 SampleRouter = @Backbone.Router.extend(
@@ -56,12 +56,12 @@ SampleRouter = @Backbone.Router.extend(
 <pre><code>"": "index"
 </code></pre>
 
-<p>  index: ->
+<p>  index: &ndash;>
 )
 new SampleRouter
 ```</p>
 
-<p>This won't work when running the Mocha tests because it assumes the Meteor framework is present to load Backbone. I solved this by creating a factory for the router and injecting the Backbone module.</p>
+<p>This won&rsquo;t work when running the Mocha tests because it assumes the Meteor framework is present to load Backbone. I solved this by creating a factory for the router and injecting the Backbone module.</p>
 
 <p>Note, I need to put this module in tests/lib so Meteor will make sure to load it first</p>
 
@@ -70,9 +70,9 @@ new SampleRouter
 root = exports ? this</p>
 
 <p>class SampleRouterFactory
-  constructor: (@Backbone) -></p>
+  constructor: (@Backbone) &ndash;></p>
 
-<p>  getRouter: () -></p>
+<p>  getRouter: () &ndash;></p>
 
 <pre><code>SampleRouter = @Backbone.Router.extend(
   routes:
@@ -91,18 +91,18 @@ new SampleRouter
 
 <p>This module will now create a class that will return a new instance of the SampleRouter.</p>
 
-<p>Now, let's look at the test case:</p>
+<p>Now, let&rsquo;s look at the test case:</p>
 
 <p>tests/sample_router_factory_test.coffee
 ``` coffeescript
-should = require('should')
-Backbone = require('backbone')
-SampleRouterFactory = require('../client/lib/sample_router_factory').SampleRouterFactory</p>
+should = require(&lsquo;should&rsquo;)
+Backbone = require(&lsquo;backbone&rsquo;)
+SampleRouterFactory = require(&lsquo;../client/lib/sample_router_factory&rsquo;).SampleRouterFactory</p>
 
-<p>describe "SampleRouter", ->
+<p>describe &ldquo;SampleRouter&rdquo;, &ndash;>
   factory = new SampleRouterFactory(Backbone)
   router = factory.getRouter(Backbone)
-  it "should have an index router", -></p>
+  it &ldquo;should have an index router&rdquo;, &ndash;></p>
 
 <pre><code>router.routes[''].should.equal('index')
 </code></pre>
@@ -118,7 +118,7 @@ Meteor.startup -&gt;
   router = factory.getRouter(Backbone)
 </code></p>
 
-<p>Again, there's no need to require either Backbone (loaded as a SmartPackage) or the actual SampleRouterFactory because Meteor treats all of your CoffeeScript files as a single file and consequently scope.</p>
+<p>Again, there&rsquo;s no need to require either Backbone (loaded as a SmartPackage) or the actual SampleRouterFactory because Meteor treats all of your CoffeeScript files as a single file and consequently scope.</p>
 
 <p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">Source code here.</a></p>
 ]]></content>
@@ -129,12 +129,12 @@ Meteor.startup -&gt;
     <link href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/"/>
     <updated>2012-08-19T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha</id>
-    <content type="html"><![CDATA[<p>Despite no mention in the official <a href="http://docs.meteor.com/">Meteor docs</a>, adding unit tests is fairly easy. For some reason, they don't mention this but any files in the tests/ folder will be ignored by the Meteor server.</p>
+    <content type="html"><![CDATA[<p>Despite no mention in the official <a href="http://docs.meteor.com/">Meteor docs</a>, adding unit tests is fairly easy. For some reason, they don&rsquo;t mention this but any files in the tests/ folder will be ignored by the Meteor server.</p>
 
 <!--more-->
 
 
-<p>What you'll need:</p>
+<p>What you&rsquo;ll need:</p>
 
 <ul>
     <li><a href="https://github.com/meteor/meteor">Meteor</a></li>
@@ -166,15 +166,15 @@ meteor add coffeescript
 
 <p>``` bash</p>
 
-<p>mocha tests/*.coffee -w -G --compilers coffee:coffee-script</p>
+<p>mocha tests/*.coffee -w -G &mdash;compilers coffee:coffee-script</p>
 
 <p>```</p>
 
 <p>Now to create a sample test:</p>
 
 <p>``` coffeescript test.coffee
-describe "Array", ->
-  describe "#indexOf()", -></p>
+describe &ldquo;Array&rdquo;, &ndash;>
+  describe &ldquo;#indexOf()&rdquo;, &ndash;></p>
 
 <pre><code>it "should return -1 when the value is not present", -&gt;
   assert.equal -1, [1, 2, 3].indexOf(1)
@@ -241,31 +241,31 @@ routes:
 <p>Now let’s look at showProjects.</p>
 
 <p>``` coffeescript
-showProjects: (project_id, feature_id, bug_id) ->
-  @renderViews(@projects, project_id, "Projects")</p>
+showProjects: (project_id, feature_id, bug_id) &ndash;>
+  @renderViews(@projects, project_id, &ldquo;Projects&rdquo;)</p>
 
 <p>  if project_id
-    @loadChildren(@projects, project_id, [feature_id, bug_id], "loadFeatures")
+    @loadChildren(@projects, project_id, [feature_id, bug_id], &ldquo;loadFeatures&rdquo;)
 ```</p>
 
 <p>My original goal was to create a helper method that would support an abitrary length chain of loading children. That is, loadChildren will call loadFeatures which will then call loadChildren again etc. The final implementation isn’t quite that generic since it requires me to construct the individual item_ids at the start.</p>
 
 <p>As I was finishing this prototype , I managed to remove all duplicate code by creating some helper methods.</p>
 
-<p>``` coffeescript
-clearType: (model) ->
-  $("#list-#{model}").html('')
-  $("#new-#{model}").html('')</p>
+<p>`&ldquo; coffeescript
+clearType: (model) &ndash;>
+  $(&ldquo;#list-#{model}&rdquo;).html(&rdquo;)
+  $(&ldquo;#new-#{model}&rdquo;).html(&lsquo;&rsquo;)</p>
 
-<p>renderView: (selector, view) ->
+<p>renderView: (selector, view) &ndash;>
   $(selector).html(view.render().el)</p>
 
-<p>renderViews: (items, item_id, type) ->
+<p>renderViews: (items, item_id, type) &ndash;>
   indexView = new Trackbone.Views.IndexView(items: items, id: item_id, type: type)
-  @renderView("#list-#{type.toLowerCase()}", indexView)</p>
+  @renderView(&ldquo;#list-#{type.toLowerCase()}&rdquo;, indexView)</p>
 
 <p>  newView = new Trackbone.Views.NewView(collection: items, type: type)
-  @renderView("#new-#{type.toLowerCase()}", newView)
+  @renderView(&ldquo;#new-#{type.toLowerCase()}&rdquo;, newView)
 ```</p>
 
 <p>And now let’s look at loadChildren:</p>
@@ -281,26 +281,26 @@ loadChildren: (items, item_id, child_ids, callback) -&gt;
   item.children.fetch()
 </code></p>
 
-<p>Okay, why am I indexing into the object with a string instead of just passing the function in directly. Well, because the fat arrow wasn’t working as expected. Either I was doing something wrong or there's a bug in the coffee-rails interpreter because js2coffee gave me a different result.</p>
+<p>Okay, why am I indexing into the object with a string instead of just passing the function in directly. Well, because the fat arrow wasn’t working as expected. Either I was doing something wrong or there&rsquo;s a bug in the coffee-rails interpreter because js2coffee gave me a different result.</p>
 
 <p>The full router:</p>
 
 <p>``` coffeescript
 class Trackbone.Routers.ProjectsRouter extends Backbone.Router
-  initialize: (options) ->
+  initialize: (options) &ndash;>
     @projects = new Trackbone.Collections.ProjectsCollection()
     @projects.reset options.projects</p>
 
 <p>  routes:
-    ".<em>"  : "showProjects"
-    "projects/:project_id" : "showProjects"
-    "projects/:project_id/features/:feature_id/</em>" : "showProjects"</p>
+    ".<em>&ldquo;  : "showProjects&rdquo;
+    "projects/:project_id" : &ldquo;showProjects&rdquo;
+    "projects/:project_id/features/:feature_id/</em>&ldquo; : "showProjects&rdquo;</p>
 
-<p>  clearType: (model) ->
-    $("#list-#{model}").html('')
-    $("#new-#{model}").html('')</p>
+<p>  clearType: (model) &ndash;>
+    $(&ldquo;#list-#{model}&rdquo;).html(&lsquo;&rsquo;)
+    $(&ldquo;#new-#{model}&rdquo;).html(&lsquo;&rsquo;)</p>
 
-<p>  loadChildren: (items, item_id, child_ids, callback) ->
+<p>  loadChildren: (items, item_id, child_ids, callback) &ndash;>
     item = items.get(item_id)
     item.loadChildren()
     item.children.fetch(
@@ -309,32 +309,32 @@ class Trackbone.Routers.ProjectsRouter extends Backbone.Router
     )
     item.children.fetch()</p>
 
-<p>  renderView: (selector, view) ->
+<p>  renderView: (selector, view) &ndash;>
     $(selector).html(view.render().el)</p>
 
-<p>  renderViews: (items, item_id, type) ->
+<p>  renderViews: (items, item_id, type) &ndash;>
     indexView = new Trackbone.Views.IndexView(items: items, id: item_id, type: type)
-    @renderView("#list-#{type.toLowerCase()}", indexView)</p>
+    @renderView(&ldquo;#list-#{type.toLowerCase()}&rdquo;, indexView)</p>
 
 <p>    newView = new Trackbone.Views.NewView(collection: items, type: type)
-    @renderView("#new-#{type.toLowerCase()}", newView)</p>
+    @renderView(&ldquo;#new-#{type.toLowerCase()}&rdquo;, newView)</p>
 
-<p>  showProjects: (project_id, feature_id, bug_id) ->
-    @renderViews(@projects, project_id, "Projects")</p>
+<p>  showProjects: (project_id, feature_id, bug_id) &ndash;>
+    @renderViews(@projects, project_id, &ldquo;Projects&rdquo;)</p>
 
 <p>    if project_id
-      @loadChildren(@projects, project_id, [feature_id, bug_id], "loadFeatures")</p>
+      @loadChildren(@projects, project_id, [feature_id, bug_id], &ldquo;loadFeatures&rdquo;)</p>
 
-<p>  loadFeatures: (features, feature_id, child_ids) ->
-    @renderViews(features, feature_id, "Features")</p>
+<p>  loadFeatures: (features, feature_id, child_ids) &ndash;>
+    @renderViews(features, feature_id, &ldquo;Features&rdquo;)</p>
 
 <p>    if feature_id
-      @loadChildren(features, feature_id, child_ids, "loadBugs")
+      @loadChildren(features, feature_id, child_ids, &ldquo;loadBugs&rdquo;)
     else
-      @clearType("bugs")</p>
+      @clearType(&ldquo;bugs&rdquo;)</p>
 
-<p>  loadBugs: (bugs, bug_id, child_ids) ->
-    @renderViews(bugs, bug_id, "Bugs")
+<p>  loadBugs: (bugs, bug_id, child_ids) &ndash;>
+    @renderViews(bugs, bug_id, &ldquo;Bugs&rdquo;)
 ```</p>
 
 <p>I also needed to tweak my item view to include the correct url for the select link.</p>
@@ -343,24 +343,24 @@ class Trackbone.Routers.ProjectsRouter extends Backbone.Router
 Trackbone.Views.Projects ||= {}</p>
 
 <p>class Trackbone.Views.ItemView extends Backbone.View
-  template: JST["backbone/templates/item"]</p>
+  template: JST[&ldquo;backbone/templates/item&rdquo;]</p>
 
 <p>  events:
-    "click .destroy" : "destroy"</p>
+    "click .destroy" : &ldquo;destroy&rdquo;</p>
 
-<p>  tagName: "tr"
-  className: "item"</p>
+<p>  tagName: &ldquo;tr&rdquo;
+  className: &ldquo;item&rdquo;</p>
 
-<p>  destroy: () ->
+<p>  destroy: () &ndash;>
     @model.destroy()
     this.remove()</p>
 
 <p>    return false</p>
 
-<p>  render: ->
-    name = @model.get("name")
-    id = @model.get("id")
-    url = "#{@model.collection.url()}/#{id}"
+<p>  render: &ndash;>
+    name = @model.get(&ldquo;name&rdquo;)
+    id = @model.get(&ldquo;id&rdquo;)
+    url = &ldquo;#{@model.collection.url()}/#{id}&rdquo;
     $(@el).html(@template(name: name, id: id, url: url))
     if (@options.selected)
       window.toggleSelected(@el)
@@ -377,12 +377,12 @@ Trackbone.Views.Projects ||= {}</p>
     <link href="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/"/>
     <updated>2012-04-26T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone</id>
-    <content type="html"><![CDATA[<p>In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" >previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn't share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.</p>
+    <content type="html"><![CDATA[<p>In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" >previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn&rsquo;t share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.</p>
 
 <!--more-->
 
 
-<p>For example, here's Project vs Feature Index Templates:
+<p>For example, here&rsquo;s Project vs Feature Index Templates:
 ``` html</p>
 
 <h1>Listing projects</h1>
@@ -506,9 +506,9 @@ to
 Trackbone.Views ||= {}</p>
 
 <p>class Trackbone.Views.IndexView extends Backbone.View
-  template: JST["backbone/templates/index"]</p>
+  template: JST[&ldquo;backbone/templates/index&rdquo;]</p>
 
-<p>  initialize: () -></p>
+<p>  initialize: () &ndash;></p>
 
 <pre><code>@options.items.bind('reset', @addAll)
 @options.items.bind('sync', @addAll)
@@ -539,7 +539,7 @@ return this
 
 <p>```</p>
 
-<p>First thing to note is that this View has an initialize method. But that method will never be called automatically because we're going to extend this View into a new class and create an instance of the subclass instead. Also note that we're calling a function getView() that isn't defined in this class.</p>
+<p>First thing to note is that this View has an initialize method. But that method will never be called automatically because we&rsquo;re going to extend this View into a new class and create an instance of the subclass instead. Also note that we&rsquo;re calling a function getView() that isn&rsquo;t defined in this class.</p>
 
 <p>``` coffeescript</p>
 
@@ -548,7 +548,7 @@ return this
 <p>Trackbone.Views.Projects ||= {}</p>
 
 <p>class Trackbone.Views.Projects.IndexView extends Trackbone.Views.IndexView
-  initialize: () -></p>
+  initialize: () &ndash;></p>
 
 <pre><code>super
 @options.type = "Projects"
@@ -561,7 +561,7 @@ return this
 
 <p>```</p>
 
-<p>We can call the into the parent class by using super in this view's initialize. This is just a <a href="http://coffeescript.org/#classes">CoffeeScript shortcut</a> to apply the same arguments to the parent's constructor. I've also explicitly required the parent View class since Rails does not guarantee which order JavaScript files will be loaded in the browser. The getView function here creates the correct ItemView based off the Project model.</p>
+<p>We can call the into the parent class by using super in this view&rsquo;s initialize. This is just a <a href="http://coffeescript.org/#classes">CoffeeScript shortcut</a> to apply the same arguments to the parent&rsquo;s constructor. I&rsquo;ve also explicitly required the parent View class since Rails does not guarantee which order JavaScript files will be loaded in the browser. The getView function here creates the correct ItemView based off the Project model.</p>
 
 <p>The New item View shown below is generic enough that it did not need to be extended for each model.</p>
 
@@ -569,14 +569,14 @@ return this
 Trackbone.Views.Projects ||= {}</p>
 
 <p>class Trackbone.Views.NewView extends Backbone.View
-  template: JST["backbone/templates/new"]</p>
+  template: JST[&ldquo;backbone/templates/new&rdquo;]</p>
 
 <p>  events:</p>
 
 <pre><code>"submit #new-item": "save"
 </code></pre>
 
-<p>  save: (e) -></p>
+<p>  save: (e) &ndash;></p>
 
 <pre><code>e.preventDefault()
 e.stopPropagation()
@@ -587,7 +587,7 @@ if name
   @collection.create(name: name)
 </code></pre>
 
-<p>  render: -></p>
+<p>  render: &ndash;></p>
 
 <pre><code>$(@el).html(@template(type: @options.type))
 
@@ -600,21 +600,21 @@ return this
 
 <p>``` coffeescript
 class Trackbone.Models.Project extends Backbone.Model
-  paramRoot: 'project'</p>
+  paramRoot: &lsquo;project&rsquo;</p>
 
 <p>  defaults:</p>
 
 <pre><code>name: null
 </code></pre>
 
-<p>  loadChildren: -></p>
+<p>  loadChildren: &ndash;></p>
 
 <pre><code>@children = new Trackbone.Collections.FeaturesCollection([], {project_url: @url()});
 </code></pre>
 
 <p>class Trackbone.Collections.ProjectsCollection extends Backbone.Collection
   model: Trackbone.Models.Project
-  url: '/projects'
+  url: &lsquo;/projects&rsquo;
 ```</p>
 
 <p>One thing to point out in the Item View base class is that I believe I could have used the <a href="http://coffeescript.org/#fat_arrow">fat arrow</a> to retain the correct context.</p>
@@ -623,7 +623,7 @@ class Trackbone.Models.Project extends Backbone.Model
 Trackbone.Views.Projects ||= {}</p>
 
 <p>class Trackbone.Views.ItemView extends Backbone.View
-  template: JST["backbone/templates/item"]</p>
+  template: JST[&ldquo;backbone/templates/item&rdquo;]</p>
 
 <p>  events:</p>
 
@@ -631,10 +631,10 @@ Trackbone.Views.Projects ||= {}</p>
 "click .destroy" : "destroy"
 </code></pre>
 
-<p>  tagName: "tr"
-  className: "item"</p>
+<p>  tagName: &ldquo;tr&rdquo;
+  className: &ldquo;item&rdquo;</p>
 
-<p>  select: () -></p>
+<p>  select: () &ndash;></p>
 
 <pre><code>if @model.loadChildren
   window.toggleSelected(@el)
@@ -646,7 +646,7 @@ Trackbone.Views.Projects ||= {}</p>
     @model.children.fetch()
 </code></pre>
 
-<p>  destroy: () -></p>
+<p>  destroy: () &ndash;></p>
 
 <pre><code>@model.destroy()
 this.remove()
@@ -654,7 +654,7 @@ this.remove()
 return false
 </code></pre>
 
-<p>  render: -></p>
+<p>  render: &ndash;></p>
 
 <pre><code>$(@el).html(@template(@model.toJSON() ))
 return this
@@ -662,7 +662,7 @@ return this
 
 <p>```</p>
 
-<p>Now the actual Project view only had to define how to render it's children.</p>
+<p>Now the actual Project view only had to define how to render it&rsquo;s children.</p>
 
 <p>``` coffeescript</p>
 
@@ -671,9 +671,9 @@ return this
 <p>Trackbone.Views.Projects ||= {}</p>
 
 <p>class Trackbone.Views.Projects.ProjectView extends Trackbone.Views.ItemView
-  template: JST["backbone/templates/item"]</p>
+  template: JST[&ldquo;backbone/templates/item&rdquo;]</p>
 
-<p>  renderChildren: (children) -></p>
+<p>  renderChildren: (children) &ndash;></p>
 
 <pre><code>featuresView = new Trackbone.Views.Features.IndexView(items: children)
 $("#list-features").html(featuresView.render().el)
@@ -688,9 +688,9 @@ $("#new-bugs").html('')
 
 <p>```</p>
 
-<p>Again, here's the <a href="http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone/tree/version2">source</a>.</p>
+<p>Again, here&rsquo;s the <a href="http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone/tree/version2">source</a>.</p>
 
-<p>I think this is a big improvement over the first version, though it's not quite as good as it could be. Having the loadChildren logic in the views doesn't really make sense, but I'm leaving those changes for when I implement permalinks.</p>
+<p>I think this is a big improvement over the first version, though it&rsquo;s not quite as good as it could be. Having the loadChildren logic in the views doesn&rsquo;t really make sense, but I&rsquo;m leaving those changes for when I implement permalinks.</p>
 ]]></content>
   </entry>
   
@@ -699,11 +699,11 @@ $("#new-bugs").html('')
     <link href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/"/>
     <updated>2012-04-23T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js</id>
-    <content type="html"><![CDATA[<p>While playing around with Backbone.js, I couldn't find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine's</a> implementation is fairly straightforward.</p>
+    <content type="html"><![CDATA[<p>While playing around with Backbone.js, I couldn&rsquo;t find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine&rsquo;s</a> implementation is fairly straightforward.</p>
 
-<p>I did find a relevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn't seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
+<p>I did find a relevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
 
-<p>I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I'll walk through in this post.</p>
+<p>I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I&rsquo;ll walk through in this post.</p>
 
 <!--more-->
 
@@ -722,7 +722,7 @@ $("#new-bugs").html('')
 
 <p><strong>Rails backend:</strong></p>
 
-<p>Rails controllers provide the REST API for our Backbone app. I haven't inlined them here since they only have a few modifications post-scaffolding, but you can view them <a href="https://github.com/skalb/trackbone/tree/version1/app/controllers">here</a></p>
+<p>Rails controllers provide the REST API for our Backbone app. I haven&rsquo;t inlined them here since they only have a few modifications post-scaffolding, but you can view them <a href="https://github.com/skalb/trackbone/tree/version1/app/controllers">here</a></p>
 
 <p>Modifications:</p>
 
@@ -734,7 +734,7 @@ $("#new-bugs").html('')
 
 
 <p>``` ruby routes.rb
-root :to => "home#index"</p>
+root :to => &ldquo;home#index&rdquo;</p>
 
 <p>Trackbone::Application.routes.draw do
   resources :projects do</p>
@@ -750,7 +750,7 @@ end
 
 <p>For setting up Backbone, the rails-backbone gem provides a good <a href="https://github.com/codebrew/backbone-rails/blob/master/README.md">guide</a>.</p>
 
-<p>Originally, I scaffolded Backbone here as well. On review, I'm not sure I would do that again. I think you'll end at a better design if you start from scratch.</p>
+<p>Originally, I scaffolded Backbone here as well. On review, I&rsquo;m not sure I would do that again. I think you&rsquo;ll end at a better design if you start from scratch.</p>
 
 <p><strong>Creating Backbone Models:</strong></p>
 
@@ -758,42 +758,42 @@ end
 
 <p>``` coffeescript javascripts/backbone/models/project.js.coffee
 class Trackbone.Models.Project extends Backbone.Model
-  paramRoot: 'project'</p>
+  paramRoot: &lsquo;project&rsquo;</p>
 
 <p>  defaults:</p>
 
 <pre><code>name: null
 </code></pre>
 
-<p>  loadFeatures: -></p>
+<p>  loadFeatures: &ndash;></p>
 
 <pre><code>@features = new Trackbone.Collections.FeaturesCollection([], {project_url: @url()});
 </code></pre>
 
 <p>class Trackbone.Collections.ProjectsCollection extends Backbone.Collection
   model: Trackbone.Models.Project
-  url: '/projects'
+  url: &lsquo;/projects&rsquo;
 ```</p>
 
-<p>On reflection, loadFeatures is poorly named. It's really more of an 'initialize', but anyways, calling that method will create a FeaturesCollection and pass in the Url for this project. You can see how this is used in the Features model</p>
+<p>On reflection, loadFeatures is poorly named. It&rsquo;s really more of an &lsquo;initialize&rsquo;, but anyways, calling that method will create a FeaturesCollection and pass in the Url for this project. You can see how this is used in the Features model</p>
 
 <p>``` coffeescript javascripts/backbone/models/feature.js.coffee
 class Trackbone.Models.Feature extends Backbone.Model
-  paramRoot: 'feature'</p>
+  paramRoot: &lsquo;feature&rsquo;</p>
 
 <p>  defaults:</p>
 
 <pre><code>name: null
 </code></pre>
 
-<p>  loadBugs: -></p>
+<p>  loadBugs: &ndash;></p>
 
 <pre><code>@bugs = new Trackbone.Collections.BugsCollection([], {feature_url: @url()});
 </code></pre>
 
 <p>class Trackbone.Collections.FeaturesCollection extends Backbone.Collection
   model: Trackbone.Models.Feature
-  initialize: (model, args) -></p>
+  initialize: (model, args) &ndash;></p>
 
 <pre><code>@url = -&gt;
   args.project_url + "/features"
@@ -805,7 +805,7 @@ class Trackbone.Models.Feature extends Backbone.Model
 
 <p>``` coffeescript javascripts/backbone/models/bug.js.coffee
 class Trackbone.Models.Bug extends Backbone.Model
-  paramRoot: 'bug'</p>
+  paramRoot: &lsquo;bug&rsquo;</p>
 
 <p>  defaults:</p>
 
@@ -814,7 +814,7 @@ class Trackbone.Models.Bug extends Backbone.Model
 
 <p>class Trackbone.Collections.BugsCollection extends Backbone.Collection
   model: Trackbone.Models.Bug
-  initialize: (model, args) -></p>
+  initialize: (model, args) &ndash;></p>
 
 <pre><code>@url = -&gt;
   args.feature_url + "/bugs"
@@ -828,7 +828,7 @@ class Trackbone.Models.Bug extends Backbone.Model
 
 <p>``` coffeescript javascripts/backbone/routers/projects_router.js.coffee
 class Trackbone.Routers.ProjectsRouter extends Backbone.Router
-  initialize: (options) -></p>
+  initialize: (options) &ndash;></p>
 
 <pre><code>@projects = new Trackbone.Collections.ProjectsCollection()
 @projects.reset options.projects
@@ -839,7 +839,7 @@ class Trackbone.Routers.ProjectsRouter extends Backbone.Router
 <pre><code>".*" : "index"
 </code></pre>
 
-<p>  index: -></p>
+<p>  index: &ndash;></p>
 
 <pre><code>@view = new Trackbone.Views.Projects.IndexView(projects: @projects)
 $("#list-projects").html(@view.render().el)
@@ -850,7 +850,7 @@ $("#new-projects").html(@newProjectView.render().el)
 
 <p>```</p>
 
-<p>Because we're not worrying about permalinks (yet! I've started looking into this, and hope to create a follow-up post), we only need one catch-all route. We then pass in the respective models to our views.</p>
+<p>Because we&rsquo;re not worrying about permalinks (yet! I&rsquo;ve started looking into this, and hope to create a follow-up post), we only need one catch-all route. We then pass in the respective models to our views.</p>
 
 <p><strong>Listing projects:</strong></p>
 
@@ -955,9 +955,9 @@ $("#new-projects").html(@newProjectView.render().el)
 Trackbone.Views.Projects ||= {}</p>
 
 <p>class Trackbone.Views.Projects.IndexView extends Backbone.View
-  template: JST["backbone/templates/projects/index"]</p>
+  template: JST[&ldquo;backbone/templates/projects/index&rdquo;]</p>
 
-<p>  initialize: () -></p>
+<p>  initialize: () &ndash;></p>
 
 <pre><code>@options.projects.bind('reset', @addAll)
 @options.projects.bind('sync', @render)
@@ -990,14 +990,14 @@ return this
 Trackbone.Views.Projects ||= {}</p>
 
 <p>class Trackbone.Views.Projects.NewView extends Backbone.View
-  template: JST["backbone/templates/projects/new"]</p>
+  template: JST[&ldquo;backbone/templates/projects/new&rdquo;]</p>
 
 <p>  events:</p>
 
 <pre><code>"submit #new-project": "save"
 </code></pre>
 
-<p>  save: (e) -></p>
+<p>  save: (e) &ndash;></p>
 
 <pre><code>e.preventDefault()
 e.stopPropagation()
@@ -1008,7 +1008,7 @@ if name
   @collection.create(name: name)
 </code></pre>
 
-<p>  render: -></p>
+<p>  render: &ndash;></p>
 
 <pre><code>$(@el).html(@template())
 
@@ -1023,7 +1023,7 @@ return this
 Trackbone.Views.Projects ||= {}</p>
 
 <p>class Trackbone.Views.Projects.ProjectView extends Backbone.View
-  template: JST["backbone/templates/shared/item"]</p>
+  template: JST[&ldquo;backbone/templates/shared/item&rdquo;]</p>
 
 <p>  events:</p>
 
@@ -1031,10 +1031,10 @@ Trackbone.Views.Projects ||= {}</p>
 "click .destroy" : "destroy"
 </code></pre>
 
-<p>  tagName: "tr"
-  className: "item"</p>
+<p>  tagName: &ldquo;tr&rdquo;
+  className: &ldquo;item&rdquo;</p>
 
-<p>  select: () -></p>
+<p>  select: () &ndash;></p>
 
 <pre><code>window.toggleSelected(@el)
 @model.loadFeatures()
@@ -1052,7 +1052,7 @@ do (@model) -&gt;
 @model.features.fetch()
 </code></pre>
 
-<p>  destroy: () -></p>
+<p>  destroy: () &ndash;></p>
 
 <pre><code>@model.destroy()
 this.remove()
@@ -1060,7 +1060,7 @@ this.remove()
 return false
 </code></pre>
 
-<p>  render: -></p>
+<p>  render: &ndash;></p>
 
 <pre><code>$(@el).html(@template(@model.toJSON() ))
 return this
@@ -1068,13 +1068,13 @@ return this
 
 <p>```</p>
 
-<p>This view is really the heart of the app. Every time a Project is selected, we'll display the Features for that Project by calling fetch() and binding to success().</p>
+<p>This view is really the heart of the app. Every time a Project is selected, we&rsquo;ll display the Features for that Project by calling fetch() and binding to success().</p>
 
-<p>I'm not going to inline the templates and views for Features and Bugs since they are more or less identical, but feel free to browse through all the <a href="https://github.com/skalb/trackbone/tree/version1/app/assets/javascripts/backbone">client side code</a></p>
+<p>I&rsquo;m not going to inline the templates and views for Features and Bugs since they are more or less identical, but feel free to browse through all the <a href="https://github.com/skalb/trackbone/tree/version1/app/assets/javascripts/backbone">client side code</a></p>
 
-<p>Again, here's a working <a href="http://young-flower-9677.herokuapp.com/">demo</a>.</p>
+<p>Again, here&rsquo;s a working <a href="http://young-flower-9677.herokuapp.com/">demo</a>.</p>
 
-<p>Please provide any feedback you have in the comments. Was this useful? Too long? Too much/too little code inline? I'm currently working on a couple more entires that will build on this one as I'm learning more about Backbone.js, so feedback is definitely useful.</p>
+<p>Please provide any feedback you have in the comments. Was this useful? Too long? Too much/too little code inline? I&rsquo;m currently working on a couple more entires that will build on this one as I&rsquo;m learning more about Backbone.js, so feedback is definitely useful.</p>
 ]]></content>
   </entry>
   

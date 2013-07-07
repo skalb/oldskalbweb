@@ -9,7 +9,7 @@
   <meta name="author" content="Sameer Kalburgi">
 
   
-  <meta name="description" content="Testing Backbone Routers in Meteor With Mocha Aug 20th, 2012 One of the downsides of Meteor and perhaps strongest complaint is that it doesn&#8217;t &hellip;">
+  <meta name="description" content="Testing Backbone Routers in Meteor With Mocha Aug 20th, 2012 One of the downsides of Meteor and perhaps strongest complaint is that it doesn&rsquo;t &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -116,12 +116,12 @@
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>One of the downsides of Meteor and perhaps strongest complaint is that it doesn&#8217;t play nicely with existing NodeJS modules. You&#8217;re forced to use the available SmartPackages (or build one). This is a problem since the Mocha environment runs without the browser and doesn&#8217;t have access to the libraries included by the SmartPackage.</p>
+      <p>One of the downsides of Meteor and perhaps strongest complaint is that it doesn&rsquo;t play nicely with existing NodeJS modules. You&rsquo;re forced to use the available SmartPackages (or build one). This is a problem since the Mocha environment runs without the browser and doesn&rsquo;t have access to the libraries included by the SmartPackage.</p>
 
 <!--more-->
 
 
-<p><em>Here&#8217;s a previous <a title="Testing with Meteor, CoffeeScript and Mocha" href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
+<p><em>Here&rsquo;s a previous <a title="Testing with Meteor, CoffeeScript and Mocha" href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
 
 <p>Creating the project:</p>
 
@@ -157,7 +157,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>My goal was to create a very basic Backbone router test. Normally, I&#8217;d define the router like so:</p>
+<p>My goal was to create a very basic Backbone router test. Normally, I&rsquo;d define the router like so:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -176,7 +176,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This won&#8217;t work when running the Mocha tests because it assumes the Meteor framework is present to load Backbone. I solved this by creating a factory for the router and injecting the Backbone module.</p>
+<p>This won&rsquo;t work when running the Mocha tests because it assumes the Meteor framework is present to load Backbone. I solved this by creating a factory for the router and injecting the Backbone module.</p>
 
 <p>Note, I need to put this module in tests/lib so Meteor will make sure to load it first</p>
 
@@ -221,7 +221,7 @@
 
 <p>This module will now create a class that will return a new instance of the SampleRouter.</p>
 
-<p>Now, let&#8217;s look at the test case:</p>
+<p>Now, let&rsquo;s look at the test case:</p>
 
 <p>tests/sample_router_factory_test.coffee</p>
 
@@ -259,7 +259,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Again, there&#8217;s no need to require either Backbone (loaded as a SmartPackage) or the actual SampleRouterFactory because Meteor treats all of your CoffeeScript files as a single file and consequently scope.</p>
+<p>Again, there&rsquo;s no need to require either Backbone (loaded as a SmartPackage) or the actual SampleRouterFactory because Meteor treats all of your CoffeeScript files as a single file and consequently scope.</p>
 
 <p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">Source code here.</a></p>
 

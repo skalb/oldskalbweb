@@ -160,7 +160,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>node-autocomplete and other necessary libraries can be added to package.json. Note: I&#8217;m required to use older verions of some packages because Heroku does not support the latest version of Express.</p>
+<p>node-autocomplete and other necessary libraries can be added to package.json. Note: I&rsquo;m required to use older verions of some packages because Heroku does not support the latest version of Express.</p>
 
 <figure class='code'><figcaption><span>package.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -197,7 +197,7 @@
 
 <p>The dataset for this example is going to be airports and their codes. I wanted to be able to intelligently handle for the case where the user enters either the airport code or the name since most travel sites operate this way.</p>
 
-<p><a href="/assets/airports.dat">Airports.dat</a> - format name|code</p>
+<p><a href="/assets/airports.dat">Airports.dat</a> &ndash; format name|code</p>
 
 <p>We need to keep lookups in memory to present the user with the properly capitalized airport name. During the actual autocomplete search, we will only use lowercased entries and input. Therefore, we need to keep track of three things:</p>
 
@@ -255,7 +255,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>In the nodeJS route that returns the airport data, we&#8217;ll use the input to test if it matched either an airport name or an aiport code and return those results.</p>
+<p>In the nodeJS route that returns the airport data, we&rsquo;ll use the input to test if it matched either an airport name or an aiport code and return those results.</p>
 
 <figure class='code'><figcaption><span>routes/index.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -280,7 +280,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Here&#8217;s what a <a href="http://airport-autocomplete.herokuapp.com/airports?term=RIO">sample request</a> for RIO would return:</p>
+<p>Here&rsquo;s what a <a href="http://airport-autocomplete.herokuapp.com/airports?term=RIO">sample request</a> for RIO would return:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -307,7 +307,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The last part is to wire up the actual jQuery UI autocomplete. I&#8217;ve also added a handler on the open to highlight the term from the search.</p>
+<p>The last part is to wire up the actual jQuery UI autocomplete. I&rsquo;ve also added a handler on the open to highlight the term from the search.</p>
 
 <figure class='code'><figcaption><span>public/javascripts/index.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
