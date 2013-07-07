@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-07T15:07:35-07:00</updated>
+  <updated>2013-07-07T15:23:27-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -21,14 +21,14 @@
     <content type="html"><![CDATA[<p>This post is part of a series:</p>
 
 <ul>
-    <li><a title="How to (easily) handle model relationships in Rails and Backbone.js" href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/">First post</a></li>
-    <li><a title="Extending and refactoring views in Backbone.js" href="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/">Second post</a></li>
+    <li>[First post](http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/)</li>
+    <li>[Second post](http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/)</li>
 </ul>
 
 
 <p>One of the missing features in my prototype was handling of permalinks. To make things easy, I originally removed all the routes and added click handlers instead. In retrospect that was a mistake. Instead of having the app logic tangled up with click handlers, it would have been much more straightforward to define routes and use links.</p>
 
-<p>Here’s the <a href="https://github.com/skalb/trackbone">source</a> and <a href="http://young-flower-9677.herokuapp.com/">demo</a>.</p>
+<p>Here’s the <a href="https://github.com/skalb/trackbone%22>source&lt;/a>%C2%A0and%C2%A0&lt;a%20href=%22http://young-flower-9677.herokuapp.com/">demo</a>.</p>
 
 <!--more-->
 
@@ -183,7 +183,7 @@ Trackbone.Views.Projects ||= {}</p>
 
 <p>```</p>
 
-<p>Again, here’s the <a href="https://github.com/skalb/trackbone">source</a> and <a href="http://young-flower-9677.herokuapp.com/">demo</a>.</p>
+<p>Again, here’s the <a href="https://github.com/skalb/trackbone%22>source&lt;/a>%C2%A0and%C2%A0&lt;a%20href=%22http://young-flower-9677.herokuapp.com/">demo</a>.</p>
 ]]></content>
   </entry>
   
@@ -192,7 +192,7 @@ Trackbone.Views.Projects ||= {}</p>
     <link href="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/"/>
     <updated>2012-04-26T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone</id>
-    <content type="html"><![CDATA[<p>In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" >previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn&rsquo;t share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.</p>
+    <content type="html"><![CDATA[<p>In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/">previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn&rsquo;t share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.</p>
 
 <!--more-->
 
@@ -503,7 +503,7 @@ $("#new-bugs").html('')
 
 <p>```</p>
 
-<p>Again, here&rsquo;s the <a href="http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone/tree/version2">source</a>.</p>
+<p>Again, here&rsquo;s the <a href="http://young-flower-9677.herokuapp.com/%22>demo&lt;/a>%20and%20&lt;a%20href=%22https://github.com/skalb/trackbone/tree/version2">source</a>.</p>
 
 <p>I think this is a big improvement over the first version, though it&rsquo;s not quite as good as it could be. Having the loadChildren logic in the views doesn&rsquo;t really make sense, but I&rsquo;m leaving those changes for when I implement permalinks.</p>
 ]]></content>
@@ -516,7 +516,7 @@ $("#new-bugs").html('')
     <id>http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js</id>
     <content type="html"><![CDATA[<p>While playing around with Backbone.js, I couldn&rsquo;t find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine&rsquo;s</a> implementation is fairly straightforward.</p>
 
-<p>I did find a relevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
+<p>I did find a relevant <a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
 
 <p>I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I&rsquo;ll walk through in this post.</p>
 
@@ -715,7 +715,7 @@ $("#new-projects").html(@newProjectView.render().el)
 
 <p><code>html javascripts/backbone/templates/shared/item.jst.ejs
 &lt;td&gt;&lt;a href="#" class="select"&gt;&lt;%= name %&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href="#" class="destroy"&gt;Destroy&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;[Destroy](#" class="destroy)&lt;/td&gt;
 </code></p>
 
 <p>``` html javascripts/backbone/templates/projects/index.jst.ejs</p>

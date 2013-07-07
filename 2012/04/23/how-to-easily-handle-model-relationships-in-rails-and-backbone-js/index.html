@@ -118,7 +118,7 @@
     <div class="span12">
       <p>While playing around with Backbone.js, I couldn&rsquo;t find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine&rsquo;s</a> implementation is fairly straightforward.</p>
 
-<p>I did find a relevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
+<p>I did find a relevant <a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
 
 <p>I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I&rsquo;ll walk through in this post.</p>
 
@@ -363,7 +363,7 @@
 <figure class='code'><figcaption><span>javascripts/backbone/templates/shared/item.jst.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;td&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span> <span class="na">class=</span><span class="s">&quot;select&quot;</span><span class="nt">&gt;</span><span class="err">&lt;</span>%= name %&gt;<span class="nt">&lt;/td&gt;</span>
-</span><span class='line'><span class="nt">&lt;td&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span> <span class="na">class=</span><span class="s">&quot;destroy&quot;</span><span class="nt">&gt;</span>Destroy<span class="nt">&lt;/a&gt;&lt;/td&gt;</span>
+</span><span class='line'><span class="nt">&lt;td&gt;</span>[Destroy](#&quot; class=&quot;destroy)<span class="nt">&lt;/td&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Meteor | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/meteor/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-07T15:07:35-07:00</updated>
+  <updated>2013-07-07T15:23:27-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -18,7 +18,7 @@
     <link href="http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections/"/>
     <updated>2012-08-25T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections</id>
-    <content type="html"><![CDATA[<p>Following my testing described <a title="Testing Backbone Routers in Meteor with Mocha" href="http://www.skalb.com/2012/08/19/testing-backbone-routers-in-meteor-with-mocha/">here</a>, I wanted to verify that Meteor interacts with my Routers correctly.</p>
+    <content type="html"><![CDATA[<p>Following my testing described <a href="http://www.skalb.com/2012/08/19/testing-backbone-routers-in-meteor-with-mocha/">here</a>, I wanted to verify that Meteor interacts with my Routers correctly.</p>
 
 <!--more-->
 
@@ -124,7 +124,7 @@ items.find.called.should.equal true
 <!--more-->
 
 
-<p><em>Here&rsquo;s a previous <a title="Testing with Meteor, CoffeeScript and Mocha" href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
+<p><em>Here&rsquo;s a previous <a href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
 
 <p>Creating the project:</p>
 
@@ -238,9 +238,9 @@ Meteor.startup -&gt;
 <p>What you&rsquo;ll need:</p>
 
 <ul>
-    <li><a href="https://github.com/meteor/meteor">Meteor</a></li>
-    <li><a href="https://github.com/isaacs/npm">Npm</a></li>
-    <li><a href="https://github.com/visionmedia/mocha">Mocha</a></li>
+    <li>[Meteor](https://github.com/meteor/meteor)</li>
+    <li>[Npm](https://github.com/isaacs/npm)</li>
+    <li>[Mocha](https://github.com/visionmedia/mocha)</li>
 </ul>
 
 
@@ -249,7 +249,7 @@ Meteor.startup -&gt;
 
 <div>
 <ul>
-    <li><a href="http://growl.info/">Growl</a> (for notifications from mocha watch)</li>
+    <li>[Growl](http://growl.info/) (for notifications from mocha watch)</li>
 </ul>
 </div>
 
@@ -293,7 +293,7 @@ describe &ldquo;Array&rdquo;, &ndash;>
 <ul>
     <li>The growl notification didn't work for me, but I assume that's because I'm using an old version.</li>
     <li>When using Mocha watch, sometimes a failing test result would be outputted many times</li>
-    <li><a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</li>
+    <li>[Jasmine](https://github.com/pivotal/jasmine) should also work fine</li>
 </ul>
 
 ]]></content>
@@ -316,7 +316,7 @@ describe &ldquo;Array&rdquo;, &ndash;>
 <!--more-->
 
 
-<p><strong>Updated: Source code at <a href="https://github.com/skalb/docshare-tutorial"><a href="https://github.com/skalb/docshare-tutorial">https://github.com/skalb/docshare-tutorial</a></a></strong></p>
+<p><strong>Updated: Source code at <a href="https://github.com/skalb/docshare-tutorial">https://github.com/skalb/docshare-tutorial</a></strong></p>
 
 <p><strong>Spec:</strong></p>
 
@@ -364,7 +364,7 @@ cd docshare-tutorial
 meteor
 </code></p>
 
-<p>You should see the default site at <a href="http://localhost:3000/"><a href="http://localhost:3000">http://localhost:3000</a></a>:</p>
+<p>You should see the default site at <a href="http://localhost:3000/">http://localhost:3000</a>:</p>
 
 <p>Lastly, add the other packages we are going to use</p>
 
@@ -523,7 +523,7 @@ DocumentsRouter = Backbone.Router.extend(
   Backbone.history.start pushState: true
 ```</p>
 
-<p>Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at <a href="http://backbonejs.org/"><a href="http://backbonejs.org/">http://backbonejs.org/</a></a></p>
+<p>Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at <a href="http://backbonejs.org/">http://backbonejs.org/</a></p>
 
 <p>We are also using Meteor.startup again here but for a different purpose. On the client side it will run after DOM is loaded every time. I think it would be more clear if this method didn’t mean different things based on context.</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Programming | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/programming/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-07T15:07:35-07:00</updated>
+  <updated>2013-07-07T15:23:27-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -26,9 +26,9 @@
 <p>What you&rsquo;ll need:</p>
 
 <ul>
-    <li><a href="https://github.com/meteor/meteor">Meteor</a></li>
-    <li><a href="https://github.com/isaacs/npm">Npm</a></li>
-    <li><a href="https://github.com/visionmedia/mocha">Mocha</a></li>
+    <li>[Meteor](https://github.com/meteor/meteor)</li>
+    <li>[Npm](https://github.com/isaacs/npm)</li>
+    <li>[Mocha](https://github.com/visionmedia/mocha)</li>
 </ul>
 
 
@@ -37,7 +37,7 @@
 
 <div>
 <ul>
-    <li><a href="http://growl.info/">Growl</a> (for notifications from mocha watch)</li>
+    <li>[Growl](http://growl.info/) (for notifications from mocha watch)</li>
 </ul>
 </div>
 
@@ -81,7 +81,7 @@ describe &ldquo;Array&rdquo;, &ndash;>
 <ul>
     <li>The growl notification didn't work for me, but I assume that's because I'm using an old version.</li>
     <li>When using Mocha watch, sometimes a failing test result would be outputted many times</li>
-    <li><a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</li>
+    <li>[Jasmine](https://github.com/pivotal/jasmine) should also work fine</li>
 </ul>
 
 ]]></content>

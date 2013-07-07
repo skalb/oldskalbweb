@@ -4,7 +4,7 @@
   <title><![CDATA[skalb.com]]></title>
   <link href="http://www.skalb.com/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-07T15:07:35-07:00</updated>
+  <updated>2013-07-07T15:23:27-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -348,11 +348,11 @@
 </span><span class='line'>    <span class="kd">var</span> <span class="nx">counts</span><span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#heat-map-3 tbody td&#39;</span><span class="p">).</span><span class="nx">not</span><span class="p">(</span><span class="s1">&#39;.stats-title&#39;</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 </span><span class='line'>        <span class="k">return</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
 </span><span class='line'>    <span class="p">}).</span><span class="nx">get</span><span class="p">();</span>
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  <span class="c1">// return max value</span>
 </span><span class='line'>  <span class="kd">var</span> <span class="nx">max</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">counts</span><span class="p">),</span>
 </span><span class='line'>      <span class="nx">middle</span> <span class="o">=</span> <span class="nx">max</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-</span><span class='line'>  
+</span><span class='line'>
 </span><span class='line'>  <span class="c1">// add classes to cells based on nearest 10 value</span>
 </span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#heat-map-3 tbody td&#39;</span><span class="p">).</span><span class="nx">not</span><span class="p">(</span><span class="s1">&#39;.stats-title&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
 </span><span class='line'>      <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
@@ -383,7 +383,7 @@
     <link href="http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections/"/>
     <updated>2012-08-25T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections</id>
-    <content type="html"><![CDATA[<p>Following my testing described <a title="Testing Backbone Routers in Meteor with Mocha" href="http://www.skalb.com/2012/08/19/testing-backbone-routers-in-meteor-with-mocha/">here</a>, I wanted to verify that Meteor interacts with my Routers correctly.</p>
+    <content type="html"><![CDATA[<p>Following my testing described <a href="http://www.skalb.com/2012/08/19/testing-backbone-routers-in-meteor-with-mocha/">here</a>, I wanted to verify that Meteor interacts with my Routers correctly.</p>
 
 <!--more-->
 
@@ -524,7 +524,7 @@
 <!--more-->
 
 
-<p><em>Here&rsquo;s a previous <a title="Testing with Meteor, CoffeeScript and Mocha" href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
+<p><em>Here&rsquo;s a previous <a href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
 
 <p>Creating the project:</p>
 
@@ -681,9 +681,9 @@
 <p>What you&rsquo;ll need:</p>
 
 <ul>
-    <li><a href="https://github.com/meteor/meteor">Meteor</a></li>
-    <li><a href="https://github.com/isaacs/npm">Npm</a></li>
-    <li><a href="https://github.com/visionmedia/mocha">Mocha</a></li>
+    <li>[Meteor](https://github.com/meteor/meteor)</li>
+    <li>[Npm](https://github.com/isaacs/npm)</li>
+    <li>[Mocha](https://github.com/visionmedia/mocha)</li>
 </ul>
 
 
@@ -692,7 +692,7 @@
 
 <div>
 <ul>
-    <li><a href="http://growl.info/">Growl</a> (for notifications from mocha watch)</li>
+    <li>[Growl](http://growl.info/) (for notifications from mocha watch)</li>
 </ul>
 </div>
 
@@ -742,7 +742,7 @@
 <ul>
     <li>The growl notification didn&#8217;t work for me, but I assume that&#8217;s because I&#8217;m using an old version.</li>
     <li>When using Mocha watch, sometimes a failing test result would be outputted many times</li>
-    <li><a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</li>
+    <li>[Jasmine](https://github.com/pivotal/jasmine) should also work fine</li>
 </ul>
 
 ]]></content>
@@ -778,14 +778,14 @@
     <content type="html"><![CDATA[<p>This post is part of a series:</p>
 
 <ul>
-    <li><a title="How to (easily) handle model relationships in Rails and Backbone.js" href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/">First post</a></li>
-    <li><a title="Extending and refactoring views in Backbone.js" href="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/">Second post</a></li>
+    <li>[First post](http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/)</li>
+    <li>[Second post](http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/)</li>
 </ul>
 
 
 <p>One of the missing features in my prototype was handling of permalinks. To make things easy, I originally removed all the routes and added click handlers instead. In retrospect that was a mistake. Instead of having the app logic tangled up with click handlers, it would have been much more straightforward to define routes and use links.</p>
 
-<p>Here’s the <a href="https://github.com/skalb/trackbone">source</a> and <a href="http://young-flower-9677.herokuapp.com/">demo</a>.</p>
+<p>Here’s the <a href="https://github.com/skalb/trackbone%22>source&lt;/a>%C2%A0and%C2%A0&lt;a%20href=%22http://young-flower-9677.herokuapp.com/&#8221;>demo</a>.</p>
 
 <!--more-->
 
@@ -1043,7 +1043,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Again, here’s the <a href="https://github.com/skalb/trackbone">source</a> and <a href="http://young-flower-9677.herokuapp.com/">demo</a>.</p>
+<p>Again, here’s the <a href="https://github.com/skalb/trackbone%22>source&lt;/a>%C2%A0and%C2%A0&lt;a%20href=%22http://young-flower-9677.herokuapp.com/&#8221;>demo</a>.</p>
 ]]></content>
   </entry>
   
@@ -1052,7 +1052,7 @@
     <link href="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/"/>
     <updated>2012-04-26T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone</id>
-    <content type="html"><![CDATA[<p>In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" >previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn&rsquo;t share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.</p>
+    <content type="html"><![CDATA[<p>In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/">previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn&rsquo;t share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.</p>
 
 <!--more-->
 
@@ -1460,7 +1460,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Again, here&rsquo;s the <a href="http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone/tree/version2">source</a>.</p>
+<p>Again, here&rsquo;s the <a href="http://young-flower-9677.herokuapp.com/%22>demo&lt;/a>%20and%20&lt;a%20href=%22https://github.com/skalb/trackbone/tree/version2&#8221;>source</a>.</p>
 
 <p>I think this is a big improvement over the first version, though it&rsquo;s not quite as good as it could be. Having the loadChildren logic in the views doesn&rsquo;t really make sense, but I&rsquo;m leaving those changes for when I implement permalinks.</p>
 ]]></content>
@@ -1473,7 +1473,7 @@
     <id>http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js</id>
     <content type="html"><![CDATA[<p>While playing around with Backbone.js, I couldn&rsquo;t find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine&rsquo;s</a> implementation is fairly straightforward.</p>
 
-<p>I did find a relevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
+<p>I did find a relevant <a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
 
 <p>I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I&rsquo;ll walk through in this post.</p>
 
@@ -1718,7 +1718,7 @@
 <figure class='code'><figcaption><span>javascripts/backbone/templates/shared/item.jst.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;td&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span> <span class="na">class=</span><span class="s">&quot;select&quot;</span><span class="nt">&gt;</span><span class="err">&lt;</span>%= name %&gt;<span class="nt">&lt;/td&gt;</span>
-</span><span class='line'><span class="nt">&lt;td&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span> <span class="na">class=</span><span class="s">&quot;destroy&quot;</span><span class="nt">&gt;</span>Destroy<span class="nt">&lt;/a&gt;&lt;/td&gt;</span>
+</span><span class='line'><span class="nt">&lt;td&gt;</span>[Destroy](#&quot; class=&quot;destroy)<span class="nt">&lt;/td&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1978,7 +1978,7 @@
 <!--more-->
 
 
-<p><strong>Updated: Source code at <a href="https://github.com/skalb/docshare-tutorial"><a href="https://github.com/skalb/docshare-tutorial">https://github.com/skalb/docshare-tutorial</a></a></strong></p>
+<p><strong>Updated: Source code at <a href="https://github.com/skalb/docshare-tutorial">https://github.com/skalb/docshare-tutorial</a></strong></p>
 
 <p><strong>Spec:</strong></p>
 
@@ -2030,7 +2030,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>You should see the default site at <a href="http://localhost:3000/"><a href="http://localhost:3000">http://localhost:3000</a></a>:</p>
+<p>You should see the default site at <a href="http://localhost:3000/">http://localhost:3000</a>:</p>
 
 <p>Lastly, add the other packages we are going to use</p>
 
@@ -2227,7 +2227,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at <a href="http://backbonejs.org/"><a href="http://backbonejs.org/">http://backbonejs.org/</a></a></p>
+<p>Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at <a href="http://backbonejs.org/">http://backbonejs.org/</a></p>
 
 <p>We are also using Meteor.startup again here but for a different purpose. On the client side it will run after DOM is loaded every time. I think it would be more clear if this method didn’t mean different things based on context.</p>
 

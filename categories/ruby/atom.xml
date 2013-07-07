@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/ruby/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-07T15:07:35-07:00</updated>
+  <updated>2013-07-07T15:23:27-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -20,7 +20,7 @@
     <id>http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js</id>
     <content type="html"><![CDATA[<p>While playing around with Backbone.js, I couldn&rsquo;t find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine&rsquo;s</a> implementation is fairly straightforward.</p>
 
-<p>I did find a relevant<a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
+<p>I did find a relevant <a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
 
 <p>I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I&rsquo;ll walk through in this post.</p>
 
@@ -219,7 +219,7 @@ $("#new-projects").html(@newProjectView.render().el)
 
 <p><code>html javascripts/backbone/templates/shared/item.jst.ejs
 &lt;td&gt;&lt;a href="#" class="select"&gt;&lt;%= name %&gt;&lt;/td&gt;
-&lt;td&gt;&lt;a href="#" class="destroy"&gt;Destroy&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;[Destroy](#" class="destroy)&lt;/td&gt;
 </code></p>
 
 <p>``` html javascripts/backbone/templates/projects/index.jst.ejs</p>
