@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Programming | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/programming/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2013-07-07T15:23:27-07:00</updated>
+  <updated>2013-08-11T15:01:10-07:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -18,7 +18,7 @@
     <link href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/"/>
     <updated>2012-08-19T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha</id>
-    <content type="html"><![CDATA[<p>Despite no mention in the official <a href="http://docs.meteor.com/">Meteor docs</a>, adding unit tests is fairly easy. For some reason, they don&rsquo;t mention this but any files in the tests/ folder will be ignored by the Meteor server.</p>
+    <content type="html"><![CDATA[<p>Adding unit tests is straightforward in <a href="http://docs.meteor.com/#structuringyourapp">Meteor</a>. Any files in the tests/ folder will be ignored by the Meteor server.</p>
 
 <!--more-->
 
@@ -26,24 +26,15 @@
 <p>What you&rsquo;ll need:</p>
 
 <ul>
-    <li>[Meteor](https://github.com/meteor/meteor)</li>
-    <li>[Npm](https://github.com/isaacs/npm)</li>
-    <li>[Mocha](https://github.com/visionmedia/mocha)</li>
+<li><a href="https://github.com/meteor/meteor">Meteor</a></li>
+<li><a href="https://github.com/isaacs/npm">Npm</a></li>
+<li><a href="https://github.com/visionmedia/mocha">Mocha</a></li>
 </ul>
 
 
-<div>Optional:</div>
+<p>Optional: <a href="http://growl.info/">Growl</a> (for notifications from mocha watch)</p>
 
-
-<div>
-<ul>
-    <li>[Growl](http://growl.info/) (for notifications from mocha watch)</li>
-</ul>
-</div>
-
-
-<div>Getting everything running:</div>
-
+<p>Getting everything running:</p>
 
 <p><code>bash
 meteor create mocha
@@ -76,14 +67,10 @@ describe &ldquo;Array&rdquo;, &ndash;>
 
 <p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha">Source code here.</a></p>
 
-<p>Some notes:</p>
-
-<ul>
-    <li>The growl notification didn't work for me, but I assume that's because I'm using an old version.</li>
-    <li>When using Mocha watch, sometimes a failing test result would be outputted many times</li>
-    <li>[Jasmine](https://github.com/pivotal/jasmine) should also work fine</li>
-</ul>
-
+<p>Some notes:
+&ndash; The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
+&ndash; When using Mocha watch, sometimes a failing test result would be outputted many times
+&ndash; <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
 ]]></content>
   </entry>
   

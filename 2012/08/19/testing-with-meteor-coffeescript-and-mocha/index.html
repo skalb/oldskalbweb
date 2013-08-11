@@ -9,7 +9,7 @@
   <meta name="author" content="Sameer Kalburgi">
 
   
-  <meta name="description" content="Testing With Meteor, CoffeeScript and Mocha Aug 19th, 2012 Despite no mention in the official Meteor docs, adding unit tests is fairly easy. For &hellip;">
+  <meta name="description" content="Testing With Meteor, CoffeeScript and Mocha Aug 19th, 2012 Adding unit tests is straightforward in Meteor. Any files in the tests/ folder will be &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,7 @@
     <li><a href="http://plus.google.com/100596472903145614776" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
     
     
+    
 </ul>
 
   	    </div>
@@ -116,7 +117,7 @@
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>Despite no mention in the official <a href="http://docs.meteor.com/">Meteor docs</a>, adding unit tests is fairly easy. For some reason, they don&rsquo;t mention this but any files in the tests/ folder will be ignored by the Meteor server.</p>
+      <p>Adding unit tests is straightforward in <a href="http://docs.meteor.com/#structuringyourapp">Meteor</a>. Any files in the tests/ folder will be ignored by the Meteor server.</p>
 
 <!--more-->
 
@@ -124,26 +125,15 @@
 <p>What you&rsquo;ll need:</p>
 
 <ul>
-    <li>[Meteor](https://github.com/meteor/meteor)</li>
-    <li>[Npm](https://github.com/isaacs/npm)</li>
-    <li>[Mocha](https://github.com/visionmedia/mocha)</li>
+<li><a href="https://github.com/meteor/meteor">Meteor</a></li>
+<li><a href="https://github.com/isaacs/npm">Npm</a></li>
+<li><a href="https://github.com/visionmedia/mocha">Mocha</a></li>
 </ul>
 
 
-<div>Optional:</div>
+<p>Optional: <a href="http://growl.info/">Growl</a> (for notifications from mocha watch)</p>
 
-
-<div>
-<ul>
-    <li>[Growl](http://growl.info/) (for notifications from mocha watch)</li>
-</ul>
-</div>
-
-
-<div>Getting everything running:</div>
-
-
-
+<p>Getting everything running:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -180,14 +170,10 @@
 
 <p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha">Source code here.</a></p>
 
-<p>Some notes:</p>
-
-<ul>
-    <li>The growl notification didn&#8217;t work for me, but I assume that&#8217;s because I&#8217;m using an old version.</li>
-    <li>When using Mocha watch, sometimes a failing test result would be outputted many times</li>
-    <li>[Jasmine](https://github.com/pivotal/jasmine) should also work fine</li>
-</ul>
-
+<p>Some notes:
+&ndash; The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
+&ndash; When using Mocha watch, sometimes a failing test result would be outputted many times
+&ndash; <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
 
     </div>
   </div>
