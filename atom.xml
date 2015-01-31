@@ -1,0 +1,2308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[skalb.com]]></title>
+  <link href="http://www.skalb.com/atom.xml" rel="self"/>
+  <link href="http://www.skalb.com/"/>
+  <updated>2015-01-31T14:06:31-08:00</updated>
+  <id>http://www.skalb.com/</id>
+  <author>
+    <name><![CDATA[Sameer Kalburgi]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Simpleshop: Pure JavaScript Photo Editing]]></title>
+    <link href="http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing/"/>
+    <updated>2013-07-04T17:00:00-07:00</updated>
+    <id>http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing</id>
+    <content type="html"><![CDATA[<p>Even as a developer, it amazes me what you can build with no (at least required) knowledge of anything beyond javascript and Heroku.</p>
+
+<p><a href="http://simpleshop.heroku.com/">Simpleshop</a></p>
+
+<p><a href="https://github.com/skalb/simpleshop">Source</a></p>
+
+<!--more-->
+
+
+<p>Built using:</p>
+
+<ul>
+<li>nodeJS/Heroku</li>
+<li>Filepicker.io</li>
+<li>Aviary</li>
+</ul>
+
+
+<p>Then again, they do say <a href="http://www.codinghorror.com/blog/2007/07/the-principle-of-least-power.html">javascript</a> is <a href="http://online.wsj.com/article/SB10001424053111903480904576512250915629460.html">eating</a> the world, in so many words.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Server Side Airport Autocomplete Using NodeJS]]></title>
+    <link href="http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/"/>
+    <updated>2013-04-23T15:47:00-07:00</updated>
+    <id>http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs</id>
+    <content type="html"><![CDATA[<p>This post shows how to enable autocomplete on a web form that consumes a JSON api running on nodeJS.</p>
+
+<p><a href="http://airport-autocomplete.herokuapp.com/">Example</a></p>
+
+<p><a href="https://github.com/skalb/airport-autocomplete">Source</a></p>
+
+<!--more-->
+
+
+<p>To enable the autocomplete, we need two main components to the app:</p>
+
+<ul>
+<li><a href="http://jqueryui.com/autocomplete/">jQueryUI autocomplete</a></li>
+<li><a href="https://github.com/marccampbell/node-autocomplete">node-autocomplete</a></li>
+</ul>
+
+
+<p>The easiest way to add jQueryUI is to include a reference in our layout:</p>
+
+<figure class='code'><figcaption><span>layout.jade</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>!!!
+</span><span class='line'>html
+</span><span class='line'>  head
+</span><span class='line'>    title= title
+</span><span class='line'>    link(rel=&#39;stylesheet&#39;, href=&#39;http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css&#39;)
+</span><span class='line'>    link(rel=&#39;stylesheet&#39;, href=&#39;/stylesheets/style.css&#39;)
+</span><span class='line'>    script(src=&#39;http://code.jquery.com/jquery-1.8.3.min.js&#39;)
+</span><span class='line'>    script(src=&#39;http://code.jquery.com/ui/1.9.2/jquery-ui.min.js&#39;)
+</span><span class='line'>    script(src=&#39;http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js &#39;)
+</span><span class='line'>    script(src=&#39;/javascripts/index.js&#39;)
+</span><span class='line'>  body!= body
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>node-autocomplete and other necessary libraries can be added to package.json. Note: I&rsquo;m required to use older verions of some packages because Heroku does not support the latest version of Express.</p>
+
+<figure class='code'><figcaption><span>package.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;airport-autocomplete&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;express&quot;</span><span class="p">:</span> <span class="s2">&quot;2.5.x&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;jade&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;autocomplete&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;underscore&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;jquery&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>  <span class="nt">&quot;engines&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="s2">&quot;0.8.x&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;npm&quot;</span><span class="p">:</span> <span class="s2">&quot;1.1.x&quot;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The dataset for this example is going to be airports and their codes. I wanted to be able to intelligently handle for the case where the user enters either the airport code or the name since most travel sites operate this way.</p>
+
+<p><a href="http://www.skalb.com/assets/airports.dat">Airports.dat</a> - format name|code</p>
+
+<p>We need to keep lookups in memory to present the user with the properly capitalized airport name. During the actual autocomplete search, we will only use lowercased entries and input. Therefore, we need to keep track of three things:</p>
+
+<ul>
+<li>The actual autocomplete object where we load both codes and names into</li>
+<li>One lookup to retrieve the full name from the code</li>
+<li>Another lookup to retrieve the full name from a lowercased airport name</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>routes/index.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;data/airport-codes.dat&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">airports</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">parts</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">),</span>
+</span><span class='line'>        <span class="nx">airportName</span> <span class="o">=</span> <span class="nx">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="nx">airportNameLower</span> <span class="o">=</span> <span class="nx">airportName</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">(),</span>
+</span><span class='line'>        <span class="nx">airportCode</span> <span class="o">=</span> <span class="nx">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>        <span class="nx">airportCodeLower</span> <span class="o">=</span> <span class="nx">airportCode</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">(),</span>
+</span><span class='line'>        <span class="nx">fullName</span> <span class="o">=</span> <span class="nx">airportCode</span> <span class="o">+</span> <span class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="nx">airportName</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">airportNames</span><span class="p">[</span><span class="nx">airportNameLower</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fullName</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">airportCodes</span><span class="p">[</span><span class="nx">airportCodeLower</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fullName</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">airports</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">airportNameLower</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">airports</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">airportCodeLower</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">namesAC</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">onReady</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">onReady</span><span class="p">(</span><span class="nx">airports</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the nodeJS route that returns the airport data, we&rsquo;ll use the input to test if it matched either an airport name or an aiport code and return those results.</p>
+
+<figure class='code'><figcaption><span>routes/index.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">exports</span><span class="p">.</span><span class="nx">airports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">airport</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">[</span><span class="s2">&quot;term&quot;</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">(),</span>
+</span><span class='line'>      <span class="nx">results</span> <span class="o">=</span> <span class="nx">namesAC</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">airport</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">airportResults</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">results</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">airportNames</span><span class="p">[</span><span class="nx">a</span><span class="p">]</span> <span class="o">||</span> <span class="nx">airportCodes</span><span class="p">[</span><span class="nx">a</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">airportResults</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&rsquo;s what a <a href="http://airport-autocomplete.herokuapp.com/airports?term=RIO">sample request</a> for RIO would return:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;RBR - Rio Branco, AC, Brazil&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RCU - Rio Cuarto, CD, Argentina&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;GIG - Rio De Janeiro, RJ, Brazil&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RGL - Rio Gallegos, Argentina - Internacional&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RIG - Rio Grande, RS, Brazil&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RGA - Rio Grande, TF, Argentina&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;ROY - Rio Mayo, CB, Argentina&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RVD - Rio Verde, GO, Brazil&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RCH - Riohacha, Colombia&quot;</span>
+</span><span class='line'><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The last part is to wire up the actual jQuery UI autocomplete. I&rsquo;ve also added a handler on the open to highlight the term from the search.</p>
+
+<figure class='code'><figcaption><span>public/javascripts/index.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">termTemplate</span> <span class="o">=</span> <span class="s2">&quot;&lt;span class=&#39;ui-autocomplete-term&#39;&gt;$1&lt;/span&gt;&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#origin&quot;</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">({</span>
+</span><span class='line'>      <span class="nx">source</span><span class="o">:</span> <span class="s2">&quot;/airports&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">minLength</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">ui</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">acData</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;autocomplete&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">acData</span>
+</span><span class='line'>                <span class="p">.</span><span class="nx">menu</span>
+</span><span class='line'>                <span class="p">.</span><span class="nx">element</span>
+</span><span class='line'>                <span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'>                    <span class="kd">var</span> <span class="nx">regex</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="nx">acData</span><span class="p">.</span><span class="nx">term</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="s1">&#39;gi&#39;</span> <span class="p">);</span>
+</span><span class='line'>                    <span class="nx">me</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span> <span class="nx">me</span><span class="p">.</span><span class="nx">text</span><span class="p">().</span><span class="nx">replace</span><span class="p">(</span><span class="nx">regex</span><span class="p">,</span> <span class="nx">termTemplate</span><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'>                <span class="p">});</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">})();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Multi-color Heat Map in JavaScript]]></title>
+    <link href="http://www.skalb.com/2013/01/20/multi-color-heat-map-in-javascript/"/>
+    <updated>2013-01-20T00:00:00-08:00</updated>
+    <id>http://www.skalb.com/2013/01/20/multi-color-heat-map-in-javascript</id>
+    <content type="html"><![CDATA[<p>While working on my <a href="http://flightgrid.herokuapp.com/">flight grid site</a>, I was looking for a way to add a multi-color heat map.</p>
+
+<p>I found the following <a href="http://www.designchemical.com/blog/index.php/jquery/jquery-tutorial-create-a-flexible-data-heat-map/">example</a>, but for just one color.</p>
+
+<p>I modified it to work for two colors as shown below (warning messy code!):</p>
+
+<!--more-->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/JavaScript&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="c1">// Function to get the Max value in Array</span>
+</span><span class='line'>    <span class="nb">Array</span><span class="p">.</span><span class="nx">max</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">array</span> <span class="p">){</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span> <span class="nb">Math</span><span class="p">,</span> <span class="nx">array</span> <span class="p">);</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// get all values</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">counts</span><span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#heat-map-3 tbody td&#39;</span><span class="p">).</span><span class="nx">not</span><span class="p">(</span><span class="s1">&#39;.stats-title&#39;</span><span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
+</span><span class='line'>    <span class="p">}).</span><span class="nx">get</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// return max value</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">max</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">counts</span><span class="p">),</span>
+</span><span class='line'>      <span class="nx">middle</span> <span class="o">=</span> <span class="nx">max</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// add classes to cells based on nearest 10 value</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#heat-map-3 tbody td&#39;</span><span class="p">).</span><span class="nx">not</span><span class="p">(</span><span class="s1">&#39;.stats-title&#39;</span><span class="p">).</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">val</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">());</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">val</span> <span class="o">&lt;</span> <span class="nx">middle</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">pos</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">((</span><span class="nx">val</span><span class="o">/</span><span class="nx">middle</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="p">)).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>          <span class="nx">relative</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">pos</span> <span class="o">/</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="mi">225</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>          <span class="nx">clr</span> <span class="o">=</span> <span class="s1">&#39;rgb(&#39;</span><span class="o">+</span><span class="nx">relative</span><span class="o">+</span><span class="s1">&#39;,&#39;</span><span class="o">+</span><span class="mi">255</span><span class="o">+</span><span class="s1">&#39;,&#39;</span><span class="o">+</span><span class="nx">relative</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">;</span>
+</span><span class='line'>          <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span><span class="nx">backgroundColor</span><span class="o">:</span><span class="nx">clr</span><span class="p">});</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">pos</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(((</span><span class="nx">val</span><span class="o">-</span><span class="nx">middle</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="nx">max</span><span class="o">-</span><span class="nx">middle</span><span class="p">))</span><span class="o">*</span><span class="mi">100</span><span class="p">)).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">relative</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">pos</span> <span class="o">/</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="mi">225</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>      <span class="nx">clr</span> <span class="o">=</span> <span class="s1">&#39;rgb(&#39;</span><span class="o">+</span><span class="mi">255</span><span class="o">+</span><span class="s1">&#39;,&#39;</span><span class="o">+</span><span class="nx">relative</span><span class="o">+</span><span class="s1">&#39;,&#39;</span><span class="o">+</span><span class="nx">relative</span><span class="o">+</span><span class="s1">&#39;)&#39;</span><span class="p">;</span>
+</span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span><span class="nx">backgroundColor</span><span class="o">:</span><span class="nx">clr</span><span class="p">});</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&rsquo;s a working <a href="http://www.skalb.com/assets/jquery-data-heat-map.html">example</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Sinon Spys With Meteor Collections]]></title>
+    <link href="http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections/"/>
+    <updated>2012-08-25T00:00:00-07:00</updated>
+    <id>http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections</id>
+    <content type="html"><![CDATA[<p>Following my testing described <a href="http://www.skalb.com/2012/08/19/testing-backbone-routers-in-meteor-with-mocha/">here</a>, I wanted to verify that Meteor interacts with my Routers correctly.</p>
+
+<!--more-->
+
+
+<p>The Meteor.Collection object exposes methods for querying the MongoDB collection as described in the docs. I want to test if my index callback will retrieve all the items it should.</p>
+
+<p>Add the new module we need:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>npm install sinon
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&rsquo;s how to use the spy:</p>
+
+<figure class='code'><figcaption><span>lib/sample_router_factory.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">items =</span>
+</span><span class='line'>  <span class="nv">find: </span><span class="nx">sinon</span><span class="p">.</span><span class="nx">spy</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, let&rsquo;s write our test:</p>
+
+<figure class='code'><figcaption><span>tests/sample_router_factory_test.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">it</span> <span class="s">&quot;should retrieve all items&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nx">router</span><span class="p">.</span><span class="nx">navigate</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">items</span><span class="p">.</span><span class="nx">find</span><span class="p">.</span><span class="nx">called</span><span class="p">.</span><span class="nx">should</span><span class="p">.</span><span class="nx">equal</span> <span class="kc">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will fail, since we need to first modify our Router to accept a collection as an argument and then call find on it.</p>
+
+<figure class='code'><figcaption><span>lib/sample_router_factory.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">root = </span><span class="nx">exports</span> <span class="o">?</span> <span class="k">this</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">SampleRouterFactory</span>
+</span><span class='line'>  <span class="nv">constructor: </span><span class="nf">(@Backbone, @Items) -&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">getRouter: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nv">SampleRouter = </span><span class="nx">@Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span>
+</span><span class='line'>      <span class="nv">routes:</span>
+</span><span class='line'>        <span class="s">&quot;&quot;</span><span class="o">:</span> <span class="s">&quot;index&quot;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nv">index: </span><span class="nf">=&gt;</span>
+</span><span class='line'>        <span class="nv">items = </span><span class="nx">@Items</span><span class="p">.</span><span class="nx">find</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nx">SampleRouter</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">root.SampleRouterFactory = </span><span class="nx">SampleRouterFactory</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This <em>should</em> pass, but yet doesn&rsquo;t. Why? Thinking about the assumption our test is making when using the a Backbone router, it likely depends on Backbone initialization. We can try this in our test, also:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span>
+</span><span class='line'>  <span class="nv">silent: </span><span class="kc">true</span>
+</span><span class='line'>  <span class="nv">pushState: </span><span class="kc">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This doesn&rsquo;t work either because Backbone assumes we are in the browser when accessing <strong>window</strong>. I&rsquo;m pretty sure this is not the approach I want. We don&rsquo;t need to add a dependency on Backbone&rsquo;s internal behavior to test a method of my Router. My previous test verifies that the root path will call an index method, so now I only need to call that index method and validate that behavior. This has the added benefit of simplifying the test.</p>
+
+<p>Here&rsquo;s the final version of my tests:</p>
+
+<figure class='code'><figcaption><span>tests/sample_router_factory_test.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">util = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;util&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nv">should = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;should&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nv">Backbone = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;backbone&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nv">sinon = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;sinon&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nv">SampleRouterFactory = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;../client/lib/sample_router_factory&#39;</span><span class="p">).</span><span class="nx">SampleRouterFactory</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">describe</span> <span class="s">&quot;SampleRouter&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nv">items =</span>
+</span><span class='line'>    <span class="nv">find: </span><span class="nx">sinon</span><span class="p">.</span><span class="nx">spy</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">factory = </span><span class="k">new</span> <span class="nx">SampleRouterFactory</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">,</span> <span class="nx">items</span><span class="p">)</span>
+</span><span class='line'>  <span class="nv">router = </span><span class="nx">factory</span><span class="p">.</span><span class="nx">getRouter</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">it</span> <span class="s">&quot;should have an index route&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">router</span><span class="p">.</span><span class="nx">routes</span><span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">].</span><span class="nx">should</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s">&#39;index&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">it</span> <span class="s">&quot;should retrieve all items when navigating to index&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">router</span><span class="p">.</span><span class="nx">index</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">items</span><span class="p">.</span><span class="nx">find</span><span class="p">.</span><span class="nx">called</span><span class="p">.</span><span class="nx">should</span><span class="p">.</span><span class="nx">equal</span> <span class="kc">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A bit roundabout, but in the end what I was trying to accomplish. Source <a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">here</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Testing Backbone Routers in Meteor With Mocha]]></title>
+    <link href="http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/"/>
+    <updated>2012-08-20T00:00:00-07:00</updated>
+    <id>http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha</id>
+    <content type="html"><![CDATA[<p>One of the downsides of Meteor and perhaps strongest complaint is that it doesn&rsquo;t play nicely with existing NodeJS modules. You&rsquo;re forced to use the available SmartPackages (or build one). This is a problem since the Mocha environment runs without the browser and doesn&rsquo;t have access to the libraries included by the SmartPackage.</p>
+
+<!--more-->
+
+
+<p><em>Here&rsquo;s a previous <a href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
+
+<p>Creating the project:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>meteor create mocha-router
+</span><span class='line'>meteor add backbone
+</span><span class='line'>meteor add coffeescript
+</span><span class='line'><span class="nb">cd </span>mocha-router
+</span><span class='line'>mkdir client
+</span><span class='line'>mkdir server
+</span><span class='line'>mkdir tests
+</span><span class='line'><span class="nb">cd </span>tests
+</span><span class='line'>mkdir lib
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When I first installed the modules, I installed them in my project root, but this caused Meteor to try to load them in the both the client/server environment which crashed the Meteor server. Luckily, Meteor will ignore anything in the tests folder so we can install the necessary modules there.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>npm install should
+</span><span class='line'>npm install backbone
+</span><span class='line'>mocha *.coffee --compilers coffee:coffee-script
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My goal was to create a very basic Backbone router test. Normally, I&rsquo;d define the router like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">SampleRouter = </span><span class="nx">@Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span>
+</span><span class='line'>  <span class="nv">routes:</span>
+</span><span class='line'>    <span class="s">&quot;&quot;</span><span class="o">:</span> <span class="s">&quot;index&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">index: </span><span class="nf">-&gt;</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'><span class="k">new</span> <span class="nx">SampleRouter</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This won&rsquo;t work when running the Mocha tests because it assumes the Meteor framework is present to load Backbone. I solved this by creating a factory for the router and injecting the Backbone module.</p>
+
+<p>Note, I need to put this module in tests/lib so Meteor will make sure to load it first</p>
+
+<p>lib/sample_router_factory.coffee:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">root = </span><span class="nx">exports</span> <span class="o">?</span> <span class="k">this</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">SampleRouterFactory</span>
+</span><span class='line'>  <span class="nv">constructor: </span><span class="nf">(@Backbone) -&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">getRouter: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nv">SampleRouter = </span><span class="nx">@Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span>
+</span><span class='line'>      <span class="nv">routes:</span>
+</span><span class='line'>        <span class="s">&quot;&quot;</span><span class="o">:</span> <span class="s">&quot;index&quot;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nv">index: </span><span class="nf">-&gt;</span>
+</span><span class='line'>        <span class="nx">Session</span><span class="p">.</span><span class="nx">set</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nx">SampleRouter</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">root.SampleRouterFactory = </span><span class="nx">SampleRouterFactory</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Exports is a global object accessible in the nodeJS environment that Mocha runs in. See this <a href="http://visionmedia.github.com/masteringnode/book.html">ebook</a> for more details.</p>
+
+<p>This module will now create a class that will return a new instance of the SampleRouter.</p>
+
+<p>Now, let&rsquo;s look at the test case:</p>
+
+<p>tests/sample_router_factory_test.coffee</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">should = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;should&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nv">Backbone = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;backbone&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nv">SampleRouterFactory = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;../client/lib/sample_router_factory&#39;</span><span class="p">).</span><span class="nx">SampleRouterFactory</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">describe</span> <span class="s">&quot;SampleRouter&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nv">factory = </span><span class="k">new</span> <span class="nx">SampleRouterFactory</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">)</span>
+</span><span class='line'>  <span class="nv">router = </span><span class="nx">factory</span><span class="p">.</span><span class="nx">getRouter</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">it</span> <span class="s">&quot;should have an index router&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">router</span><span class="p">.</span><span class="nx">routes</span><span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">].</span><span class="nx">should</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s">&#39;index&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lastly, in the actual Meteor app I create the app a similar way:</p>
+
+<p>mocha-router.coffee</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Meteor</span><span class="p">.</span><span class="nx">startup</span> <span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nv">factory = </span><span class="k">new</span> <span class="nx">SampleRouterFactory</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">)</span>
+</span><span class='line'>  <span class="nv">router = </span><span class="nx">factory</span><span class="p">.</span><span class="nx">getRouter</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, there&rsquo;s no need to require either Backbone (loaded as a SmartPackage) or the actual SampleRouterFactory because Meteor treats all of your CoffeeScript files as a single file and consequently scope.</p>
+
+<p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">Source code here.</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Testing With Meteor, CoffeeScript and Mocha]]></title>
+    <link href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/"/>
+    <updated>2012-08-19T00:00:00-07:00</updated>
+    <id>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha</id>
+    <content type="html"><![CDATA[<p>Adding unit tests is straightforward in <a href="http://docs.meteor.com/#structuringyourapp">Meteor</a>. Any files in the tests/ folder will be ignored by the Meteor server.</p>
+
+<!--more-->
+
+
+<p>What you&rsquo;ll need:</p>
+
+<ul>
+<li><a href="https://github.com/meteor/meteor">Meteor</a></li>
+<li><a href="https://github.com/isaacs/npm">Npm</a></li>
+<li><a href="https://github.com/visionmedia/mocha">Mocha</a></li>
+</ul>
+
+
+<p>Optional: <a href="http://growl.info/">Growl</a> (for notifications from mocha watch)</p>
+
+<p>Getting everything running:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>meteor create mocha
+</span><span class='line'><span class="nb">cd </span>mocha
+</span><span class='line'>meteor add coffeescript
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Setting up Mocha to watch our coffee files and send Growl notifications:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>mocha tests/*.coffee -w -G --compilers coffee:coffee-script
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now to create a sample test:</p>
+
+<figure class='code'><figcaption><span>test.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">describe</span> <span class="s">&quot;Array&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nx">describe</span> <span class="s">&quot;#indexOf()&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">it</span> <span class="s">&quot;should return -1 when the value is not present&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>      <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="nx">indexOf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="nx">indexOf</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Mocha should notice the file change and run the tests showing you the passing test.</p>
+
+<p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha">Source code here.</a></p>
+
+<p>Some notes:
+- The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
+- When using Mocha watch, sometimes a failing test result would be outputted many times
+- <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Book Review: Technical Blogging]]></title>
+    <link href="http://www.skalb.com/2012/05/02/book-review-technical-blogging/"/>
+    <updated>2012-05-02T00:00:00-07:00</updated>
+    <id>http://www.skalb.com/2012/05/02/book-review-technical-blogging</id>
+    <content type="html"><![CDATA[<p><a href="http://www.amazon.com/gp/product/1934356883/ref=as_li_ss_il?ie=UTF8&amp;tag=skalbontechno-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=1934356883"><img class="alignleft" src="http://ws.assoc-amazon.com/widgets/q?_encoding=UTF8&amp;Format=_SL160_&amp;ASIN=1934356883&amp;MarketPlace=US&amp;ID=AsinImage&amp;WS=1&amp;tag=skalbontechno-20&amp;ServiceVersion=20070822" alt="" border="0" /></a><img style="border: none !important; margin: 0px !important;" src="http://www.assoc-amazon.com/e/ir?t=skalbontechno-20&amp;l=as2&amp;o=1&amp;a=1934356883" alt="" width="1" height="1" border="0" /><a href="http://www.amazon.com/gp/product/1934356883/ref=as_li_qf_sp_asin_tl?ie=UTF8&amp;tag=skalbontechno-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1934356883">Technical Blogging: Turn Your Expertise into a Remarkable Online Presence</a><img style="border: none !important; margin: 0px !important;" src="http://www.assoc-amazon.com/e/ir?t=skalbontechno-20&amp;l=as2&amp;o=1&amp;a=1934356883" alt="" width="1" height="1" border="0" /></p>
+
+<p>I think it&rsquo;s safe to say most developers would like to have a successful blog. After all, a blog is great way to develop a <a href="http://www.codinghorror.com/blog/2006/04/your-personal-brand.html">personal brand</a>. Personally, I&rsquo;ve attempted and failed many times over the years. If you&rsquo;re anything like me, you&rsquo;ve always felt a bit paralyzed by how much work maintaining a successful online presences is. Meaning I would have to worry about marketing, SEO, social media, readership, engagement, comments, and oh, of course, actually writing quality content. Luckily for us, this book puts together a series of simple, straight forward, and easy steps that will take you from nothing to a well-built blog (like this one, of course!).</p>
+
+<!--more-->
+
+
+<p>There&rsquo;s a lot of great content in here. I went in thinking (as I often do) that I already knew everything and it was just a matter of sitting down and actually writing posts. That&rsquo;s a big part of it, of course, but the author really helps you focus on exactly what you want to achieve. I especially enjoyed reading the chapters on promoting and marketing. I tend to automatically assume that all you need is to write great content and people will find it. The author certainly encourages writing the best content you can, but he explains ethical, honest, and realistic ways for you to promote your blog. In fact, he even points out sleazy things you shouldn&rsquo;t do.</p>
+
+<p>My biggest complaint is that for a book with a chapter titled <span style="text-decoration: underline;">Content Is King</span>, I would have expected a larger part devoted to actually writing content. Since the author runs a successful programming blog, I would have loved to see an analysis of which posts were popular and why they were popular. Or alternatively an analysis of current popular technical blogs and what they do well. I could see that the author felt people shouldn&rsquo;t clone other popular sites and instead &ldquo;develop your own voice&rdquo; as he puts it, but I think there could have been a better balance.</p>
+
+<p>Although this book does have &ldquo;technical&rdquo; in it, I definitely think it&rsquo;s broader than that. As I mentioned, it&rsquo;s more targeted to technical people but not necessarily writing technical content. Most of the recommendations are really just about good blogging.</p>
+
+<p>I would definitely recommend this <a href="http://www.amazon.com/gp/product/1934356883/ref=as_li_qf_sp_asin_tl?ie=UTF8&amp;tag=skalbontechno-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1934356883">book</a><img style="border: none !important; margin: 0px !important;" src="http://www.assoc-amazon.com/e/ir?t=skalbontechno-20&amp;l=as2&amp;o=1&amp;a=1934356883" alt="" width="1" height="1" border="0" /> to anyone interested in blogging. Above all, I think it will make you excited to start a blog.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Handling Permalinks in Backbone.js With Routers]]></title>
+    <link href="http://www.skalb.com/2012/04/30/handling-permalinks-in-backbone-js-with-routers/"/>
+    <updated>2012-04-30T00:00:00-07:00</updated>
+    <id>http://www.skalb.com/2012/04/30/handling-permalinks-in-backbone-js-with-routers</id>
+    <content type="html"><![CDATA[<p>This post is part of a series:</p>
+
+<ul>
+<li><a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/">First post</a></li></li>
+<li><a href="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/">Second post</a></li></li>
+</ul>
+
+
+<p>One of the missing features in my prototype was handling of permalinks. To make things easy, I originally removed all the routes and added click handlers instead. In retrospect that was a mistake. Instead of having the app logic tangled up with click handlers, it would have been much more straightforward to define routes and use links.</p>
+
+<p>Here’s the <a href="http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone">source</a></p>
+
+<!--more-->
+
+
+<p>In this post, I’m going to explain the  Backbone router step by step. First, I need to actually define what routes I want:</p>
+
+<p>I need:</p>
+
+<ul>
+<li>Home page -> Load list of projects</li></li>
+<li>Selected project -> Load list of projects and features</li></li>
+<li>Selected feature -> Load list of projects, features, and bugs</li></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">routes:</span>
+</span><span class='line'>  <span class="s">&quot;.*&quot;</span> <span class="err"> </span><span class="o">:</span> <span class="s">&quot;showProjects&quot;</span>
+</span><span class='line'>  <span class="s">&quot;projects/:project_id&quot;</span> <span class="o">:</span> <span class="s">&quot;showProjects&quot;</span>
+</span><span class='line'>  <span class="s">&quot;projects/:project_id/features/:feature_id/*&quot;</span> <span class="o">:</span> <span class="s">&quot;showProjects&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice that all my routes point to the same function. The only difference is that the project_id and feature_id variables will be undefined. JavaScript won’t complain if your function call doesn’t match the function signature. It will just set them undefined.</p>
+
+<p>Now let’s look at showProjects.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">showProjects: </span><span class="nf">(project_id, feature_id, bug_id) -&gt;</span>
+</span><span class='line'> <span class="err"> </span><span class="nx">@renderViews</span><span class="p">(</span><span class="nx">@projects</span><span class="p">,</span> <span class="nx">project_id</span><span class="p">,</span> <span class="s">&quot;Projects&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="k">if</span> <span class="nx">project_id</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">@loadChildren</span><span class="p">(</span><span class="nx">@projects</span><span class="p">,</span> <span class="nx">project_id</span><span class="p">,</span> <span class="p">[</span><span class="nx">feature_id</span><span class="p">,</span> <span class="nx">bug_id</span><span class="p">],</span> <span class="s">&quot;loadFeatures&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My original goal was to create a helper method that would support an abitrary length chain of loading children. That is, loadChildren will call loadFeatures which will then call loadChildren again etc. The final implementation isn’t quite that generic since it requires me to construct the individual item_ids at the start.</p>
+
+<p>As I was finishing this prototype , I managed to remove all duplicate code by creating some helper methods.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">clearType: </span><span class="nf">(model) -&gt;</span>
+</span><span class='line'> <span class="err"> </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'> <span class="err"> </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">renderView: </span><span class="nf">(selector, view) -&gt;</span>
+</span><span class='line'> <span class="err"> </span><span class="nx">$</span><span class="p">(</span><span class="nx">selector</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">renderViews: </span><span class="nf">(items, item_id, type) -&gt;</span>
+</span><span class='line'> <span class="err"> </span><span class="nv">indexView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">items: </span><span class="nx">items</span><span class="p">,</span> <span class="nv">id: </span><span class="nx">item_id</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span><span class="p">)</span>
+</span><span class='line'> <span class="err"> </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;#list-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">indexView</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">newView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">items</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span><span class="p">)</span>
+</span><span class='line'> <span class="err"> </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;#new-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">newView</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And now let’s look at loadChildren:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">loadChildren: </span><span class="nf">(items, item_id, child_ids, callback) -&gt;</span>
+</span><span class='line'> <span class="err"> </span><span class="nv">item = </span><span class="nx">items</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">item_id</span><span class="p">)</span>
+</span><span class='line'> <span class="err"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">loadChildren</span><span class="p">()</span>
+</span><span class='line'> <span class="err"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span>
+</span><span class='line'> <span class="err">   </span><span class="nv">success: </span><span class="nf">=&gt;</span>
+</span><span class='line'> <span class="err">     </span><span class="nx">@</span><span class="p">[</span><span class="nx">callback</span><span class="p">](</span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="nx">child_ids</span><span class="p">.</span><span class="nx">shift</span><span class="p">(),</span> <span class="nx">child_ids</span><span class="p">)</span>
+</span><span class='line'> <span class="err"> </span><span class="p">)</span>
+</span><span class='line'> <span class="err"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Okay, why am I indexing into the object with a string instead of just passing the function in directly. Well, because the fat arrow wasn’t working as expected. Either I was doing something wrong or there&rsquo;s a bug in the coffee-rails interpreter because js2coffee gave me a different result.</p>
+
+<p>The full router:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Routers</span><span class="p">.</span><span class="nx">ProjectsRouter</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span>
+</span><span class='line'> <span class="err"> </span><span class="nv">initialize: </span><span class="nf">(options) -&gt;</span>
+</span><span class='line'> <span class="err">   </span><span class="vi">@projects = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">ProjectsCollection</span><span class="p">()</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">@projects</span><span class="p">.</span><span class="nx">reset</span> <span class="nx">options</span><span class="p">.</span><span class="nx">projects</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">routes:</span>
+</span><span class='line'> <span class="err">   </span><span class="s">&quot;.*&quot;</span> <span class="err"> </span><span class="o">:</span> <span class="s">&quot;showProjects&quot;</span>
+</span><span class='line'> <span class="err">   </span><span class="s">&quot;projects/:project_id&quot;</span> <span class="o">:</span> <span class="s">&quot;showProjects&quot;</span>
+</span><span class='line'> <span class="err">   </span><span class="s">&quot;projects/:project_id/features/:feature_id/*&quot;</span> <span class="o">:</span> <span class="s">&quot;showProjects&quot;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">clearType: </span><span class="nf">(model) -&gt;</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">loadChildren: </span><span class="nf">(items, item_id, child_ids, callback) -&gt;</span>
+</span><span class='line'> <span class="err">   </span><span class="nv">item = </span><span class="nx">items</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">item_id</span><span class="p">)</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">item</span><span class="p">.</span><span class="nx">loadChildren</span><span class="p">()</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span>
+</span><span class='line'> <span class="err">     </span><span class="nv">success: </span><span class="nf">=&gt;</span>
+</span><span class='line'> <span class="err">       </span><span class="nx">@</span><span class="p">[</span><span class="nx">callback</span><span class="p">](</span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="nx">child_ids</span><span class="p">.</span><span class="nx">shift</span><span class="p">(),</span> <span class="nx">child_ids</span><span class="p">)</span>
+</span><span class='line'> <span class="err">   </span><span class="p">)</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">renderView: </span><span class="nf">(selector, view) -&gt;</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">$</span><span class="p">(</span><span class="nx">selector</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">renderViews: </span><span class="nf">(items, item_id, type) -&gt;</span>
+</span><span class='line'> <span class="err">   </span><span class="nv">indexView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">items: </span><span class="nx">items</span><span class="p">,</span> <span class="nv">id: </span><span class="nx">item_id</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span><span class="p">)</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;#list-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">indexView</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err">   </span><span class="nv">newView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">items</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span><span class="p">)</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;#new-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">newView</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">showProjects: </span><span class="nf">(project_id, feature_id, bug_id) -&gt;</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">@renderViews</span><span class="p">(</span><span class="nx">@projects</span><span class="p">,</span> <span class="nx">project_id</span><span class="p">,</span> <span class="s">&quot;Projects&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err">   </span><span class="k">if</span> <span class="nx">project_id</span>
+</span><span class='line'> <span class="err">     </span><span class="nx">@loadChildren</span><span class="p">(</span><span class="nx">@projects</span><span class="p">,</span> <span class="nx">project_id</span><span class="p">,</span> <span class="p">[</span><span class="nx">feature_id</span><span class="p">,</span> <span class="nx">bug_id</span><span class="p">],</span> <span class="s">&quot;loadFeatures&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">loadFeatures: </span><span class="nf">(features, feature_id, child_ids) -&gt;</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">@renderViews</span><span class="p">(</span><span class="nx">features</span><span class="p">,</span> <span class="nx">feature_id</span><span class="p">,</span> <span class="s">&quot;Features&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err">   </span><span class="k">if</span> <span class="nx">feature_id</span>
+</span><span class='line'> <span class="err">     </span><span class="nx">@loadChildren</span><span class="p">(</span><span class="nx">features</span><span class="p">,</span> <span class="nx">feature_id</span><span class="p">,</span> <span class="nx">child_ids</span><span class="p">,</span> <span class="s">&quot;loadBugs&quot;</span><span class="p">)</span>
+</span><span class='line'> <span class="err">   </span><span class="k">else</span>
+</span><span class='line'> <span class="err">     </span><span class="nx">@clearType</span><span class="p">(</span><span class="s">&quot;bugs&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">loadBugs: </span><span class="nf">(bugs, bug_id, child_ids) -&gt;</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">@renderViews</span><span class="p">(</span><span class="nx">bugs</span><span class="p">,</span> <span class="nx">bug_id</span><span class="p">,</span> <span class="s">&quot;Bugs&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I also needed to tweak my item view to include the correct url for the select link.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">ItemView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'> <span class="err"> </span><span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/item&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">events:</span>
+</span><span class='line'> <span class="err">   </span><span class="s">&quot;click .destroy&quot;</span> <span class="o">:</span> <span class="s">&quot;destroy&quot;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">tagName: </span><span class="s">&quot;tr&quot;</span>
+</span><span class='line'> <span class="err"> </span><span class="nv">className: </span><span class="s">&quot;item&quot;</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">destroy: </span><span class="nf">() -&gt;</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">@model</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+</span><span class='line'> <span class="err">   </span><span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err">   </span><span class="k">return</span> <span class="kc">false</span>
+</span><span class='line'>
+</span><span class='line'> <span class="err"> </span><span class="nv">render: </span><span class="nf">-&gt;</span>
+</span><span class='line'> <span class="err">   </span><span class="nv">name = </span><span class="nx">@model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+</span><span class='line'> <span class="err">   </span><span class="nv">id = </span><span class="nx">@model</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
+</span><span class='line'> <span class="err">   </span><span class="nv">url = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">@model</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">url</span><span class="p">()</span><span class="si">}</span><span class="s">/</span><span class="si">#{</span><span class="nx">id</span><span class="si">}</span><span class="s">&quot;</span>
+</span><span class='line'> <span class="err">   </span><span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nv">name: </span><span class="nx">name</span><span class="p">,</span> <span class="nv">id: </span><span class="nx">id</span><span class="p">,</span> <span class="nv">url: </span><span class="nx">url</span><span class="p">))</span>
+</span><span class='line'> <span class="err">   </span><span class="k">if</span> <span class="p">(</span><span class="nx">@options</span><span class="p">.</span><span class="nx">selected</span><span class="p">)</span>
+</span><span class='line'> <span class="err">     </span><span class="nb">window</span><span class="p">.</span><span class="nx">toggleSelected</span><span class="p">(</span><span class="nx">@el</span><span class="p">)</span>
+</span><span class='line'> <span class="err">   </span><span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, here’s the <a href="http://young-flower-9677.herokuapp.com/">demo</a> and <a href="https://github.com/skalb/trackbone">source</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Extending and Refactoring Views in Backbone.js]]></title>
+    <link href="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/"/>
+    <updated>2012-04-26T00:00:00-07:00</updated>
+    <id>http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone</id>
+    <content type="html"><![CDATA[<p>In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/">previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn&rsquo;t share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.</p>
+
+<!--more-->
+
+
+<p>For example, here&rsquo;s Project vs Feature Index Templates:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing projects&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;table id="projects-table">
+</span><span class='line'>  &lt;tr>
+</span><span class='line'>    &lt;th>Name&lt;/th>
+</span><span class='line'>    &lt;th>&lt;/th>
+</span><span class='line'>  &lt;/tr>
+</span><span class='line'>&lt;/table></span></code></pre></td></tr></table></div></figure>
+
+
+<p>vs.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing features&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;table id="features-table">
+</span><span class='line'>  &lt;tr>
+</span><span class='line'>    &lt;th>Name&lt;/th>
+</span><span class='line'>    &lt;th>&lt;/th>
+</span><span class='line'>  &lt;/tr>
+</span><span class='line'>&lt;/table></span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is easily refactored to:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing &lt;%= type %>&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;table id="items-table">
+</span><span class='line'>  &lt;tr>
+</span><span class='line'>    &lt;th>Name&lt;/th>
+</span><span class='line'>    &lt;th>&lt;/th>
+</span><span class='line'>  &lt;/tr>
+</span><span class='line'>&lt;/table></span></code></pre></td></tr></table></div></figure>
+
+
+<p>Similarly, the New View changed from:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>New project&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;form id="new-project" name="project">
+</span><span class='line'>  &lt;div class="field">
+</span><span class='line'>    &lt;label for="name"> name:&lt;/label>
+</span><span class='line'>    &lt;input type="text" name="name" id="name" value="&lt;%= name %>" >
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>  &lt;div class="actions">
+</span><span class='line'>    &lt;input type="submit" value="Create Project" />
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>&lt;/form></span></code></pre></td></tr></table></div></figure>
+
+
+<p>to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>New &lt;%= type %>&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;form id="new-item">
+</span><span class='line'>  &lt;div class="field">
+</span><span class='line'>    &lt;label for="name"> name:&lt;/label>
+</span><span class='line'>    &lt;input type="text" name="name" id="name" value="&lt;%= name %>" >
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>  &lt;div class="actions">
+</span><span class='line'>    &lt;input type="submit" value="Create &lt;%= type %>" />
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>&lt;/form></span></code></pre></td></tr></table></div></figure>
+
+
+<p>Great, that was easy and now I just reduced my total Templates. To share functionality between the Views I needed to create a base View class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">IndexView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/index&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;reset&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;sync&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">addAll: </span><span class="nf">() =&gt;</span>
+</span><span class='line'>    <span class="c1"># This shouldn&#39;t be needed, but for some reason</span>
+</span><span class='line'>    <span class="c1"># lists are rendered twice</span>
+</span><span class='line'>    <span class="nx">@$</span><span class="p">(</span><span class="s">&quot;tbody&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">@addOne</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">addOne: </span><span class="nf">(item) =&gt;</span>
+</span><span class='line'>    <span class="nv">item.collection = </span><span class="nx">@options</span><span class="p">.</span><span class="nx">items</span>
+</span><span class='line'>    <span class="nx">@$</span><span class="p">(</span><span class="s">&quot;tbody&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">@getView</span><span class="p">({</span><span class="nv">model: </span><span class="nx">item</span><span class="p">}).</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">=&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nv">type: </span><span class="nx">@options</span><span class="p">.</span><span class="nx">type</span><span class="p">))</span>
+</span><span class='line'>    <span class="nx">@addAll</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>First thing to note is that this View has an initialize method. But that method will never be called automatically because we&rsquo;re going to extend this View into a new class and create an instance of the subclass instead. Also note that we&rsquo;re calling a function getView() that isn&rsquo;t defined in this class.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1">#= require ../index_view</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">IndexView</span> <span class="k">extends</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">IndexView</span>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="k">super</span>
+</span><span class='line'>    <span class="vi">@options.type = </span><span class="s">&quot;Projects&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">getView: </span><span class="nf">(options) =&gt;</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">ProjectView</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can call the into the parent class by using super in this view&rsquo;s initialize. This is just a <a href="http://coffeescript.org/#classes">CoffeeScript shortcut</a> to apply the same arguments to the parent&rsquo;s constructor. I&rsquo;ve also explicitly required the parent View class since Rails does not guarantee which order JavaScript files will be loaded in the browser. The getView function here creates the correct ItemView based off the Project model.</p>
+
+<p>The New item View shown below is generic enough that it did not need to be extended for each model.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/new&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">events:</span>
+</span><span class='line'>    <span class="s">&quot;submit #new-item&quot;</span><span class="o">:</span> <span class="s">&quot;save&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">save: </span><span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">name = </span><span class="nx">@</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-item #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nx">name</span>
+</span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-item #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">@collection</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nv">name: </span><span class="nx">name</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nv">type: </span><span class="nx">@options</span><span class="p">.</span><span class="nx">type</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The Item View is a bit trickier because it contained the select handling for when an item was clicked. To be able to reuse the handling, I had to make the load methods consistently named loadChildren as shown below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Project</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span>
+</span><span class='line'>  <span class="nv">paramRoot: </span><span class="s">&#39;project&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">defaults:</span>
+</span><span class='line'>    <span class="nv">name: </span><span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">loadChildren: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="vi">@children = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">FeaturesCollection</span><span class="p">([],</span> <span class="p">{</span><span class="nv">project_url: </span><span class="nx">@url</span><span class="p">()});</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">ProjectsCollection</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span>
+</span><span class='line'>  <span class="nv">model: </span><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Project</span>
+</span><span class='line'>  <span class="nv">url: </span><span class="s">&#39;/projects&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One thing to point out in the Item View base class is that I believe I could have used the <a href="http://coffeescript.org/#fat_arrow">fat arrow</a> to retain the correct context.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">ItemView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/item&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">events:</span>
+</span><span class='line'>    <span class="s">&quot;click .select&quot;</span> <span class="o">:</span> <span class="s">&quot;select&quot;</span>
+</span><span class='line'>    <span class="s">&quot;click .destroy&quot;</span> <span class="o">:</span> <span class="s">&quot;destroy&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">tagName: </span><span class="s">&quot;tr&quot;</span>
+</span><span class='line'>  <span class="nv">className: </span><span class="s">&quot;item&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">select: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nx">@model</span><span class="p">.</span><span class="nx">loadChildren</span>
+</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">toggleSelected</span><span class="p">(</span><span class="nx">@el</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">@model</span><span class="p">.</span><span class="nx">loadChildren</span><span class="p">()</span>
+</span><span class='line'>      <span class="nx">do</span> <span class="nf">(@model, @renderChildren) -&gt;</span>
+</span><span class='line'>        <span class="nx">@model</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span>
+</span><span class='line'>          <span class="nv">success: </span><span class="nx">@renderChildren</span><span class="p">(</span><span class="nx">@model</span><span class="p">.</span><span class="nx">children</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>        <span class="nx">@model</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">destroy: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nx">@model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span> <span class="p">))</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now the actual Project view only had to define how to render it&rsquo;s children.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1">#= require ../item_view</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">ProjectView</span> <span class="k">extends</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">ItemView</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/item&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">renderChildren: </span><span class="nf">(children) -&gt;</span>
+</span><span class='line'>    <span class="nv">featuresView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Features</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">items: </span><span class="nx">children</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">featuresView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># We should probably only render this once instead of each load</span>
+</span><span class='line'>    <span class="nv">newFeaturesView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">children</span><span class="p">,</span> <span class="nv">type: </span><span class="s">&quot;Features&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">newFeaturesView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, here&rsquo;s the <a href="http://young-flower-9677.herokuapp.com/%22>demo&lt;/a>%20and%20&lt;a%20href=%22https://github.com/skalb/trackbone/tree/version2&#8221;>source</a>.</p>
+
+<p>I think this is a big improvement over the first version, though it&rsquo;s not quite as good as it could be. Having the loadChildren logic in the views doesn&rsquo;t really make sense, but I&rsquo;m leaving those changes for when I implement permalinks.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to (Easily) Handle Model Relationships in Rails and Backbone.js]]></title>
+    <link href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/"/>
+    <updated>2012-04-23T00:00:00-07:00</updated>
+    <id>http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js</id>
+    <content type="html"><![CDATA[<p>While playing around with Backbone.js, I couldn&rsquo;t find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine&rsquo;s</a> implementation is fairly straightforward.</p>
+
+<p>I did find a relevant <a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
+
+<p>I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I&rsquo;ll walk through in this post.</p>
+
+<!--more-->
+
+
+<p>Briefly, this is a single page three panel app with drill-downs:</p>
+
+<ul>
+    <li>Many projects</li>
+    <li>Project has many Features</li>
+    <li>Featurehas many Bugs</li>
+</ul>
+
+
+<p><a href="http://young-flower-9677.herokuapp.com/">Demo on Heroku</a>
+<a href="https://github.com/skalb/trackbone/tree/version1">Source</a></p>
+
+<p><strong>Rails backend:</strong></p>
+
+<p>Rails controllers provide the REST API for our Backbone app. I haven&rsquo;t inlined them here since they only have a few modifications post-scaffolding, but you can view them <a href="https://github.com/skalb/trackbone/tree/version1/app/controllers">here</a></p>
+
+<p>Modifications:</p>
+
+<ul>
+<li>Projects#index is moved to HomeController</li>
+<li>Location is not returned in response after #create</li>
+<li>Model is returned after #update</li>
+</ul>
+
+
+
+
+<figure class='code'><figcaption><span>routes.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">root</span> <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="s2">&quot;home#index&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Trackbone</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">resources</span> <span class="ss">:projects</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">resources</span> <span class="ss">:features</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">resources</span> <span class="ss">:bugs</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For setting up Backbone, the rails-backbone gem provides a good <a href="https://github.com/codebrew/backbone-rails/blob/master/README.md">guide</a>.</p>
+
+<p>Originally, I scaffolded Backbone here as well. On review, I&rsquo;m not sure I would do that again. I think you&rsquo;ll end at a better design if you start from scratch.</p>
+
+<p><strong>Creating Backbone Models:</strong></p>
+
+<p>Features only exist in the context of a Project, so they should only be loaded for a specific Project and similarly for Bugs.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/models/project.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Project</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span>
+</span><span class='line'>  <span class="nv">paramRoot: </span><span class="s">&#39;project&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">defaults:</span>
+</span><span class='line'>    <span class="nv">name: </span><span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">loadFeatures: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="vi">@features = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">FeaturesCollection</span><span class="p">([],</span> <span class="p">{</span><span class="nv">project_url: </span><span class="nx">@url</span><span class="p">()});</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">ProjectsCollection</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span>
+</span><span class='line'>  <span class="nv">model: </span><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Project</span>
+</span><span class='line'>  <span class="nv">url: </span><span class="s">&#39;/projects&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On reflection, loadFeatures is poorly named. It&rsquo;s really more of an &lsquo;initialize&rsquo;, but anyways, calling that method will create a FeaturesCollection and pass in the Url for this project. You can see how this is used in the Features model</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/models/feature.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Feature</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span>
+</span><span class='line'>  <span class="nv">paramRoot: </span><span class="s">&#39;feature&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">defaults:</span>
+</span><span class='line'>    <span class="nv">name: </span><span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">loadBugs: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="vi">@bugs = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">BugsCollection</span><span class="p">([],</span> <span class="p">{</span><span class="nv">feature_url: </span><span class="nx">@url</span><span class="p">()});</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">FeaturesCollection</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span>
+</span><span class='line'>  <span class="nv">model: </span><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Feature</span>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">(model, args) -&gt;</span>
+</span><span class='line'>    <span class="vi">@url = </span><span class="nf">-&gt;</span>
+</span><span class='line'>      <span class="nx">args</span><span class="p">.</span><span class="nx">project_url</span> <span class="o">+</span> <span class="s">&quot;/features&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the project_url from args will prepend all RESTful requests made on the features model with projects/:project_id.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/models/bug.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Bug</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span>
+</span><span class='line'>  <span class="nv">paramRoot: </span><span class="s">&#39;bug&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">defaults:</span>
+</span><span class='line'>    <span class="nv">name: </span><span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">BugsCollection</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span>
+</span><span class='line'>  <span class="nv">model: </span><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Bug</span>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">(model, args) -&gt;</span>
+</span><span class='line'>    <span class="vi">@url = </span><span class="nf">-&gt;</span>
+</span><span class='line'>      <span class="nx">args</span><span class="p">.</span><span class="nx">feature_url</span> <span class="o">+</span> <span class="s">&quot;/bugs&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Backbone Routers:</strong></p>
+
+<p>Next we need to create the Projects router which will be the entry point into our single page app.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/routers/projects_router.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Routers</span><span class="p">.</span><span class="nx">ProjectsRouter</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">(options) -&gt;</span>
+</span><span class='line'>    <span class="vi">@projects = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">ProjectsCollection</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">@projects</span><span class="p">.</span><span class="nx">reset</span> <span class="nx">options</span><span class="p">.</span><span class="nx">projects</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">routes:</span>
+</span><span class='line'>    <span class="s">&quot;.*&quot;</span> <span class="o">:</span> <span class="s">&quot;index&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">index: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="vi">@view = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">projects: </span><span class="nx">@projects</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-projects&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="vi">@newProjectView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">@projects</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-projects&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@newProjectView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Because we&rsquo;re not worrying about permalinks (yet! I&rsquo;ve started looking into this, and hope to create a follow-up post), we only need one catch-all route. We then pass in the respective models to our views.</p>
+
+<p><strong>Listing projects:</strong></p>
+
+<figure class='code'><figcaption><span>views/projects/index.html.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;h1&gt;</span>Trackbone<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'><span class="nt">&lt;hr&gt;</span>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;new-projects&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;list-projects&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;new-features&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;list-features&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;new-bugs&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;list-bugs&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nb">window</span><span class="p">.</span><span class="nx">router</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Routers</span><span class="p">.</span><span class="nx">ProjectsRouter</span><span class="p">(</span>
+</span><span class='line'>      <span class="p">{</span> <span class="nx">projects</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="err">@</span><span class="nx">projects</span><span class="p">.</span><span class="nx">to_json</span><span class="p">.</span><span class="nx">html_safe</span> <span class="o">-%&gt;</span> <span class="p">}</span>
+</span><span class='line'>    <span class="p">);</span>
+</span><span class='line'>    <span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is a container, new, and list div for each model. Backbone will load data from our Rest API, build HTML using the Views and Templates and inject that HTML into those DIV elements. Note that we are passing in projects from Rails to the router. This allows us to grab data from the server when the page is first requested and save an additional call on page load. Since this is a single page app, this is the only Rails view we need.</p>
+
+<p>To display our Project data we need three templates: index to list projects, project for a specific item, and new to create a project.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;td>&lt;a href="#" class="select">&lt;%= name %>&lt;/td>
+</span><span class='line'>&lt;td>[Destroy](#" class="destroy)&lt;/td></span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing projects&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;table id="projects-table">
+</span><span class='line'>  &lt;tr>
+</span><span class='line'>    &lt;th>Name&lt;/th>
+</span><span class='line'>    &lt;th>&lt;/th>
+</span><span class='line'>  &lt;/tr>
+</span><span class='line'>&lt;/table>
+</span><span class='line'>
+</span><span class='line'>&lt;br/></span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>New project&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;form id="new-project" name="project">
+</span><span class='line'>  &lt;div class="field">
+</span><span class='line'>    &lt;label for="name"> name:&lt;/label>
+</span><span class='line'>    &lt;input type="text" name="name" id="name" value="&lt;%= name %>" >
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>  &lt;div class="actions">
+</span><span class='line'>    &lt;input type="submit" value="Create Project" />
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>&lt;/form></span></code></pre></td></tr></table></div></figure>
+
+
+<p>These should be fairly self-explanatory. Each template will also need a Backbone View as well.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/views/projects/index_view.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">IndexView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/projects/index&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;reset&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;sync&#39;</span><span class="p">,</span> <span class="nx">@render</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">addAll: </span><span class="nf">() =&gt;</span>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">@addOne</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">addOne: </span><span class="nf">(project) =&gt;</span>
+</span><span class='line'>    <span class="nv">view = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">ProjectView</span><span class="p">({</span><span class="nv">model : </span><span class="nx">project</span><span class="p">})</span>
+</span><span class='line'>    <span class="nx">@$</span><span class="p">(</span><span class="s">&quot;tbody&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">=&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nv">projects: </span><span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()))</span>
+</span><span class='line'>    <span class="nx">@addAll</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This view receives the entire list of projects, renders the index view and appends a project view for each project.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/views/projects/new_view.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">NewView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/projects/new&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">events:</span>
+</span><span class='line'>    <span class="s">&quot;submit #new-project&quot;</span><span class="o">:</span> <span class="s">&quot;save&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">save: </span><span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">name = </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-project #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nx">name</span>
+</span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-project #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">@collection</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nv">name: </span><span class="nx">name</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The new view simply providers a handler for creating a new project within the collection. The create method actually does three things: creates the model, POSTs the model to the server, and adds the model to the collection.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/views/projects/project_view.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">ProjectView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/shared/item&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">events:</span>
+</span><span class='line'>    <span class="s">&quot;click .select&quot;</span> <span class="o">:</span> <span class="s">&quot;select&quot;</span>
+</span><span class='line'>    <span class="s">&quot;click .destroy&quot;</span> <span class="o">:</span> <span class="s">&quot;destroy&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">tagName: </span><span class="s">&quot;tr&quot;</span>
+</span><span class='line'>  <span class="nv">className: </span><span class="s">&quot;item&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">select: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nb">window</span><span class="p">.</span><span class="nx">toggleSelected</span><span class="p">(</span><span class="nx">@el</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">loadFeatures</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">do</span> <span class="nf">(@model) -&gt;</span>
+</span><span class='line'>      <span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">fetch</span> <span class="nv">success: </span><span class="nf">-&gt;</span>
+</span><span class='line'>        <span class="nv">featuresView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Features</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">features: </span><span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">featuresView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1"># We should probably only render this once instead of each load</span>
+</span><span class='line'>        <span class="nv">newFeaturesView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Features</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">newFeaturesView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">destroy: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nx">@model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span> <span class="p">))</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This view is really the heart of the app. Every time a Project is selected, we&rsquo;ll display the Features for that Project by calling fetch() and binding to success().</p>
+
+<p>I&rsquo;m not going to inline the templates and views for Features and Bugs since they are more or less identical, but feel free to browse through all the <a href="https://github.com/skalb/trackbone/tree/version1/app/assets/javascripts/backbone">client side code</a></p>
+
+<p>Again, here&rsquo;s a working <a href="http://young-flower-9677.herokuapp.com/">demo</a>.</p>
+
+<p>Please provide any feedback you have in the comments. Was this useful? Too long? Too much/too little code inline? I&rsquo;m currently working on a couple more entires that will build on this one as I&rsquo;m learning more about Backbone.js, so feedback is definitely useful.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Creating a Document Sharing Site With Meteor.js]]></title>
+    <link href="http://www.skalb.com/2012/04/16/creating-a-document-sharing-site-with-meteor-js/"/>
+    <updated>2012-04-16T00:00:00-07:00</updated>
+    <id>http://www.skalb.com/2012/04/16/creating-a-document-sharing-site-with-meteor-js</id>
+    <content type="html"><![CDATA[<p><strong>Background:</strong></p>
+
+<p>“Meteor is a set of new technologies for building top-quality web apps in a fraction of the time, whether you&rsquo;re an expert developer or just getting started.”
+- <a href="http://www.meteor.com">Meteor.com</a></p>
+
+<p><strong>Goal:</strong></p>
+
+<p>Create and deploy a real time document sharing website. The final product is at: <a href="http://docshare-tutorial.meteor.com">docshare-tutorial.meteor.com</a>.</p>
+
+<!--more-->
+
+
+<p><strong>Updated: Source code at <a href="https://github.com/skalb/docshare-tutorial">https://github.com/skalb/docshare-tutorial</a></strong></p>
+
+<p><strong>Spec:</strong></p>
+
+<ul>
+<li>Single page app with two sections</li>
+<li>Section 1
+
+<ul>
+<li>List of documents each with edit and delete buttons</li>
+<li>Create new document button with name input</li>
+</ul>
+</li>
+<li>Section 2
+
+<ul>
+<li>Text area of the document currently being edited</li>
+</ul>
+</li>
+</ul>
+
+
+<p><strong>Prerequisites:</strong></p>
+
+<ul>
+<li>Install Meteor</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>curl install.meteor.com <span class="p">|</span> /bin/sh
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Step 1: Getting things started</strong></p>
+
+<p>Lets create the app:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>meteor create docshare-tutorial
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, start the meteor server:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd </span>docshare-tutorial
+</span><span class='line'>meteor
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You should see the default site at <a href="http://localhost:3000/">http://localhost:3000</a>:</p>
+
+<p>Lastly, add the other packages we are going to use</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>meteor add coffeescript
+</span><span class='line'>meteor add backbone
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Step 2: Setting up the project</strong></p>
+
+<p>Go ahead and delete <strong>docshare-tutorial.js</strong> and empty out the contents of <strong>docshare-tutorial.html</strong>.</p>
+
+<p>Meteor lets you separate client and server code in 2 different ways:</p>
+
+<ol>
+<li>Using the Meteor.is_client and Meteor.is_server flags</li>
+<li>Place client and server Javascript in the /client and /server folders, respectively. Any Javascript at the root level with run on both.</li>
+</ol>
+
+
+<p>I prefer method 2 since it feels a bit cleaner to me, but feel free to instead combine everything into one file. Create <strong>docshare-tutorial.coffee</strong>  at the root and <strong>client.coffee</strong>  in /client folder and <strong>server.coffee</strong> in the /server folder.</p>
+
+<p><strong>Step 3: Server</strong></p>
+
+<p>Collections in Meteor are schemaless. We want our documents collection to be available to both the server and the client so we’ll add it to the root level.</p>
+
+<figure class='code'><figcaption><span>docshare-tutorial.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'> <span class="vi">@Documents = </span><span class="k">new</span> <span class="nx">Meteor</span><span class="p">.</span><span class="nx">Collection</span><span class="p">(</span><span class="s">&quot;documents&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Our document object will have two fields: name and text. Let’s create a sample document on startup.</p>
+
+<figure class='code'><figcaption><span>server.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Meteor</span><span class="p">.</span><span class="nx">startup</span> <span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">Documents</span><span class="p">.</span><span class="nx">find</span><span class="p">().</span><span class="nx">count</span><span class="p">()</span> <span class="o">is</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="nx">Documents</span><span class="p">.</span><span class="nx">insert</span>
+</span><span class='line'>      <span class="nv">name: </span><span class="s">&quot;Sample doc&quot;</span>
+</span><span class='line'>      <span class="nv">text: </span><span class="s">&quot;Write here...&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, if you restart the meteor server, you’ll be able to access that document in the browser. Try this in the developer console:</p>
+
+<figure class='code'><figcaption><span>console</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">Documents</span><span class="p">.</span><span class="nx">findOne</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You will see an object with the properties we just created. This is the only time you should need to restart the meteor server.</p>
+
+<p><strong>Step 4: Client HTML</strong></p>
+
+<p>Here’s we’ll define our head and body. The body will render two templates: documentList and documentView.</p>
+
+<figure class='code'><figcaption><span>console</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;</span><span class="nx">docshare</span><span class="o">&lt;</span><span class="err">/title&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/head&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="p"></span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">hr</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="p"></span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/body&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next, create the two templates needed to display the documents: documentList and document.</p>
+
+<figure class='code'><figcaption><span>console</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">template</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;documentList&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Welcome</span> <span class="nx">to</span> <span class="nb">document</span> <span class="nx">sharing</span><span class="o">!&lt;</span><span class="err">/h1&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="p"></span>
+</span><span class='line'>      <span class="p"></span>
+</span><span class='line'>    <span class="p"></span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;createDocument&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="nx">Name</span><span class="o">:</span> <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;new-document-name&quot;</span> <span class="nx">placeholder</span><span class="o">=</span><span class="s2">&quot;New document&quot;</span> <span class="o">/&gt;&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;new-document&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;create&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/template&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we are using the built in Handlebars iterator #each to render the individual document objects. Finally, there’s a input field and create button to add a new document.</p>
+
+<p>Now add the template to list the documents names each with an edit and delete button. We’ll also use a template method to determine which document is selected.</p>
+
+<figure class='code'><figcaption><span>console</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">template</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;document&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;document &quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="p"></span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;edit-document&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Edit&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;button&quot;</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;delete-document&quot;</span> <span class="nx">value</span><span class="o">=</span><span class="s2">&quot;Delete&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>   <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/template&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lastly, let’s add the actual text field that the users can edit.</p>
+
+<figure class='code'><figcaption><span>console</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">template</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;documentView&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="p"></span>
+</span><span class='line'>  <span class="p"></span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p"></span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>        <span class="o">&lt;</span><span class="nx">textarea</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;document-text&quot;</span> <span class="nx">rows</span><span class="o">=</span><span class="s2">&quot;10&quot;</span> <span class="nx">cols</span><span class="o">=</span><span class="s2">&quot;80&quot;</span><span class="o">&gt;</span><span class="p"></span><span class="o">&lt;</span><span class="err">/textarea&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">/div&gt;</span>
+</span><span class='line'>   <span class="p"></span>
+</span><span class='line'>   <span class="p"></span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/template&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that this will only be rendered if a document is currently selected. Having both an #if and a #with seems redundant, but I didn’t see a better way. Based off the Handlebars documentation, I should only need the #if, but that doesn’t work.</p>
+
+<p><strong>Step 5: Client Coffeescript</strong></p>
+
+<p>First, we’ll setup a Backbone router to allow us to keep track of which document we’re viewing. This will allow us to support page refreshes and permalinking to documents.</p>
+
+<figure class='code'><figcaption><span>client.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">DocumentsRouter = </span><span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span>
+</span><span class='line'>  <span class="nv">routes:</span>
+</span><span class='line'>    <span class="s">&quot;:document_id&quot;</span><span class="o">:</span> <span class="s">&quot;main&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">main: </span><span class="nf">(document_id) -&gt;</span>
+</span><span class='line'>    <span class="nx">Session</span><span class="p">.</span><span class="nx">set</span> <span class="s">&quot;document_id&quot;</span><span class="p">,</span> <span class="nx">document_id</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">setDocument: </span><span class="nf">(document_id) -&gt;</span>
+</span><span class='line'>    <span class="nx">@navigate</span><span class="p">(</span><span class="nx">document_id</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">Router = </span><span class="k">new</span> <span class="nx">DocumentsRouter</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Meteor</span><span class="p">.</span><span class="nx">startup</span> <span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span> <span class="nv">pushState: </span><span class="kc">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at <a href="http://backbonejs.org/">http://backbonejs.org/</a></p>
+
+<p>We are also using Meteor.startup again here but for a different purpose. On the client side it will run after DOM is loaded every time. I think it would be more clear if this method didn’t mean different things based on context.</p>
+
+<p>Next, we need to define where the documentList template gets its data and handle the create new button</p>
+
+<figure class='code'><figcaption><span>client.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">Template.documentList.documents = </span><span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nx">Documents</span><span class="p">.</span><span class="nx">find</span><span class="p">({},</span>
+</span><span class='line'>    <span class="nv">sort:</span>
+</span><span class='line'>      <span class="nv">name: </span><span class="mi">1</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">Template.documentList.events =</span>
+</span><span class='line'>  <span class="s">&#39;click #new-document&#39;</span><span class="o">:</span> <span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="nv">name = </span><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#new-document-name&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nx">name</span>
+</span><span class='line'>      <span class="nx">Documents</span><span class="p">.</span><span class="nx">insert</span><span class="p">(</span>
+</span><span class='line'>        <span class="nv">name: </span><span class="nx">name</span>
+</span><span class='line'>        <span class="nv">text: </span><span class="s">&quot;&quot;</span>
+</span><span class='line'>      <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice that we’re sorting the documents by name. Each time a new document is added it will be correctly injected into the DOM. The entire list is not recreated. There is also a bit of validation to make sure the name exists.</p>
+
+<p>Documents.insert (and all collection operations) are non-blocking when called client side. Meteor will go ahead and insert the data to the local client and can optionally call a callback with an object identifier or error message after the real operation finishes. This is invisible to the user, of course.</p>
+
+<p>Next, define the selected property and event handlers for edit and delete:</p>
+
+<figure class='code'><figcaption><span>client.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">Template.document.events =</span>
+</span><span class='line'>  <span class="s">&#39;click #delete-document&#39;</span><span class="o">:</span> <span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="nx">Documents</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">@_id</span><span class="p">)</span>
+</span><span class='line'>  <span class="s">&#39;click #edit-document&#39;</span><span class="o">:</span> <span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="nx">Router</span><span class="p">.</span><span class="nx">setDocument</span><span class="p">(</span><span class="nx">@_id</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">Template.document.selected = </span><span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">Session</span><span class="p">.</span><span class="nx">equals</span><span class="p">(</span><span class="s">&quot;document_id&quot;</span><span class="p">,</span> <span class="nx">@_id</span><span class="p">)</span> <span class="k">then</span> <span class="s">&quot;selected&quot;</span> <span class="k">else</span> <span class="s">&quot;&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that in handlers for events the this object is the actual Document object.</p>
+
+<p>Next, define the selectedDocument using the id stored in the session and update the text of that document when the user presses a key.</p>
+
+<figure class='code'><figcaption><span>client.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">Template.documentView.selectedDocument = </span><span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nv">document_id = </span><span class="nx">Session</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s">&quot;document_id&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">Documents</span><span class="p">.</span><span class="nx">findOne</span><span class="p">(</span>
+</span><span class='line'>    <span class="nv">_id: </span><span class="nx">document_id</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">Template.documentView.events =</span>
+</span><span class='line'>  <span class="s">&#39;keyup #document-text&#39;</span><span class="o">:</span> <span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="c1"># @_id should work here, but it doesn&#39;t</span>
+</span><span class='line'>    <span class="nv">sel = _id: </span><span class="nx">Session</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s">&quot;document_id&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nv">mod = $set: text: </span><span class="nx">$</span><span class="p">(</span><span class="s">&#39;#document-text&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">Documents</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">sel</span><span class="p">,</span> <span class="nx">mod</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Meteor acknowledges in their docs: “For now, the event handler gets the template data from the top level of the current template, not the template data from the template context of the element that triggered the event. This will be changing.” This is why we have to pull the id from the session.</p>
+
+<p>Lastly, add the css style for the selected div:</p>
+
+<figure class='code'><figcaption><span>docshare-tutorial.css</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.selected</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">background-color</span><span class="o">:</span> <span class="nb">yellow</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Conclusion:</strong>
+That’s it, done! 50 lines of HTML and 50 lines of Coffeescript for a very basic Google docs clone.</p>
+
+<p>To test it out open two browsers and type!</p>
+]]></content>
+  </entry>
+  
+</feed>

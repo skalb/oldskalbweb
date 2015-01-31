@@ -1,0 +1,536 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Server Side Airport Autocomplete Using NodeJS - skalb.com</title>
+  <meta name="author" content="Sameer Kalburgi">
+
+  
+  <meta name="description" content="This post shows how to enable autocomplete on a web form that consumes a JSON api running on nodeJS. Example Source To enable the autocomplete, we &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/skalb" rel="alternate" title="skalb.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-19284849-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">skalb.com</a></h1>
+  
+    <h2>By Sameer Kalburgi.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/skalb" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="www.skalb.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Server Side Airport Autocomplete Using NodeJS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-04-23T15:47:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2013</span></span> <span class='time'>3:47 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This post shows how to enable autocomplete on a web form that consumes a JSON api running on nodeJS.</p>
+
+<p><a href="http://airport-autocomplete.herokuapp.com/">Example</a></p>
+
+<p><a href="https://github.com/skalb/airport-autocomplete">Source</a></p>
+
+<!--more-->
+
+
+<p>To enable the autocomplete, we need two main components to the app:</p>
+
+<ul>
+<li><a href="http://jqueryui.com/autocomplete/">jQueryUI autocomplete</a></li>
+<li><a href="https://github.com/marccampbell/node-autocomplete">node-autocomplete</a></li>
+</ul>
+
+
+<p>The easiest way to add jQueryUI is to include a reference in our layout:</p>
+
+<figure class='code'><figcaption><span>layout.jade</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>!!!
+</span><span class='line'>html
+</span><span class='line'>  head
+</span><span class='line'>    title= title
+</span><span class='line'>    link(rel=&#39;stylesheet&#39;, href=&#39;http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css&#39;)
+</span><span class='line'>    link(rel=&#39;stylesheet&#39;, href=&#39;/stylesheets/style.css&#39;)
+</span><span class='line'>    script(src=&#39;http://code.jquery.com/jquery-1.8.3.min.js&#39;)
+</span><span class='line'>    script(src=&#39;http://code.jquery.com/ui/1.9.2/jquery-ui.min.js&#39;)
+</span><span class='line'>    script(src=&#39;http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js &#39;)
+</span><span class='line'>    script(src=&#39;/javascripts/index.js&#39;)
+</span><span class='line'>  body!= body
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>node-autocomplete and other necessary libraries can be added to package.json. Note: I&rsquo;m required to use older verions of some packages because Heroku does not support the latest version of Express.</p>
+
+<figure class='code'><figcaption><span>package.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;airport-autocomplete&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+</span><span class='line'>  <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;express&quot;</span><span class="p">:</span> <span class="s2">&quot;2.5.x&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;jade&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;autocomplete&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;underscore&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;jquery&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span>
+</span><span class='line'>  <span class="p">},</span>
+</span><span class='line'>  <span class="nt">&quot;engines&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;node&quot;</span><span class="p">:</span> <span class="s2">&quot;0.8.x&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;npm&quot;</span><span class="p">:</span> <span class="s2">&quot;1.1.x&quot;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The dataset for this example is going to be airports and their codes. I wanted to be able to intelligently handle for the case where the user enters either the airport code or the name since most travel sites operate this way.</p>
+
+<p><a href="/assets/airports.dat">Airports.dat</a> - format name|code</p>
+
+<p>We need to keep lookups in memory to present the user with the properly capitalized airport name. During the actual autocomplete search, we will only use lowercased entries and input. Therefore, we need to keep track of three things:</p>
+
+<ul>
+<li>The actual autocomplete object where we load both codes and names into</li>
+<li>One lookup to retrieve the full name from the code</li>
+<li>Another lookup to retrieve the full name from a lowercased airport name</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>routes/index.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;data/airport-codes.dat&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">airports</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;\n&#39;</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">parts</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">trim</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">),</span>
+</span><span class='line'>        <span class="nx">airportName</span> <span class="o">=</span> <span class="nx">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+</span><span class='line'>        <span class="nx">airportNameLower</span> <span class="o">=</span> <span class="nx">airportName</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">(),</span>
+</span><span class='line'>        <span class="nx">airportCode</span> <span class="o">=</span> <span class="nx">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>        <span class="nx">airportCodeLower</span> <span class="o">=</span> <span class="nx">airportCode</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">(),</span>
+</span><span class='line'>        <span class="nx">fullName</span> <span class="o">=</span> <span class="nx">airportCode</span> <span class="o">+</span> <span class="s2">&quot; - &quot;</span> <span class="o">+</span> <span class="nx">airportName</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">airportNames</span><span class="p">[</span><span class="nx">airportNameLower</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fullName</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">airportCodes</span><span class="p">[</span><span class="nx">airportCodeLower</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fullName</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">airports</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">airportNameLower</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">airports</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">airportCodeLower</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">namesAC</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">onReady</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">onReady</span><span class="p">(</span><span class="nx">airports</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the nodeJS route that returns the airport data, we&rsquo;ll use the input to test if it matched either an airport name or an aiport code and return those results.</p>
+
+<figure class='code'><figcaption><span>routes/index.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">exports</span><span class="p">.</span><span class="nx">airports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">airport</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">[</span><span class="s2">&quot;term&quot;</span><span class="p">].</span><span class="nx">toLowerCase</span><span class="p">(),</span>
+</span><span class='line'>      <span class="nx">results</span> <span class="o">=</span> <span class="nx">namesAC</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">airport</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">airportResults</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">results</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">airportNames</span><span class="p">[</span><span class="nx">a</span><span class="p">]</span> <span class="o">||</span> <span class="nx">airportCodes</span><span class="p">[</span><span class="nx">a</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">airportResults</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&rsquo;s what a <a href="http://airport-autocomplete.herokuapp.com/airports?term=RIO">sample request</a> for RIO would return:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">[</span>
+</span><span class='line'>    <span class="s2">&quot;RBR - Rio Branco, AC, Brazil&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RCU - Rio Cuarto, CD, Argentina&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;GIG - Rio De Janeiro, RJ, Brazil&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RGL - Rio Gallegos, Argentina - Internacional&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RIG - Rio Grande, RS, Brazil&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RGA - Rio Grande, TF, Argentina&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;ROY - Rio Mayo, CB, Argentina&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RVD - Rio Verde, GO, Brazil&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;RCH - Riohacha, Colombia&quot;</span>
+</span><span class='line'><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The last part is to wire up the actual jQuery UI autocomplete. I&rsquo;ve also added a handler on the open to highlight the term from the search.</p>
+
+<figure class='code'><figcaption><span>public/javascripts/index.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">termTemplate</span> <span class="o">=</span> <span class="s2">&quot;&lt;span class=&#39;ui-autocomplete-term&#39;&gt;$1&lt;/span&gt;&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#origin&quot;</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">({</span>
+</span><span class='line'>      <span class="nx">source</span><span class="o">:</span> <span class="s2">&quot;/airports&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">minLength</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">open</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span><span class="nx">ui</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kd">var</span> <span class="nx">acData</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">data</span><span class="p">(</span><span class="s1">&#39;autocomplete&#39;</span><span class="p">);</span>
+</span><span class='line'>            <span class="nx">acData</span>
+</span><span class='line'>                <span class="p">.</span><span class="nx">menu</span>
+</span><span class='line'>                <span class="p">.</span><span class="nx">element</span>
+</span><span class='line'>                <span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="kd">var</span> <span class="nx">me</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'>                    <span class="kd">var</span> <span class="nx">regex</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="nx">acData</span><span class="p">.</span><span class="nx">term</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="s1">&#39;gi&#39;</span> <span class="p">);</span>
+</span><span class='line'>                    <span class="nx">me</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span> <span class="nx">me</span><span class="p">.</span><span class="nx">text</span><span class="p">().</span><span class="nx">replace</span><span class="p">(</span><span class="nx">regex</span><span class="p">,</span> <span class="nx">termTemplate</span><span class="p">)</span> <span class="p">);</span>
+</span><span class='line'>                <span class="p">});</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">})();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sameer Kalburgi</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-04-23T15:47:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2013</span></span> <span class='time'>3:47 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/express/'>express</a>, <a class='category' href='/categories/javascript/'>javascript</a>, <a class='category' href='/categories/nodejs/'>nodejs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/" data-via="sameerkalburgi" data-counturl="http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2013/01/20/multi-color-heat-map-in-javascript/" title="Previous Post: Multi-color heat map in JavaScript">&laquo; Multi-color heat map in JavaScript</a>
+      
+      
+        <a class="basic-alignment right" href="/2013/07/04/simpleshop-pure-javascript-photo-editing/" title="Next Post: Simpleshop: pure JavaScript photo editing">Simpleshop: pure JavaScript photo editing &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/04/simpleshop-pure-javascript-photo-editing/">Simpleshop: Pure JavaScript Photo Editing</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/04/23/server-side-auto-complete-using-nodejs/">Server Side Airport Autocomplete Using NodeJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/20/multi-color-heat-map-in-javascript/">Multi-color Heat Map in JavaScript</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/25/using-sinon-spys-with-meteor-collections/">Using Sinon Spys With Meteor Collections</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/">Testing Backbone Routers in Meteor With Mocha</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/skalb">@skalb</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'skalb',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/100596472903145614776?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Sameer Kalburgi -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'skalb';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/';
+        var disqus_url = 'http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

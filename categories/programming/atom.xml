@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Programming | skalb.com]]></title>
+  <link href="http://www.skalb.com/categories/programming/atom.xml" rel="self"/>
+  <link href="http://www.skalb.com/"/>
+  <updated>2015-01-31T14:06:31-08:00</updated>
+  <id>http://www.skalb.com/</id>
+  <author>
+    <name><![CDATA[Sameer Kalburgi]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Testing With Meteor, CoffeeScript and Mocha]]></title>
+    <link href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/"/>
+    <updated>2012-08-19T00:00:00-07:00</updated>
+    <id>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha</id>
+    <content type="html"><![CDATA[<p>Adding unit tests is straightforward in <a href="http://docs.meteor.com/#structuringyourapp">Meteor</a>. Any files in the tests/ folder will be ignored by the Meteor server.</p>
+
+<!--more-->
+
+
+<p>What you&rsquo;ll need:</p>
+
+<ul>
+<li><a href="https://github.com/meteor/meteor">Meteor</a></li>
+<li><a href="https://github.com/isaacs/npm">Npm</a></li>
+<li><a href="https://github.com/visionmedia/mocha">Mocha</a></li>
+</ul>
+
+
+<p>Optional: <a href="http://growl.info/">Growl</a> (for notifications from mocha watch)</p>
+
+<p>Getting everything running:</p>
+
+<pre><code class="bash">meteor create mocha
+cd mocha
+meteor add coffeescript
+</code></pre>
+
+<p>Setting up Mocha to watch our coffee files and send Growl notifications:</p>
+
+<pre><code class="bash">
+mocha tests/*.coffee -w -G --compilers coffee:coffee-script
+</code></pre>
+
+<p>Now to create a sample test:</p>
+
+<pre><code class="coffeescript test.coffee">describe "Array", -&gt;
+  describe "#indexOf()", -&gt;
+    it "should return -1 when the value is not present", -&gt;
+      assert.equal -1, [1, 2, 3].indexOf(1)
+      assert.equal -1, [1, 2, 3].indexOf(0)
+</code></pre>
+
+<p>Mocha should notice the file change and run the tests showing you the passing test.</p>
+
+<p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha">Source code here.</a></p>
+
+<p>Some notes:
+- The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
+- When using Mocha watch, sometimes a failing test result would be outputted many times
+- <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
+]]></content>
+  </entry>
+  
+</feed>

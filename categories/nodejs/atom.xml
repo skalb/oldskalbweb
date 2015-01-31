@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Nodejs | skalb.com]]></title>
+  <link href="http://www.skalb.com/categories/nodejs/atom.xml" rel="self"/>
+  <link href="http://www.skalb.com/"/>
+  <updated>2015-01-31T14:06:31-08:00</updated>
+  <id>http://www.skalb.com/</id>
+  <author>
+    <name><![CDATA[Sameer Kalburgi]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Simpleshop: Pure JavaScript Photo Editing]]></title>
+    <link href="http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing/"/>
+    <updated>2013-07-04T17:00:00-07:00</updated>
+    <id>http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing</id>
+    <content type="html"><![CDATA[<p>Even as a developer, it amazes me what you can build with no (at least required) knowledge of anything beyond javascript and Heroku.</p>
+
+<p><a href="http://simpleshop.heroku.com/">Simpleshop</a></p>
+
+<p><a href="https://github.com/skalb/simpleshop">Source</a></p>
+
+<!--more-->
+
+
+<p>Built using:</p>
+
+<ul>
+<li>nodeJS/Heroku</li>
+<li>Filepicker.io</li>
+<li>Aviary</li>
+</ul>
+
+
+<p>Then again, they do say <a href="http://www.codinghorror.com/blog/2007/07/the-principle-of-least-power.html">javascript</a> is <a href="http://online.wsj.com/article/SB10001424053111903480904576512250915629460.html">eating</a> the world, in so many words.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Server Side Airport Autocomplete Using NodeJS]]></title>
+    <link href="http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/"/>
+    <updated>2013-04-23T15:47:00-07:00</updated>
+    <id>http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs</id>
+    <content type="html"><![CDATA[<p>This post shows how to enable autocomplete on a web form that consumes a JSON api running on nodeJS.</p>
+
+<p><a href="http://airport-autocomplete.herokuapp.com/">Example</a></p>
+
+<p><a href="https://github.com/skalb/airport-autocomplete">Source</a></p>
+
+<!--more-->
+
+
+<p>To enable the autocomplete, we need two main components to the app:</p>
+
+<ul>
+<li><a href="http://jqueryui.com/autocomplete/">jQueryUI autocomplete</a></li>
+<li><a href="https://github.com/marccampbell/node-autocomplete">node-autocomplete</a></li>
+</ul>
+
+
+<p>The easiest way to add jQueryUI is to include a reference in our layout:</p>
+
+<pre><code class="html layout.jade">!!!
+html
+  head
+    title= title
+    link(rel='stylesheet', href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css')
+    link(rel='stylesheet', href='http://www.skalb.com/stylesheets/style.css')
+    script(src='http://code.jquery.com/jquery-1.8.3.min.js')
+    script(src='http://code.jquery.com/ui/1.9.2/jquery-ui.min.js')
+    script(src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js ')
+    script(src='/javascripts/index.js')
+  body!= body
+</code></pre>
+
+<p>node-autocomplete and other necessary libraries can be added to package.json. Note: I&rsquo;m required to use older verions of some packages because Heroku does not support the latest version of Express.</p>
+
+<pre><code class="json package.json">{
+  "name": "airport-autocomplete",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "2.5.x",
+    "jade": "*",
+    "autocomplete": "*",
+    "underscore": "*",
+    "jquery": "*"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  }
+}
+</code></pre>
+
+<p>The dataset for this example is going to be airports and their codes. I wanted to be able to intelligently handle for the case where the user enters either the airport code or the name since most travel sites operate this way.</p>
+
+<p><a href="/assets/airports.dat">Airports.dat</a> - format name|code</p>
+
+<p>We need to keep lookups in memory to present the user with the properly capitalized airport name. During the actual autocomplete search, we will only use lowercased entries and input. Therefore, we need to keep track of three things:</p>
+
+<ul>
+<li>The actual autocomplete object where we load both codes and names into</li>
+<li>One lookup to retrieve the full name from the code</li>
+<li>Another lookup to retrieve the full name from a lowercased airport name</li>
+</ul>
+
+
+<pre><code class="javascript routes/index.js">fs.readFile('data/airport-codes.dat', function(err, data) {
+  var airports = [];
+
+  _.each(data.toString().split('\n'), function(a) {
+    var parts = a.trim().split("|"),
+        airportName = parts[0],
+        airportNameLower = airportName.toLowerCase(),
+        airportCode = parts[1];
+        airportCodeLower = airportCode.toLowerCase(),
+        fullName = airportCode + " - " + airportName;
+
+    airportNames[airportNameLower] = fullName;
+    airportCodes[airportCodeLower] = fullName;
+
+    airports.push(airportNameLower);
+    airports.push(airportCodeLower);
+  });
+
+  namesAC.initialize(function(onReady) {
+    onReady(airports);
+  });
+});
+</code></pre>
+
+<p>In the nodeJS route that returns the airport data, we&rsquo;ll use the input to test if it matched either an airport name or an aiport code and return those results.</p>
+
+<pre><code class="javascript routes/index.js">exports.airports = function(req, res) {
+  var airport = req.query["term"].toLowerCase(),
+      results = namesAC.search(airport);
+
+  var airportResults = _.map(results, function(a) {
+    return airportNames[a] || airportCodes[a];
+  });
+
+  res.send(airportResults);
+};
+</code></pre>
+
+<p>Here&rsquo;s what a <a href="http://airport-autocomplete.herokuapp.com/airports?term=RIO">sample request</a> for RIO would return:</p>
+
+<pre><code class="json">[
+    "RBR - Rio Branco, AC, Brazil",
+    "RCU - Rio Cuarto, CD, Argentina",
+    "GIG - Rio De Janeiro, RJ, Brazil",
+    "RGL - Rio Gallegos, Argentina - Internacional",
+    "RIG - Rio Grande, RS, Brazil",
+    "RGA - Rio Grande, TF, Argentina",
+    "ROY - Rio Mayo, CB, Argentina",
+    "RVD - Rio Verde, GO, Brazil",
+    "RCH - Riohacha, Colombia"
+]
+</code></pre>
+
+<p>The last part is to wire up the actual jQuery UI autocomplete. I&rsquo;ve also added a handler on the open to highlight the term from the search.</p>
+
+<pre><code class="javascript public/javascripts/index.js">(function () {
+  var termTemplate = "&lt;span class='ui-autocomplete-term'&gt;$1&lt;/span&gt;";
+
+  $(document).ready(function() {
+    $("#origin").autocomplete({
+      source: "/airports",
+      minLength: 2,
+      open: function(e,ui) {
+            var acData = $(this).data('autocomplete');
+            acData
+                .menu
+                .element
+                .find('a')
+                .each(function() {
+                    var me = $(this);
+                    var regex = new RegExp( '(' + acData.term + ')', 'gi' );
+                    me.html( me.text().replace(regex, termTemplate) );
+                });
+        }
+    });
+  });
+})();
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

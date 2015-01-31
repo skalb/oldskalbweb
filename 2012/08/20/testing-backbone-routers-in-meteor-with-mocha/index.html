@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Testing Backbone Routers in Meteor With Mocha - skalb.com</title>
+  <meta name="author" content="Sameer Kalburgi">
+
+  
+  <meta name="description" content="One of the downsides of Meteor and perhaps strongest complaint is that it doesn&rsquo;t play nicely with existing NodeJS modules. You&rsquo;re forced &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/skalb" rel="alternate" title="skalb.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-19284849-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">skalb.com</a></h1>
+  
+    <h2>By Sameer Kalburgi.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/skalb" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="www.skalb.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Testing Backbone Routers in Meteor With Mocha</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-08-20T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>One of the downsides of Meteor and perhaps strongest complaint is that it doesn&rsquo;t play nicely with existing NodeJS modules. You&rsquo;re forced to use the available SmartPackages (or build one). This is a problem since the Mocha environment runs without the browser and doesn&rsquo;t have access to the libraries included by the SmartPackage.</p>
+
+<!--more-->
+
+
+<p><em>Here&rsquo;s a previous <a href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/">post</a> describing how to setup everything</em></p>
+
+<p>Creating the project:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>meteor create mocha-router
+</span><span class='line'>meteor add backbone
+</span><span class='line'>meteor add coffeescript
+</span><span class='line'><span class="nb">cd </span>mocha-router
+</span><span class='line'>mkdir client
+</span><span class='line'>mkdir server
+</span><span class='line'>mkdir tests
+</span><span class='line'><span class="nb">cd </span>tests
+</span><span class='line'>mkdir lib
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When I first installed the modules, I installed them in my project root, but this caused Meteor to try to load them in the both the client/server environment which crashed the Meteor server. Luckily, Meteor will ignore anything in the tests folder so we can install the necessary modules there.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>npm install should
+</span><span class='line'>npm install backbone
+</span><span class='line'>mocha *.coffee --compilers coffee:coffee-script
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My goal was to create a very basic Backbone router test. Normally, I&rsquo;d define the router like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">SampleRouter = </span><span class="nx">@Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span>
+</span><span class='line'>  <span class="nv">routes:</span>
+</span><span class='line'>    <span class="s">&quot;&quot;</span><span class="o">:</span> <span class="s">&quot;index&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">index: </span><span class="nf">-&gt;</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'><span class="k">new</span> <span class="nx">SampleRouter</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This won&rsquo;t work when running the Mocha tests because it assumes the Meteor framework is present to load Backbone. I solved this by creating a factory for the router and injecting the Backbone module.</p>
+
+<p>Note, I need to put this module in tests/lib so Meteor will make sure to load it first</p>
+
+<p>lib/sample_router_factory.coffee:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">root = </span><span class="nx">exports</span> <span class="o">?</span> <span class="k">this</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">SampleRouterFactory</span>
+</span><span class='line'>  <span class="nv">constructor: </span><span class="nf">(@Backbone) -&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">getRouter: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nv">SampleRouter = </span><span class="nx">@Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span>
+</span><span class='line'>      <span class="nv">routes:</span>
+</span><span class='line'>        <span class="s">&quot;&quot;</span><span class="o">:</span> <span class="s">&quot;index&quot;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nv">index: </span><span class="nf">-&gt;</span>
+</span><span class='line'>        <span class="nx">Session</span><span class="p">.</span><span class="nx">set</span> <span class="s">&quot;test&quot;</span><span class="p">,</span> <span class="s">&quot;test&quot;</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nx">SampleRouter</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">root.SampleRouterFactory = </span><span class="nx">SampleRouterFactory</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Exports is a global object accessible in the nodeJS environment that Mocha runs in. See this <a href="http://visionmedia.github.com/masteringnode/book.html">ebook</a> for more details.</p>
+
+<p>This module will now create a class that will return a new instance of the SampleRouter.</p>
+
+<p>Now, let&rsquo;s look at the test case:</p>
+
+<p>tests/sample_router_factory_test.coffee</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">should = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;should&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nv">Backbone = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;backbone&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nv">SampleRouterFactory = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;../client/lib/sample_router_factory&#39;</span><span class="p">).</span><span class="nx">SampleRouterFactory</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">describe</span> <span class="s">&quot;SampleRouter&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nv">factory = </span><span class="k">new</span> <span class="nx">SampleRouterFactory</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">)</span>
+</span><span class='line'>  <span class="nv">router = </span><span class="nx">factory</span><span class="p">.</span><span class="nx">getRouter</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">it</span> <span class="s">&quot;should have an index router&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">router</span><span class="p">.</span><span class="nx">routes</span><span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">].</span><span class="nx">should</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="s">&#39;index&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Lastly, in the actual Meteor app I create the app a similar way:</p>
+
+<p>mocha-router.coffee</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Meteor</span><span class="p">.</span><span class="nx">startup</span> <span class="nf">-&gt;</span>
+</span><span class='line'>  <span class="nv">factory = </span><span class="k">new</span> <span class="nx">SampleRouterFactory</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">)</span>
+</span><span class='line'>  <span class="nv">router = </span><span class="nx">factory</span><span class="p">.</span><span class="nx">getRouter</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, there&rsquo;s no need to require either Backbone (loaded as a SmartPackage) or the actual SampleRouterFactory because Meteor treats all of your CoffeeScript files as a single file and consequently scope.</p>
+
+<p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">Source code here.</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sameer Kalburgi</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-08-20T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/backbone/'>backbone</a>, <a class='category' href='/categories/coffeescript/'>coffeescript</a>, <a class='category' href='/categories/meteor/'>meteor</a>, <a class='category' href='/categories/mocha/'>mocha</a>, <a class='category' href='/categories/testing/'>testing</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/" data-via="sameerkalburgi" data-counturl="http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/08/19/testing-with-meteor-coffeescript-and-mocha/" title="Previous Post: Testing with Meteor, CoffeeScript and Mocha">&laquo; Testing with Meteor, CoffeeScript and Mocha</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/08/25/using-sinon-spys-with-meteor-collections/" title="Next Post: Using Sinon Spys with Meteor Collections">Using Sinon Spys with Meteor Collections &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/04/simpleshop-pure-javascript-photo-editing/">Simpleshop: Pure JavaScript Photo Editing</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/04/23/server-side-auto-complete-using-nodejs/">Server Side Airport Autocomplete Using NodeJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/20/multi-color-heat-map-in-javascript/">Multi-color Heat Map in JavaScript</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/25/using-sinon-spys-with-meteor-collections/">Using Sinon Spys With Meteor Collections</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/">Testing Backbone Routers in Meteor With Mocha</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/skalb">@skalb</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'skalb',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/100596472903145614776?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Sameer Kalburgi -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'skalb';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/';
+        var disqus_url = 'http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

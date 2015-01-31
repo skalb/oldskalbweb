@@ -1,0 +1,781 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How to (Easily) Handle Model Relationships in Rails and Backbone.js - skalb.com</title>
+  <meta name="author" content="Sameer Kalburgi">
+
+  
+  <meta name="description" content="While playing around with Backbone.js, I couldn&rsquo;t find an easy way to build an app that used the RESTful hierarchy of my models. I think Spine& &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/skalb" rel="alternate" title="skalb.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-19284849-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">skalb.com</a></h1>
+  
+    <h2>By Sameer Kalburgi.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/skalb" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="www.skalb.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">How to (Easily) Handle Model Relationships in Rails and Backbone.js</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-04-23T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>While playing around with Backbone.js, I couldn&rsquo;t find an easy way to build an app that used the RESTful hierarchy of my models. I think <a href="http://spinejs.com/docs/relations">Spine&rsquo;s</a> implementation is fairly straightforward.</p>
+
+<p>I did find a relevant <a href="https://github.com/PaulUithol/Backbone-relational">active project</a>, but for my specific case the added complexity of an additional component and dependency didn&rsquo;t seem justified. Rails already does the hard part for me, I just need Backbone to call the correct Urls.</p>
+
+<p>I wanted to learn more about Backbone, so I prototyped a very basic project management app using Rails and Backbone called Trackbone that I&rsquo;ll walk through in this post.</p>
+
+<!--more-->
+
+
+<p>Briefly, this is a single page three panel app with drill-downs:</p>
+
+<ul>
+    <li>Many projects</li>
+    <li>Project has many Features</li>
+    <li>Featurehas many Bugs</li>
+</ul>
+
+
+<p><a href="http://young-flower-9677.herokuapp.com/">Demo on Heroku</a>
+<a href="https://github.com/skalb/trackbone/tree/version1">Source</a></p>
+
+<p><strong>Rails backend:</strong></p>
+
+<p>Rails controllers provide the REST API for our Backbone app. I haven&rsquo;t inlined them here since they only have a few modifications post-scaffolding, but you can view them <a href="https://github.com/skalb/trackbone/tree/version1/app/controllers">here</a></p>
+
+<p>Modifications:</p>
+
+<ul>
+<li>Projects#index is moved to HomeController</li>
+<li>Location is not returned in response after #create</li>
+<li>Model is returned after #update</li>
+</ul>
+
+
+
+
+<figure class='code'><figcaption><span>routes.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">root</span> <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="s2">&quot;home#index&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Trackbone</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">resources</span> <span class="ss">:projects</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">resources</span> <span class="ss">:features</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">resources</span> <span class="ss">:bugs</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>For setting up Backbone, the rails-backbone gem provides a good <a href="https://github.com/codebrew/backbone-rails/blob/master/README.md">guide</a>.</p>
+
+<p>Originally, I scaffolded Backbone here as well. On review, I&rsquo;m not sure I would do that again. I think you&rsquo;ll end at a better design if you start from scratch.</p>
+
+<p><strong>Creating Backbone Models:</strong></p>
+
+<p>Features only exist in the context of a Project, so they should only be loaded for a specific Project and similarly for Bugs.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/models/project.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Project</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span>
+</span><span class='line'>  <span class="nv">paramRoot: </span><span class="s">&#39;project&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">defaults:</span>
+</span><span class='line'>    <span class="nv">name: </span><span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">loadFeatures: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="vi">@features = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">FeaturesCollection</span><span class="p">([],</span> <span class="p">{</span><span class="nv">project_url: </span><span class="nx">@url</span><span class="p">()});</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">ProjectsCollection</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span>
+</span><span class='line'>  <span class="nv">model: </span><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Project</span>
+</span><span class='line'>  <span class="nv">url: </span><span class="s">&#39;/projects&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On reflection, loadFeatures is poorly named. It&rsquo;s really more of an &lsquo;initialize&rsquo;, but anyways, calling that method will create a FeaturesCollection and pass in the Url for this project. You can see how this is used in the Features model</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/models/feature.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Feature</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span>
+</span><span class='line'>  <span class="nv">paramRoot: </span><span class="s">&#39;feature&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">defaults:</span>
+</span><span class='line'>    <span class="nv">name: </span><span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">loadBugs: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="vi">@bugs = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">BugsCollection</span><span class="p">([],</span> <span class="p">{</span><span class="nv">feature_url: </span><span class="nx">@url</span><span class="p">()});</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">FeaturesCollection</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span>
+</span><span class='line'>  <span class="nv">model: </span><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Feature</span>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">(model, args) -&gt;</span>
+</span><span class='line'>    <span class="vi">@url = </span><span class="nf">-&gt;</span>
+</span><span class='line'>      <span class="nx">args</span><span class="p">.</span><span class="nx">project_url</span> <span class="o">+</span> <span class="s">&quot;/features&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using the project_url from args will prepend all RESTful requests made on the features model with projects/:project_id.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/models/bug.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Bug</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span>
+</span><span class='line'>  <span class="nv">paramRoot: </span><span class="s">&#39;bug&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">defaults:</span>
+</span><span class='line'>    <span class="nv">name: </span><span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">BugsCollection</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span>
+</span><span class='line'>  <span class="nv">model: </span><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Bug</span>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">(model, args) -&gt;</span>
+</span><span class='line'>    <span class="vi">@url = </span><span class="nf">-&gt;</span>
+</span><span class='line'>      <span class="nx">args</span><span class="p">.</span><span class="nx">feature_url</span> <span class="o">+</span> <span class="s">&quot;/bugs&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Backbone Routers:</strong></p>
+
+<p>Next we need to create the Projects router which will be the entry point into our single page app.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/routers/projects_router.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Routers</span><span class="p">.</span><span class="nx">ProjectsRouter</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Router</span>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">(options) -&gt;</span>
+</span><span class='line'>    <span class="vi">@projects = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">ProjectsCollection</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">@projects</span><span class="p">.</span><span class="nx">reset</span> <span class="nx">options</span><span class="p">.</span><span class="nx">projects</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">routes:</span>
+</span><span class='line'>    <span class="s">&quot;.*&quot;</span> <span class="o">:</span> <span class="s">&quot;index&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">index: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="vi">@view = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">projects: </span><span class="nx">@projects</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-projects&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="vi">@newProjectView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">@projects</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-projects&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@newProjectView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Because we&rsquo;re not worrying about permalinks (yet! I&rsquo;ve started looking into this, and hope to create a follow-up post), we only need one catch-all route. We then pass in the respective models to our views.</p>
+
+<p><strong>Listing projects:</strong></p>
+
+<figure class='code'><figcaption><span>views/projects/index.html.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;h1&gt;</span>Trackbone<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'><span class="nt">&lt;hr&gt;</span>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;new-projects&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;list-projects&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;new-features&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;list-features&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;new-bugs&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;list-bugs&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nb">window</span><span class="p">.</span><span class="nx">router</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Routers</span><span class="p">.</span><span class="nx">ProjectsRouter</span><span class="p">(</span>
+</span><span class='line'>      <span class="p">{</span> <span class="nx">projects</span><span class="o">:</span> <span class="o">&lt;%=</span> <span class="err">@</span><span class="nx">projects</span><span class="p">.</span><span class="nx">to_json</span><span class="p">.</span><span class="nx">html_safe</span> <span class="o">-%&gt;</span> <span class="p">}</span>
+</span><span class='line'>    <span class="p">);</span>
+</span><span class='line'>    <span class="nx">Backbone</span><span class="p">.</span><span class="nx">history</span><span class="p">.</span><span class="nx">start</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is a container, new, and list div for each model. Backbone will load data from our Rest API, build HTML using the Views and Templates and inject that HTML into those DIV elements. Note that we are passing in projects from Rails to the router. This allows us to grab data from the server when the page is first requested and save an additional call on page load. Since this is a single page app, this is the only Rails view we need.</p>
+
+<p>To display our Project data we need three templates: index to list projects, project for a specific item, and new to create a project.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;td>&lt;a href="#" class="select">&lt;%= name %>&lt;/td>
+</span><span class='line'>&lt;td>[Destroy](#" class="destroy)&lt;/td></span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing projects&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;table id="projects-table">
+</span><span class='line'>  &lt;tr>
+</span><span class='line'>    &lt;th>Name&lt;/th>
+</span><span class='line'>    &lt;th>&lt;/th>
+</span><span class='line'>  &lt;/tr>
+</span><span class='line'>&lt;/table>
+</span><span class='line'>
+</span><span class='line'>&lt;br/></span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>New project&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;form id="new-project" name="project">
+</span><span class='line'>  &lt;div class="field">
+</span><span class='line'>    &lt;label for="name"> name:&lt;/label>
+</span><span class='line'>    &lt;input type="text" name="name" id="name" value="&lt;%= name %>" >
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>  &lt;div class="actions">
+</span><span class='line'>    &lt;input type="submit" value="Create Project" />
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>&lt;/form></span></code></pre></td></tr></table></div></figure>
+
+
+<p>These should be fairly self-explanatory. Each template will also need a Backbone View as well.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/views/projects/index_view.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">IndexView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/projects/index&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;reset&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;sync&#39;</span><span class="p">,</span> <span class="nx">@render</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">addAll: </span><span class="nf">() =&gt;</span>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">@addOne</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">addOne: </span><span class="nf">(project) =&gt;</span>
+</span><span class='line'>    <span class="nv">view = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">ProjectView</span><span class="p">({</span><span class="nv">model : </span><span class="nx">project</span><span class="p">})</span>
+</span><span class='line'>    <span class="nx">@$</span><span class="p">(</span><span class="s">&quot;tbody&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">=&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nv">projects: </span><span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()))</span>
+</span><span class='line'>    <span class="nx">@addAll</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This view receives the entire list of projects, renders the index view and appends a project view for each project.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/views/projects/new_view.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">NewView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/projects/new&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">events:</span>
+</span><span class='line'>    <span class="s">&quot;submit #new-project&quot;</span><span class="o">:</span> <span class="s">&quot;save&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">save: </span><span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">name = </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-project #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nx">name</span>
+</span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-project #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">@collection</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nv">name: </span><span class="nx">name</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The new view simply providers a handler for creating a new project within the collection. The create method actually does three things: creates the model, POSTs the model to the server, and adds the model to the collection.</p>
+
+<figure class='code'><figcaption><span>javascripts/backbone/views/projects/project_view.js.coffee</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">ProjectView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/shared/item&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">events:</span>
+</span><span class='line'>    <span class="s">&quot;click .select&quot;</span> <span class="o">:</span> <span class="s">&quot;select&quot;</span>
+</span><span class='line'>    <span class="s">&quot;click .destroy&quot;</span> <span class="o">:</span> <span class="s">&quot;destroy&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">tagName: </span><span class="s">&quot;tr&quot;</span>
+</span><span class='line'>  <span class="nv">className: </span><span class="s">&quot;item&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">select: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nb">window</span><span class="p">.</span><span class="nx">toggleSelected</span><span class="p">(</span><span class="nx">@el</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">loadFeatures</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">do</span> <span class="nf">(@model) -&gt;</span>
+</span><span class='line'>      <span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">fetch</span> <span class="nv">success: </span><span class="nf">-&gt;</span>
+</span><span class='line'>        <span class="nv">featuresView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Features</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">features: </span><span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">featuresView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1"># We should probably only render this once instead of each load</span>
+</span><span class='line'>        <span class="nv">newFeaturesView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Features</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">newFeaturesView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">destroy: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nx">@model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span> <span class="p">))</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This view is really the heart of the app. Every time a Project is selected, we&rsquo;ll display the Features for that Project by calling fetch() and binding to success().</p>
+
+<p>I&rsquo;m not going to inline the templates and views for Features and Bugs since they are more or less identical, but feel free to browse through all the <a href="https://github.com/skalb/trackbone/tree/version1/app/assets/javascripts/backbone">client side code</a></p>
+
+<p>Again, here&rsquo;s a working <a href="http://young-flower-9677.herokuapp.com/">demo</a>.</p>
+
+<p>Please provide any feedback you have in the comments. Was this useful? Too long? Too much/too little code inline? I&rsquo;m currently working on a couple more entires that will build on this one as I&rsquo;m learning more about Backbone.js, so feedback is definitely useful.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sameer Kalburgi</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-04-23T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/backbone/'>backbone</a>, <a class='category' href='/categories/coffeescript/'>coffeescript</a>, <a class='category' href='/categories/rails/'>rails</a>, <a class='category' href='/categories/ruby/'>ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" data-via="sameerkalburgi" data-counturl="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/04/16/creating-a-document-sharing-site-with-meteor-js/" title="Previous Post: Creating a document sharing site with Meteor.js">&laquo; Creating a document sharing site with Meteor.js</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/04/26/extending-and-refactoring-views-in-backbone/" title="Next Post: Extending and refactoring views in Backbone.js">Extending and refactoring views in Backbone.js &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/04/simpleshop-pure-javascript-photo-editing/">Simpleshop: Pure JavaScript Photo Editing</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/04/23/server-side-auto-complete-using-nodejs/">Server Side Airport Autocomplete Using NodeJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/20/multi-color-heat-map-in-javascript/">Multi-color Heat Map in JavaScript</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/25/using-sinon-spys-with-meteor-collections/">Using Sinon Spys With Meteor Collections</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/">Testing Backbone Routers in Meteor With Mocha</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/skalb">@skalb</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'skalb',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/100596472903145614776?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Sameer Kalburgi -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'skalb';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/';
+        var disqus_url = 'http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

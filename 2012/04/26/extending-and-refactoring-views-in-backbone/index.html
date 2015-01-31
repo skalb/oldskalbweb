@@ -1,0 +1,691 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Extending and Refactoring Views in Backbone.js - skalb.com</title>
+  <meta name="author" content="Sameer Kalburgi">
+
+  
+  <meta name="description" content="In a previous post, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn&rsquo;t &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://feeds.feedburner.com/skalb" rel="alternate" title="skalb.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-19284849-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">skalb.com</a></h1>
+  
+    <h2>By Sameer Kalburgi.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/skalb" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="www.skalb.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Extending and Refactoring Views in Backbone.js</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-04-26T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In a <a href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/">previous post</a>, I built an example single page app using Backbone. One thing that bothered me was how similar the views are, yet didn&rsquo;t share any code. I think part of this was that I originally scaffolded the entire app and worked backwards.</p>
+
+<!--more-->
+
+
+<p>For example, here&rsquo;s Project vs Feature Index Templates:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing projects&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;table id="projects-table">
+</span><span class='line'>  &lt;tr>
+</span><span class='line'>    &lt;th>Name&lt;/th>
+</span><span class='line'>    &lt;th>&lt;/th>
+</span><span class='line'>  &lt;/tr>
+</span><span class='line'>&lt;/table></span></code></pre></td></tr></table></div></figure>
+
+
+<p>vs.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing features&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;table id="features-table">
+</span><span class='line'>  &lt;tr>
+</span><span class='line'>    &lt;th>Name&lt;/th>
+</span><span class='line'>    &lt;th>&lt;/th>
+</span><span class='line'>  &lt;/tr>
+</span><span class='line'>&lt;/table></span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is easily refactored to:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing &lt;%= type %>&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;table id="items-table">
+</span><span class='line'>  &lt;tr>
+</span><span class='line'>    &lt;th>Name&lt;/th>
+</span><span class='line'>    &lt;th>&lt;/th>
+</span><span class='line'>  &lt;/tr>
+</span><span class='line'>&lt;/table></span></code></pre></td></tr></table></div></figure>
+
+
+<p>Similarly, the New View changed from:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>New project&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;form id="new-project" name="project">
+</span><span class='line'>  &lt;div class="field">
+</span><span class='line'>    &lt;label for="name"> name:&lt;/label>
+</span><span class='line'>    &lt;input type="text" name="name" id="name" value="&lt;%= name %>" >
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>  &lt;div class="actions">
+</span><span class='line'>    &lt;input type="submit" value="Create Project" />
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>&lt;/form></span></code></pre></td></tr></table></div></figure>
+
+
+<p>to</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>New &lt;%= type %>&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;form id="new-item">
+</span><span class='line'>  &lt;div class="field">
+</span><span class='line'>    &lt;label for="name"> name:&lt;/label>
+</span><span class='line'>    &lt;input type="text" name="name" id="name" value="&lt;%= name %>" >
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>  &lt;div class="actions">
+</span><span class='line'>    &lt;input type="submit" value="Create &lt;%= type %>" />
+</span><span class='line'>  &lt;/div>
+</span><span class='line'>
+</span><span class='line'>&lt;/form></span></code></pre></td></tr></table></div></figure>
+
+
+<p>Great, that was easy and now I just reduced my total Templates. To share functionality between the Views I needed to create a base View class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">IndexView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/index&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;reset&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;sync&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">addAll: </span><span class="nf">() =&gt;</span>
+</span><span class='line'>    <span class="c1"># This shouldn&#39;t be needed, but for some reason</span>
+</span><span class='line'>    <span class="c1"># lists are rendered twice</span>
+</span><span class='line'>    <span class="nx">@$</span><span class="p">(</span><span class="s">&quot;tbody&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">@addOne</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">addOne: </span><span class="nf">(item) =&gt;</span>
+</span><span class='line'>    <span class="nv">item.collection = </span><span class="nx">@options</span><span class="p">.</span><span class="nx">items</span>
+</span><span class='line'>    <span class="nx">@$</span><span class="p">(</span><span class="s">&quot;tbody&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">@getView</span><span class="p">({</span><span class="nv">model: </span><span class="nx">item</span><span class="p">}).</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">=&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nv">type: </span><span class="nx">@options</span><span class="p">.</span><span class="nx">type</span><span class="p">))</span>
+</span><span class='line'>    <span class="nx">@addAll</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>First thing to note is that this View has an initialize method. But that method will never be called automatically because we&rsquo;re going to extend this View into a new class and create an instance of the subclass instead. Also note that we&rsquo;re calling a function getView() that isn&rsquo;t defined in this class.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1">#= require ../index_view</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">IndexView</span> <span class="k">extends</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">IndexView</span>
+</span><span class='line'>  <span class="nv">initialize: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="k">super</span>
+</span><span class='line'>    <span class="vi">@options.type = </span><span class="s">&quot;Projects&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">getView: </span><span class="nf">(options) =&gt;</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">ProjectView</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can call the into the parent class by using super in this view&rsquo;s initialize. This is just a <a href="http://coffeescript.org/#classes">CoffeeScript shortcut</a> to apply the same arguments to the parent&rsquo;s constructor. I&rsquo;ve also explicitly required the parent View class since Rails does not guarantee which order JavaScript files will be loaded in the browser. The getView function here creates the correct ItemView based off the Project model.</p>
+
+<p>The New item View shown below is generic enough that it did not need to be extended for each model.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/new&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">events:</span>
+</span><span class='line'>    <span class="s">&quot;submit #new-item&quot;</span><span class="o">:</span> <span class="s">&quot;save&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">save: </span><span class="nf">(e) -&gt;</span>
+</span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">()</span>
+</span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">name = </span><span class="nx">@</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-item #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nx">name</span>
+</span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-item #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">@collection</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nv">name: </span><span class="nx">name</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nv">type: </span><span class="nx">@options</span><span class="p">.</span><span class="nx">type</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The Item View is a bit trickier because it contained the select handling for when an item was clicked. To be able to reuse the handling, I had to make the load methods consistently named loadChildren as shown below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Project</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span>
+</span><span class='line'>  <span class="nv">paramRoot: </span><span class="s">&#39;project&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">defaults:</span>
+</span><span class='line'>    <span class="nv">name: </span><span class="kc">null</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">loadChildren: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="vi">@children = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">FeaturesCollection</span><span class="p">([],</span> <span class="p">{</span><span class="nv">project_url: </span><span class="nx">@url</span><span class="p">()});</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Collections</span><span class="p">.</span><span class="nx">ProjectsCollection</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Collection</span>
+</span><span class='line'>  <span class="nv">model: </span><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Models</span><span class="p">.</span><span class="nx">Project</span>
+</span><span class='line'>  <span class="nv">url: </span><span class="s">&#39;/projects&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One thing to point out in the Item View base class is that I believe I could have used the <a href="http://coffeescript.org/#fat_arrow">fat arrow</a> to retain the correct context.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">ItemView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/item&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">events:</span>
+</span><span class='line'>    <span class="s">&quot;click .select&quot;</span> <span class="o">:</span> <span class="s">&quot;select&quot;</span>
+</span><span class='line'>    <span class="s">&quot;click .destroy&quot;</span> <span class="o">:</span> <span class="s">&quot;destroy&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">tagName: </span><span class="s">&quot;tr&quot;</span>
+</span><span class='line'>  <span class="nv">className: </span><span class="s">&quot;item&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">select: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nx">@model</span><span class="p">.</span><span class="nx">loadChildren</span>
+</span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">toggleSelected</span><span class="p">(</span><span class="nx">@el</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">@model</span><span class="p">.</span><span class="nx">loadChildren</span><span class="p">()</span>
+</span><span class='line'>      <span class="nx">do</span> <span class="nf">(@model, @renderChildren) -&gt;</span>
+</span><span class='line'>        <span class="nx">@model</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span>
+</span><span class='line'>          <span class="nv">success: </span><span class="nx">@renderChildren</span><span class="p">(</span><span class="nx">@model</span><span class="p">.</span><span class="nx">children</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>        <span class="nx">@model</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">destroy: </span><span class="nf">() -&gt;</span>
+</span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">render: </span><span class="nf">-&gt;</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nx">@model</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span> <span class="p">))</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now the actual Project view only had to define how to render it&rsquo;s children.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1">#= require ../item_view</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">ProjectView</span> <span class="k">extends</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">ItemView</span>
+</span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/item&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">renderChildren: </span><span class="nf">(children) -&gt;</span>
+</span><span class='line'>    <span class="nv">featuresView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Features</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">items: </span><span class="nx">children</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">featuresView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># We should probably only render this once instead of each load</span>
+</span><span class='line'>    <span class="nv">newFeaturesView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">children</span><span class="p">,</span> <span class="nv">type: </span><span class="s">&quot;Features&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">newFeaturesView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, here&rsquo;s the <a href="http://young-flower-9677.herokuapp.com/%22>demo&lt;/a>%20and%20&lt;a%20href=%22https://github.com/skalb/trackbone/tree/version2&#8221;>source</a>.</p>
+
+<p>I think this is a big improvement over the first version, though it&rsquo;s not quite as good as it could be. Having the loadChildren logic in the views doesn&rsquo;t really make sense, but I&rsquo;m leaving those changes for when I implement permalinks.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Sameer Kalburgi</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-04-26T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/backbone/'>backbone</a>, <a class='category' href='/categories/coffeescript/'>coffeescript</a>, <a class='category' href='/categories/rails/'>rails</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/" data-via="sameerkalburgi" data-counturl="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/" title="Previous Post: How to (easily) handle model relationships in Rails and Backbone.js">&laquo; How to (easily) handle model relationships in Rails and Backbone.js</a>
+      
+      
+        <a class="basic-alignment right" href="/2012/04/30/handling-permalinks-in-backbone-js-with-routers/" title="Next Post: Handling permalinks in Backbone.js with Routers">Handling permalinks in Backbone.js with Routers &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/2013/07/04/simpleshop-pure-javascript-photo-editing/">Simpleshop: Pure JavaScript Photo Editing</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/04/23/server-side-auto-complete-using-nodejs/">Server Side Airport Autocomplete Using NodeJS</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2013/01/20/multi-color-heat-map-in-javascript/">Multi-color Heat Map in JavaScript</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/25/using-sinon-spys-with-meteor-collections/">Using Sinon Spys With Meteor Collections</a>
+      </li>
+    
+      <li class="post">
+        <a href="/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/">Testing Backbone Routers in Meteor With Mocha</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/skalb">@skalb</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'skalb',
+            count: 5,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/100596472903145614776?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Sameer Kalburgi -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'skalb';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/';
+        var disqus_url = 'http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
