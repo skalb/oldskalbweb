@@ -4,11 +4,7 @@
   <title><![CDATA[skalb.com]]></title>
   <link href="http://www.skalb.com/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-<<<<<<< HEAD
-  <updated>2015-01-31T14:16:33-08:00</updated>
-=======
-  <updated>2014-07-13T14:55:20-07:00</updated>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
+  <updated>2015-01-31T18:56:54-08:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -18,11 +14,7 @@
 
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Simpleshop: Pure JavaScript Photo Editing]]></title>
-=======
-    <title type="html"><![CDATA[Simpleshop: pure JavaScript photo editing]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing/"/>
     <updated>2013-07-04T17:00:00-07:00</updated>
     <id>http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing</id>
@@ -49,11 +41,7 @@
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Server Side Airport Autocomplete Using NodeJS]]></title>
-=======
-    <title type="html"><![CDATA[Server side airport autocomplete using NodeJS]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/"/>
     <updated>2013-04-23T15:47:00-07:00</updated>
     <id>http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs</id>
@@ -138,11 +126,7 @@
 
 <p>The dataset for this example is going to be airports and their codes. I wanted to be able to intelligently handle for the case where the user enters either the airport code or the name since most travel sites operate this way.</p>
 
-<<<<<<< HEAD
 <p><a href="http://www.skalb.com/assets/airports.dat">Airports.dat</a> - format name|code</p>
-=======
-<p><a href="http://www.skalb.com/assets/airports.dat">Airports.dat</a> &ndash; format name|code</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>We need to keep lookups in memory to present the user with the properly capitalized airport name. During the actual autocomplete search, we will only use lowercased entries and input. Therefore, we need to keep track of three things:</p>
 
@@ -304,11 +288,7 @@
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Multi-color Heat Map in JavaScript]]></title>
-=======
-    <title type="html"><![CDATA[Multi-color heat map in JavaScript]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2013/01/20/multi-color-heat-map-in-javascript/"/>
     <updated>2013-01-20T00:00:00-08:00</updated>
     <id>http://www.skalb.com/2013/01/20/multi-color-heat-map-in-javascript</id>
@@ -399,11 +379,7 @@
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Using Sinon Spys With Meteor Collections]]></title>
-=======
-    <title type="html"><![CDATA[Using Sinon Spys with Meteor Collections]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections/"/>
     <updated>2012-08-25T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections</id>
@@ -464,20 +440,12 @@
 </span><span class='line'><span class="k">class</span> <span class="nx">SampleRouterFactory</span>
 </span><span class='line'>  <span class="nv">constructor: </span><span class="nf">(@Backbone, @Items) -&gt;</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nv">getRouter: </span><span class="nf">() -&gt;</span>
-=======
-</span><span class='line'>  <span class="nv">getRouter: </span><span class="p">()</span> <span class="nf">-&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="nv">SampleRouter = </span><span class="nx">@Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span>
 </span><span class='line'>      <span class="nv">routes:</span>
 </span><span class='line'>        <span class="s">&quot;&quot;</span><span class="o">:</span> <span class="s">&quot;index&quot;</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>      <span class="nv">index: </span><span class="nf">=&gt;</span>
-=======
-</span><span class='line'>      <span class="nv">index: </span><span class="o">=&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>        <span class="nv">items = </span><span class="nx">@Items</span><span class="p">.</span><span class="nx">find</span><span class="p">()</span>
 </span><span class='line'>    <span class="p">)</span>
 </span><span class='line'>    <span class="k">new</span> <span class="nx">SampleRouter</span>
@@ -547,11 +515,7 @@
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Testing Backbone Routers in Meteor With Mocha]]></title>
-=======
-    <title type="html"><![CDATA[Testing Backbone Routers in Meteor with Mocha]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/"/>
     <updated>2012-08-20T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha</id>
@@ -642,11 +606,7 @@
 </span><span class='line'><span class="k">class</span> <span class="nx">SampleRouterFactory</span>
 </span><span class='line'>  <span class="nv">constructor: </span><span class="nf">(@Backbone) -&gt;</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nv">getRouter: </span><span class="nf">() -&gt;</span>
-=======
-</span><span class='line'>  <span class="nv">getRouter: </span><span class="p">()</span> <span class="nf">-&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="nv">SampleRouter = </span><span class="nx">@Backbone</span><span class="p">.</span><span class="nx">Router</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span>
 </span><span class='line'>      <span class="nv">routes:</span>
 </span><span class='line'>        <span class="s">&quot;&quot;</span><span class="o">:</span> <span class="s">&quot;index&quot;</span>
@@ -709,11 +669,7 @@
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Testing With Meteor, CoffeeScript and Mocha]]></title>
-=======
-    <title type="html"><![CDATA[Testing with Meteor, CoffeeScript and Mocha]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/"/>
     <updated>2012-08-19T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha</id>
@@ -759,11 +715,7 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 </pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nx">describe</span> <span class="s">&quot;Array&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nx">describe</span> <span class="s">&quot;#indexOf()&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-=======
-</span><span class='line'>  <span class="nx">describe</span> <span class="s">&quot;</span><span class="err">#</span><span class="s">indexOf()&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="nx">it</span> <span class="s">&quot;should return -1 when the value is not present&quot;</span><span class="p">,</span> <span class="nf">-&gt;</span>
 </span><span class='line'>      <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="nx">indexOf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </span><span class='line'>      <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="nx">indexOf</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -775,15 +727,9 @@
 <p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha">Source code here.</a></p>
 
 <p>Some notes:
-<<<<<<< HEAD
 - The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
 - When using Mocha watch, sometimes a failing test result would be outputted many times
 - <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
-=======
-&ndash; The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
-&ndash; When using Mocha watch, sometimes a failing test result would be outputted many times
-&ndash; <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 ]]></content>
   </entry>
   
@@ -803,22 +749,14 @@
 
 <p>My biggest complaint is that for a book with a chapter titled <span style="text-decoration: underline;">Content Is King</span>, I would have expected a larger part devoted to actually writing content. Since the author runs a successful programming blog, I would have loved to see an analysis of which posts were popular and why they were popular. Or alternatively an analysis of current popular technical blogs and what they do well. I could see that the author felt people shouldn&rsquo;t clone other popular sites and instead &ldquo;develop your own voice&rdquo; as he puts it, but I think there could have been a better balance.</p>
 
-<<<<<<< HEAD
 <p>Although this book does have &ldquo;technical&rdquo; in it, I definitely think it&rsquo;s broader than that. As I mentioned, it&rsquo;s more targeted to technical people but not necessarily writing technical content. Most of the recommendations are really just about good blogging.</p>
-=======
-<p>Although this book does have &ldquo;technical&rdquo; in it, I definitely think it&rsquo;s broader than that. As I mentioned, it&rsquo;s more targeted to technical people but not necessarily writing technical content. Most of the recommendations are really just about good blogging.</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>I would definitely recommend this <a href="http://www.amazon.com/gp/product/1934356883/ref=as_li_qf_sp_asin_tl?ie=UTF8&amp;tag=skalbontechno-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1934356883">book</a><img style="border: none !important; margin: 0px !important;" src="http://www.assoc-amazon.com/e/ir?t=skalbontechno-20&amp;l=as2&amp;o=1&amp;a=1934356883" alt="" width="1" height="1" border="0" /> to anyone interested in blogging. Above all, I think it will make you excited to start a blog.</p>
 ]]></content>
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Handling Permalinks in Backbone.js With Routers]]></title>
-=======
-    <title type="html"><![CDATA[Handling permalinks in Backbone.js with Routers]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/04/30/handling-permalinks-in-backbone-js-with-routers/"/>
     <updated>2012-04-30T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/04/30/handling-permalinks-in-backbone-js-with-routers</id>
@@ -842,15 +780,9 @@
 <p>I need:</p>
 
 <ul>
-<<<<<<< HEAD
 <li>Home page -> Load list of projects</li></li>
 <li>Selected project -> Load list of projects and features</li></li>
 <li>Selected feature -> Load list of projects, features, and bugs</li></li>
-=======
-<li>Home page &ndash;> Load list of projects</li></li>
-<li>Selected project &ndash;> Load list of projects and features</li></li>
-<li>Selected feature &ndash;> Load list of projects, features, and bugs</li></li>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </ul>
 
 
@@ -900,30 +832,18 @@
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 </pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="nv">clearType: </span><span class="nf">(model) -&gt;</span>
-<<<<<<< HEAD
 </span><span class='line'> <span class="err"> </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
 </span><span class='line'> <span class="err"> </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-=======
-</span><span class='line'> <span class="err"> </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">list-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-</span><span class='line'> <span class="err"> </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>
 </span><span class='line'><span class="nv">renderView: </span><span class="nf">(selector, view) -&gt;</span>
 </span><span class='line'> <span class="err"> </span><span class="nx">$</span><span class="p">(</span><span class="nx">selector</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'><span class="nv">renderViews: </span><span class="nf">(items, item_id, type) -&gt;</span>
 </span><span class='line'> <span class="err"> </span><span class="nv">indexView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">items: </span><span class="nx">items</span><span class="p">,</span> <span class="nv">id: </span><span class="nx">item_id</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span><span class="p">)</span>
-<<<<<<< HEAD
 </span><span class='line'> <span class="err"> </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;#list-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">indexView</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'> <span class="err"> </span><span class="nv">newView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">items</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span><span class="p">)</span>
 </span><span class='line'> <span class="err"> </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;#new-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">newView</span><span class="p">)</span>
-=======
-</span><span class='line'> <span class="err"> </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">list-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">indexView</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'> <span class="err"> </span><span class="nv">newView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">items</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span><span class="p">)</span>
-</span><span class='line'> <span class="err"> </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">newView</span><span class="p">)</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -941,11 +861,7 @@
 </span><span class='line'> <span class="err"> </span><span class="nv">item = </span><span class="nx">items</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">item_id</span><span class="p">)</span>
 </span><span class='line'> <span class="err"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">loadChildren</span><span class="p">()</span>
 </span><span class='line'> <span class="err"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span>
-<<<<<<< HEAD
 </span><span class='line'> <span class="err">   </span><span class="nv">success: </span><span class="nf">=&gt;</span>
-=======
-</span><span class='line'> <span class="err">   </span><span class="nv">success: </span><span class="o">=&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'> <span class="err">     </span><span class="nx">@</span><span class="p">[</span><span class="nx">callback</span><span class="p">](</span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="nx">child_ids</span><span class="p">.</span><span class="nx">shift</span><span class="p">(),</span> <span class="nx">child_ids</span><span class="p">)</span>
 </span><span class='line'> <span class="err"> </span><span class="p">)</span>
 </span><span class='line'> <span class="err"> </span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
@@ -1016,23 +932,14 @@
 </span><span class='line'> <span class="err">   </span><span class="s">&quot;projects/:project_id/features/:feature_id/*&quot;</span> <span class="o">:</span> <span class="s">&quot;showProjects&quot;</span>
 </span><span class='line'>
 </span><span class='line'> <span class="err"> </span><span class="nv">clearType: </span><span class="nf">(model) -&gt;</span>
-<<<<<<< HEAD
 </span><span class='line'> <span class="err">   </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
 </span><span class='line'> <span class="err">   </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-=======
-</span><span class='line'> <span class="err">   </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">list-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-</span><span class='line'> <span class="err">   </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-</span><span class="si">#{</span><span class="nx">model</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>
 </span><span class='line'> <span class="err"> </span><span class="nv">loadChildren: </span><span class="nf">(items, item_id, child_ids, callback) -&gt;</span>
 </span><span class='line'> <span class="err">   </span><span class="nv">item = </span><span class="nx">items</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">item_id</span><span class="p">)</span>
 </span><span class='line'> <span class="err">   </span><span class="nx">item</span><span class="p">.</span><span class="nx">loadChildren</span><span class="p">()</span>
 </span><span class='line'> <span class="err">   </span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span>
-<<<<<<< HEAD
 </span><span class='line'> <span class="err">     </span><span class="nv">success: </span><span class="nf">=&gt;</span>
-=======
-</span><span class='line'> <span class="err">     </span><span class="nv">success: </span><span class="o">=&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'> <span class="err">       </span><span class="nx">@</span><span class="p">[</span><span class="nx">callback</span><span class="p">](</span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="nx">child_ids</span><span class="p">.</span><span class="nx">shift</span><span class="p">(),</span> <span class="nx">child_ids</span><span class="p">)</span>
 </span><span class='line'> <span class="err">   </span><span class="p">)</span>
 </span><span class='line'> <span class="err">   </span><span class="nx">item</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
@@ -1042,17 +949,10 @@
 </span><span class='line'>
 </span><span class='line'> <span class="err"> </span><span class="nv">renderViews: </span><span class="nf">(items, item_id, type) -&gt;</span>
 </span><span class='line'> <span class="err">   </span><span class="nv">indexView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">items: </span><span class="nx">items</span><span class="p">,</span> <span class="nv">id: </span><span class="nx">item_id</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span><span class="p">)</span>
-<<<<<<< HEAD
 </span><span class='line'> <span class="err">   </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;#list-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">indexView</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'> <span class="err">   </span><span class="nv">newView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">items</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span><span class="p">)</span>
 </span><span class='line'> <span class="err">   </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;#new-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">newView</span><span class="p">)</span>
-=======
-</span><span class='line'> <span class="err">   </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">list-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">indexView</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'> <span class="err">   </span><span class="nv">newView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">items</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span><span class="p">)</span>
-</span><span class='line'> <span class="err">   </span><span class="nx">@renderView</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-</span><span class="si">#{</span><span class="nx">type</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">newView</span><span class="p">)</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>
 </span><span class='line'> <span class="err"> </span><span class="nv">showProjects: </span><span class="nf">(project_id, feature_id, bug_id) -&gt;</span>
 </span><span class='line'> <span class="err">   </span><span class="nx">@renderViews</span><span class="p">(</span><span class="nx">@projects</span><span class="p">,</span> <span class="nx">project_id</span><span class="p">,</span> <span class="s">&quot;Projects&quot;</span><span class="p">)</span>
@@ -1111,11 +1011,7 @@
 </span><span class='line'> <span class="err"> </span><span class="nv">tagName: </span><span class="s">&quot;tr&quot;</span>
 </span><span class='line'> <span class="err"> </span><span class="nv">className: </span><span class="s">&quot;item&quot;</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'> <span class="err"> </span><span class="nv">destroy: </span><span class="nf">() -&gt;</span>
-=======
-</span><span class='line'> <span class="err"> </span><span class="nv">destroy: </span><span class="p">()</span> <span class="nf">-&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'> <span class="err">   </span><span class="nx">@model</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
 </span><span class='line'> <span class="err">   </span><span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
 </span><span class='line'>
@@ -1137,11 +1033,7 @@
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Extending and Refactoring Views in Backbone.js]]></title>
-=======
-    <title type="html"><![CDATA[Extending and refactoring views in Backbone.js]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/"/>
     <updated>2012-04-26T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone</id>
@@ -1152,11 +1044,7 @@
 
 <p>For example, here&rsquo;s Project vs Feature Index Templates:</p>
 
-<<<<<<< HEAD
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-=======
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1164,7 +1052,6 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-<<<<<<< HEAD
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing projects&lt;/h1>
 </span><span class='line'>
 </span><span class='line'>&lt;table id="projects-table">
@@ -1173,30 +1060,11 @@
 </span><span class='line'>    &lt;th>&lt;/th>
 </span><span class='line'>  &lt;/tr>
 </span><span class='line'>&lt;/table></span></code></pre></td></tr></table></div></figure>
-=======
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;h1&gt;</span>Listing projects<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">&quot;projects-table&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;tr&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/tr&gt;</span>
-</span><span class='line'><span class="nt">&lt;/table&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;br/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 
 <p>vs.</p>
 
-<<<<<<< HEAD
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-=======
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1204,7 +1072,6 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-<<<<<<< HEAD
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing features&lt;/h1>
 </span><span class='line'>
 </span><span class='line'>&lt;table id="features-table">
@@ -1213,30 +1080,11 @@
 </span><span class='line'>    &lt;th>&lt;/th>
 </span><span class='line'>  &lt;/tr>
 </span><span class='line'>&lt;/table></span></code></pre></td></tr></table></div></figure>
-=======
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;h1&gt;</span>Listing features<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">&quot;features-table&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;tr&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/tr&gt;</span>
-</span><span class='line'><span class="nt">&lt;/table&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;br/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 
 <p>This is easily refactored to:</p>
 
-<<<<<<< HEAD
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-=======
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1244,7 +1092,6 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-<<<<<<< HEAD
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing &lt;%= type %>&lt;/h1>
 </span><span class='line'>
 </span><span class='line'>&lt;table id="items-table">
@@ -1253,30 +1100,11 @@
 </span><span class='line'>    &lt;th>&lt;/th>
 </span><span class='line'>  &lt;/tr>
 </span><span class='line'>&lt;/table></span></code></pre></td></tr></table></div></figure>
-=======
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;h1&gt;</span>Listing <span class="err">&lt;</span>%= type %&gt;<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">&quot;items-table&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;tr&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/tr&gt;</span>
-</span><span class='line'><span class="nt">&lt;/table&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;br/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 
 <p>Similarly, the New View changed from:</p>
 
-<<<<<<< HEAD
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-=======
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1289,7 +1117,6 @@
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-<<<<<<< HEAD
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>New project&lt;/h1>
 </span><span class='line'>
 </span><span class='line'>&lt;form id="new-project" name="project">
@@ -1303,31 +1130,11 @@
 </span><span class='line'>  &lt;/div>
 </span><span class='line'>
 </span><span class='line'>&lt;/form></span></code></pre></td></tr></table></div></figure>
-=======
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;h1&gt;</span>New project<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">&quot;new-project&quot;</span> <span class="na">name=</span><span class="s">&quot;project&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;field&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span> name:<span class="nt">&lt;/label&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span> <span class="na">value=</span><span class="s">&quot;&lt;%= name %&gt;&quot;</span> <span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;actions&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Create Project&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;/form&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 
 <p>to</p>
 
-<<<<<<< HEAD
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-=======
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1340,7 +1147,6 @@
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-<<<<<<< HEAD
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>New &lt;%= type %>&lt;/h1>
 </span><span class='line'>
 </span><span class='line'>&lt;form id="new-item">
@@ -1354,22 +1160,6 @@
 </span><span class='line'>  &lt;/div>
 </span><span class='line'>
 </span><span class='line'>&lt;/form></span></code></pre></td></tr></table></div></figure>
-=======
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;h1&gt;</span>New <span class="err">&lt;</span>%= type %&gt;<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">&quot;new-item&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;field&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span> name:<span class="nt">&lt;/label&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span> <span class="na">value=</span><span class="s">&quot;&lt;%= name %&gt;&quot;</span> <span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;actions&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Create &lt;%= type %&gt;&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;/form&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 
 <p>Great, that was easy and now I just reduced my total Templates. To share functionality between the Views I needed to create a base View class:</p>
@@ -1404,19 +1194,11 @@
 </span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">IndexView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
 </span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/index&quot;</span><span class="p">]</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nv">initialize: </span><span class="nf">() -&gt;</span>
 </span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;reset&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
 </span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;sync&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">addAll: </span><span class="nf">() =&gt;</span>
-=======
-</span><span class='line'>  <span class="nv">initialize: </span><span class="p">()</span> <span class="nf">-&gt;</span>
-</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;reset&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
-</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;sync&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nv">addAll: </span><span class="p">()</span> <span class="o">=&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="c1"># This shouldn&#39;t be needed, but for some reason</span>
 </span><span class='line'>    <span class="c1"># lists are rendered twice</span>
 </span><span class='line'>    <span class="nx">@$</span><span class="p">(</span><span class="s">&quot;tbody&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
@@ -1427,11 +1209,7 @@
 </span><span class='line'>    <span class="nv">item.collection = </span><span class="nx">@options</span><span class="p">.</span><span class="nx">items</span>
 </span><span class='line'>    <span class="nx">@$</span><span class="p">(</span><span class="s">&quot;tbody&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">@getView</span><span class="p">({</span><span class="nv">model: </span><span class="nx">item</span><span class="p">}).</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nv">render: </span><span class="nf">=&gt;</span>
-=======
-</span><span class='line'>  <span class="nv">render: </span><span class="o">=&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nv">type: </span><span class="nx">@options</span><span class="p">.</span><span class="nx">type</span><span class="p">))</span>
 </span><span class='line'>    <span class="nx">@addAll</span><span class="p">()</span>
 </span><span class='line'>
@@ -1457,11 +1235,7 @@
 </span><span class='line'><span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span> <span class="o">||=</span> <span class="p">{}</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">IndexView</span> <span class="k">extends</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">IndexView</span>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nv">initialize: </span><span class="nf">() -&gt;</span>
-=======
-</span><span class='line'>  <span class="nv">initialize: </span><span class="p">()</span> <span class="nf">-&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="k">super</span>
 </span><span class='line'>    <span class="vi">@options.type = </span><span class="s">&quot;Projects&quot;</span>
 </span><span class='line'>
@@ -1501,25 +1275,15 @@
 </span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/new&quot;</span><span class="p">]</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">events:</span>
-<<<<<<< HEAD
 </span><span class='line'>    <span class="s">&quot;submit #new-item&quot;</span><span class="o">:</span> <span class="s">&quot;save&quot;</span>
-=======
-</span><span class='line'>    <span class="s">&quot;submit </span><span class="err">#</span><span class="s">new-item&quot;</span><span class="o">:</span> <span class="s">&quot;save&quot;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">save: </span><span class="nf">(e) -&gt;</span>
 </span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">()</span>
 </span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>    <span class="nv">name = </span><span class="nx">@</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-item #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
 </span><span class='line'>    <span class="k">if</span> <span class="nx">name</span>
 </span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-item #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-=======
-</span><span class='line'>    <span class="nv">name = </span><span class="nx">@</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-item </span><span class="err">#</span><span class="s">name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">if</span> <span class="nx">name</span>
-</span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-item </span><span class="err">#</span><span class="s">name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>      <span class="nx">@collection</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nv">name: </span><span class="nx">name</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">render: </span><span class="nf">-&gt;</span>
@@ -1603,11 +1367,7 @@
 </span><span class='line'>  <span class="nv">tagName: </span><span class="s">&quot;tr&quot;</span>
 </span><span class='line'>  <span class="nv">className: </span><span class="s">&quot;item&quot;</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nv">select: </span><span class="nf">() -&gt;</span>
-=======
-</span><span class='line'>  <span class="nv">select: </span><span class="p">()</span> <span class="nf">-&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="k">if</span> <span class="nx">@model</span><span class="p">.</span><span class="nx">loadChildren</span>
 </span><span class='line'>      <span class="nb">window</span><span class="p">.</span><span class="nx">toggleSelected</span><span class="p">(</span><span class="nx">@el</span><span class="p">)</span>
 </span><span class='line'>      <span class="nx">@model</span><span class="p">.</span><span class="nx">loadChildren</span><span class="p">()</span>
@@ -1617,11 +1377,7 @@
 </span><span class='line'>        <span class="p">)</span>
 </span><span class='line'>        <span class="nx">@model</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nv">destroy: </span><span class="nf">() -&gt;</span>
-=======
-</span><span class='line'>  <span class="nv">destroy: </span><span class="p">()</span> <span class="nf">-&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
 </span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
 </span><span class='line'>
@@ -1661,7 +1417,6 @@
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">renderChildren: </span><span class="nf">(children) -&gt;</span>
 </span><span class='line'>    <span class="nv">featuresView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Features</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">items: </span><span class="nx">children</span><span class="p">)</span>
-<<<<<<< HEAD
 </span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">featuresView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="c1"># We should probably only render this once instead of each load</span>
@@ -1670,16 +1425,6 @@
 </span><span class='line'>
 </span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
 </span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-=======
-</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">list-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">featuresView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1"># We should probably only render this once instead of each load</span>
-</span><span class='line'>    <span class="nv">newFeaturesView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">children</span><span class="p">,</span> <span class="nv">type: </span><span class="s">&quot;Features&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">newFeaturesView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">list-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1690,11 +1435,7 @@
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[How to (Easily) Handle Model Relationships in Rails and Backbone.js]]></title>
-=======
-    <title type="html"><![CDATA[How to (easily) handle model relationships in Rails and Backbone.js]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/"/>
     <updated>2012-04-23T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js</id>
@@ -1745,11 +1486,7 @@
 <span class='line-number'>9</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">root</span> <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="s2">&quot;home#index&quot;</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'><span class="no">Trackbone</span><span class="o">::</span><span class="no">Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
-=======
-</span><span class='line'><span class="ss">Trackbone</span><span class="p">:</span><span class="ss">:Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>  <span class="n">resources</span> <span class="ss">:projects</span> <span class="k">do</span>
 </span><span class='line'>    <span class="n">resources</span> <span class="ss">:features</span> <span class="k">do</span>
 </span><span class='line'>      <span class="n">resources</span> <span class="ss">:bugs</span>
@@ -1882,17 +1619,10 @@
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">index: </span><span class="nf">-&gt;</span>
 </span><span class='line'>    <span class="vi">@view = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">projects: </span><span class="nx">@projects</span><span class="p">)</span>
-<<<<<<< HEAD
 </span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-projects&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="vi">@newProjectView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">@projects</span><span class="p">)</span>
 </span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-projects&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@newProjectView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
-=======
-</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">list-projects&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="vi">@newProjectView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">@projects</span><span class="p">)</span>
-</span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-projects&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@newProjectView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1953,27 +1683,15 @@
 
 <p>To display our Project data we need three templates: index to list projects, project for a specific item, and new to create a project.</p>
 
-<<<<<<< HEAD
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;td>&lt;a href="#" class="select">&lt;%= name %>&lt;/td>
 </span><span class='line'>&lt;td>[Destroy](#" class="destroy)&lt;/td></span></code></pre></td></tr></table></div></figure>
-=======
-<figure class='code'><figcaption><span>javascripts/backbone/templates/shared/item.jst.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;td&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;#&quot;</span> <span class="na">class=</span><span class="s">&quot;select&quot;</span><span class="nt">&gt;</span><span class="err">&lt;</span>%= name %&gt;<span class="nt">&lt;/td&gt;</span>
-</span><span class='line'><span class="nt">&lt;td&gt;</span>[Destroy](#&quot; class=&quot;destroy)<span class="nt">&lt;/td&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 
 
 
-<<<<<<< HEAD
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-=======
-<figure class='code'><figcaption><span>javascripts/backbone/templates/projects/index.jst.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1983,7 +1701,6 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-<<<<<<< HEAD
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>Listing projects&lt;/h1>
 </span><span class='line'>
 </span><span class='line'>&lt;table id="projects-table">
@@ -1994,28 +1711,11 @@
 </span><span class='line'>&lt;/table>
 </span><span class='line'>
 </span><span class='line'>&lt;br/></span></code></pre></td></tr></table></div></figure>
-=======
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;h1&gt;</span>Listing projects<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">&quot;projects-table&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;tr&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/tr&gt;</span>
-</span><span class='line'><span class="nt">&lt;/table&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;br/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 
 
 
-<<<<<<< HEAD
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-=======
-<figure class='code'><figcaption><span>javascripts/backbone/templates/projects/new.jst.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -2028,7 +1728,6 @@
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-<<<<<<< HEAD
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;h1>New project&lt;/h1>
 </span><span class='line'>
 </span><span class='line'>&lt;form id="new-project" name="project">
@@ -2042,22 +1741,6 @@
 </span><span class='line'>  &lt;/div>
 </span><span class='line'>
 </span><span class='line'>&lt;/form></span></code></pre></td></tr></table></div></figure>
-=======
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;h1&gt;</span>New project<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">&quot;new-project&quot;</span> <span class="na">name=</span><span class="s">&quot;project&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;field&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span> name:<span class="nt">&lt;/label&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">id=</span><span class="s">&quot;name&quot;</span> <span class="na">value=</span><span class="s">&quot;&lt;%= name %&gt;&quot;</span> <span class="nt">&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;actions&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Create Project&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nt">&lt;/form&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 
 <p>These should be fairly self-explanatory. Each template will also need a Backbone View as well.</p>
@@ -2088,30 +1771,18 @@
 </span><span class='line'><span class="k">class</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">IndexView</span> <span class="k">extends</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span>
 </span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/projects/index&quot;</span><span class="p">]</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nv">initialize: </span><span class="nf">() -&gt;</span>
 </span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;reset&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
 </span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;sync&#39;</span><span class="p">,</span> <span class="nx">@render</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">addAll: </span><span class="nf">() =&gt;</span>
-=======
-</span><span class='line'>  <span class="nv">initialize: </span><span class="p">()</span> <span class="nf">-&gt;</span>
-</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;reset&#39;</span><span class="p">,</span> <span class="nx">@addAll</span><span class="p">)</span>
-</span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s">&#39;sync&#39;</span><span class="p">,</span> <span class="nx">@render</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nv">addAll: </span><span class="p">()</span> <span class="o">=&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">@addOne</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">addOne: </span><span class="nf">(project) =&gt;</span>
 </span><span class='line'>    <span class="nv">view = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Projects</span><span class="p">.</span><span class="nx">ProjectView</span><span class="p">({</span><span class="nv">model : </span><span class="nx">project</span><span class="p">})</span>
 </span><span class='line'>    <span class="nx">@$</span><span class="p">(</span><span class="s">&quot;tbody&quot;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nv">render: </span><span class="nf">=&gt;</span>
-=======
-</span><span class='line'>  <span class="nv">render: </span><span class="o">=&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="nx">$</span><span class="p">(</span><span class="nx">@el</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">@template</span><span class="p">(</span><span class="nv">projects: </span><span class="nx">@options</span><span class="p">.</span><span class="nx">projects</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()))</span>
 </span><span class='line'>    <span class="nx">@addAll</span><span class="p">()</span>
 </span><span class='line'>
@@ -2148,25 +1819,15 @@
 </span><span class='line'>  <span class="nv">template: </span><span class="nx">JST</span><span class="p">[</span><span class="s">&quot;backbone/templates/projects/new&quot;</span><span class="p">]</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">events:</span>
-<<<<<<< HEAD
 </span><span class='line'>    <span class="s">&quot;submit #new-project&quot;</span><span class="o">:</span> <span class="s">&quot;save&quot;</span>
-=======
-</span><span class='line'>    <span class="s">&quot;submit </span><span class="err">#</span><span class="s">new-project&quot;</span><span class="o">:</span> <span class="s">&quot;save&quot;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">save: </span><span class="nf">(e) -&gt;</span>
 </span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">()</span>
 </span><span class='line'>    <span class="nx">e</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>    <span class="nv">name = </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-project #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
 </span><span class='line'>    <span class="k">if</span> <span class="nx">name</span>
 </span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#new-project #name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-=======
-</span><span class='line'>    <span class="nv">name = </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-project </span><span class="err">#</span><span class="s">name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">if</span> <span class="nx">name</span>
-</span><span class='line'>      <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-project </span><span class="err">#</span><span class="s">name&quot;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>      <span class="nx">@collection</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nv">name: </span><span class="nx">name</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">render: </span><span class="nf">-&gt;</span>
@@ -2227,17 +1888,12 @@
 </span><span class='line'>  <span class="nv">tagName: </span><span class="s">&quot;tr&quot;</span>
 </span><span class='line'>  <span class="nv">className: </span><span class="s">&quot;item&quot;</span>
 </span><span class='line'>
-<<<<<<< HEAD
 </span><span class='line'>  <span class="nv">select: </span><span class="nf">() -&gt;</span>
-=======
-</span><span class='line'>  <span class="nv">select: </span><span class="p">()</span> <span class="nf">-&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="nb">window</span><span class="p">.</span><span class="nx">toggleSelected</span><span class="p">(</span><span class="nx">@el</span><span class="p">)</span>
 </span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">loadFeatures</span><span class="p">()</span>
 </span><span class='line'>    <span class="nx">do</span> <span class="nf">(@model) -&gt;</span>
 </span><span class='line'>      <span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">fetch</span> <span class="nv">success: </span><span class="nf">-&gt;</span>
 </span><span class='line'>        <span class="nv">featuresView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Features</span><span class="p">.</span><span class="nx">IndexView</span><span class="p">(</span><span class="nv">features: </span><span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>
-<<<<<<< HEAD
 </span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;#list-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">featuresView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>        <span class="c1"># We should probably only render this once instead of each load</span>
@@ -2249,19 +1905,6 @@
 </span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">destroy: </span><span class="nf">() -&gt;</span>
-=======
-</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">list-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">featuresView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1"># We should probably only render this once instead of each load</span>
-</span><span class='line'>        <span class="nv">newFeaturesView = </span><span class="k">new</span> <span class="nx">Trackbone</span><span class="p">.</span><span class="nx">Views</span><span class="p">.</span><span class="nx">Features</span><span class="p">.</span><span class="nx">NewView</span><span class="p">(</span><span class="nv">collection: </span><span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">)</span>
-</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-features&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">newFeaturesView</span><span class="p">.</span><span class="nx">render</span><span class="p">().</span><span class="nx">el</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">list-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">new-bugs&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">fetch</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nv">destroy: </span><span class="p">()</span> <span class="nf">-&gt;</span>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span><span class='line'>    <span class="nx">@model</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
 </span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
 </span><span class='line'>
@@ -2284,22 +1927,14 @@
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Creating a Document Sharing Site With Meteor.js]]></title>
-=======
-    <title type="html"><![CDATA[Creating a document sharing site with Meteor.js]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/04/16/creating-a-document-sharing-site-with-meteor-js/"/>
     <updated>2012-04-16T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/04/16/creating-a-document-sharing-site-with-meteor-js</id>
     <content type="html"><![CDATA[<p><strong>Background:</strong></p>
 
 <p>“Meteor is a set of new technologies for building top-quality web apps in a fraction of the time, whether you&rsquo;re an expert developer or just getting started.”
-<<<<<<< HEAD
 - <a href="http://www.meteor.com">Meteor.com</a></p>
-=======
-&ndash; <a href="http://www.meteor.com">Meteor.com</a></p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p><strong>Goal:</strong></p>
 
@@ -2338,11 +1973,7 @@
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<<<<<<< HEAD
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>curl install.meteor.com <span class="p">|</span> /bin/sh
-=======
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>curl install.meteor.com | /bin/sh
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 </span></code></pre></td></tr></table></div></figure>
 
 

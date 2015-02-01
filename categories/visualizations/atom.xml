@@ -4,11 +4,7 @@
   <title><![CDATA[Category: Visualizations | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/visualizations/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-<<<<<<< HEAD
-  <updated>2015-01-31T14:16:33-08:00</updated>
-=======
-  <updated>2014-07-13T14:55:20-07:00</updated>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
+  <updated>2015-01-31T18:56:54-08:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -18,11 +14,7 @@
 
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Multi-color Heat Map in JavaScript]]></title>
-=======
-    <title type="html"><![CDATA[Multi-color heat map in JavaScript]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2013/01/20/multi-color-heat-map-in-javascript/"/>
     <updated>2013-01-20T00:00:00-08:00</updated>
     <id>http://www.skalb.com/2013/01/20/multi-color-heat-map-in-javascript</id>
@@ -35,11 +27,7 @@
 <!--more-->
 
 
-<<<<<<< HEAD
 <p>&#8220;` javascript</p>
-=======
-<p>``` javascript</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <script type="text/JavaScript">
 $(document).ready(function(){
@@ -77,11 +65,7 @@ $(document).ready(function(){
 </script>
 
 
-<<<<<<< HEAD
 <p>&#8220;`</p>
-=======
-<p>```</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>Here&rsquo;s a working <a href="http://www.skalb.com/assets/jquery-data-heat-map.html">example</a>.</p>
 ]]></content>

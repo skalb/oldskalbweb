@@ -4,11 +4,7 @@
   <title><![CDATA[Category: Meteor | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/meteor/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-<<<<<<< HEAD
-  <updated>2015-01-31T14:16:33-08:00</updated>
-=======
-  <updated>2014-07-13T14:55:20-07:00</updated>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
+  <updated>2015-01-31T18:56:54-08:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -18,11 +14,7 @@
 
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Using Sinon Spys With Meteor Collections]]></title>
-=======
-    <title type="html"><![CDATA[Using Sinon Spys with Meteor Collections]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections/"/>
     <updated>2012-08-25T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections</id>
@@ -35,7 +27,6 @@
 
 <p>Add the new module we need:</p>
 
-<<<<<<< HEAD
 <pre><code class="bash">npm install sinon
 </code></pre>
 
@@ -78,63 +69,11 @@ root.SampleRouterFactory = SampleRouterFactory
   silent: true
   pushState: true
 </code></pre>
-=======
-<p><code>bash
-npm install sinon
-</code></p>
-
-<p>Here&rsquo;s how to use the spy:</p>
-
-<p><code>coffeescript lib/sample_router_factory.coffee
-items =
-  find: sinon.spy()
-</code></p>
-
-<p>Now, let&rsquo;s write our test:</p>
-
-<p><code>coffeescript tests/sample_router_factory_test.coffee
-it "should retrieve all items", -&gt;
-  router.navigate('', true)
-  items.find.called.should.equal true
-</code></p>
-
-<p>This will fail, since we need to first modify our Router to accept a collection as an argument and then call find on it.</p>
-
-<p>``` coffeescript lib/sample_router_factory.coffee
-root = exports ? this</p>
-
-<p>class SampleRouterFactory
-  constructor: (@Backbone, @Items) &ndash;></p>
-
-<p>  getRouter: () &ndash;></p>
-
-<pre><code>SampleRouter = @Backbone.Router.extend(
-  routes:
-    "": "index"
-
-  index: =&gt;
-    items = @Items.find()
-)
-new SampleRouter
-</code></pre>
-
-<p>root.SampleRouterFactory = SampleRouterFactory
-```</p>
-
-<p>This <em>should</em> pass, but yet doesn&rsquo;t. Why? Thinking about the assumption our test is making when using the a Backbone router, it likely depends on Backbone initialization. We can try this in our test, also:</p>
-
-<p><code>coffeescript
-Backbone.history.start
-  silent: true
-  pushState: true
-</code></p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>This doesn&rsquo;t work either because Backbone assumes we are in the browser when accessing <strong>window</strong>. I&rsquo;m pretty sure this is not the approach I want. We don&rsquo;t need to add a dependency on Backbone&rsquo;s internal behavior to test a method of my Router. My previous test verifies that the root path will call an index method, so now I only need to call that index method and validate that behavior. This has the added benefit of simplifying the test.</p>
 
 <p>Here&rsquo;s the final version of my tests:</p>
 
-<<<<<<< HEAD
 <pre><code class="coffeescript tests/sample_router_factory_test.coffee">util = require('util')
 should = require('should')
 Backbone = require('backbone')
@@ -156,47 +95,12 @@ describe "SampleRouter", -&gt;
     items.find.called.should.equal true
 </code></pre>
 
-=======
-<p>``` coffeescript tests/sample_router_factory_test.coffee
-util = require(&lsquo;util&rsquo;)
-should = require(&lsquo;should&rsquo;)
-Backbone = require(&lsquo;backbone&rsquo;)
-sinon = require(&lsquo;sinon&rsquo;)
-SampleRouterFactory = require(&lsquo;../client/lib/sample_router_factory&rsquo;).SampleRouterFactory</p>
-
-<p>describe &ldquo;SampleRouter&rdquo;, &ndash;>
-  items =</p>
-
-<pre><code>find: sinon.spy()
-</code></pre>
-
-<p>  factory = new SampleRouterFactory(Backbone, items)
-  router = factory.getRouter(Backbone)</p>
-
-<p>  it &ldquo;should have an index route&rdquo;, &ndash;></p>
-
-<pre><code>router.routes[''].should.equal('index')
-</code></pre>
-
-<p>  it &ldquo;should retrieve all items when navigating to index&rdquo;, &ndash;></p>
-
-<pre><code>router.index()
-items.find.called.should.equal true
-</code></pre>
-
-<p>```</p>
-
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>A bit roundabout, but in the end what I was trying to accomplish. Source <a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">here</a>.</p>
 ]]></content>
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Testing Backbone Routers in Meteor With Mocha]]></title>
-=======
-    <title type="html"><![CDATA[Testing Backbone Routers in Meteor with Mocha]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/"/>
     <updated>2012-08-20T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha</id>
@@ -209,12 +113,7 @@ items.find.called.should.equal true
 
 <p>Creating the project:</p>
 
-<<<<<<< HEAD
 <pre><code class="bash">meteor create mocha-router
-=======
-<p><code>bash
-meteor create mocha-router
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 meteor add backbone
 meteor add coffeescript
 cd mocha-router
@@ -223,7 +122,6 @@ mkdir server
 mkdir tests
 cd tests
 mkdir lib
-<<<<<<< HEAD
 </code></pre>
 
 <p>When I first installed the modules, I installed them in my project root, but this caused Meteor to try to load them in the both the client/server environment which crashed the Meteor server. Luckily, Meteor will ignore anything in the tests folder so we can install the necessary modules there.</p>
@@ -243,38 +141,12 @@ mocha *.coffee --compilers coffee:coffee-script
 )
 new SampleRouter
 </code></pre>
-=======
-</code></p>
-
-<p>When I first installed the modules, I installed them in my project root, but this caused Meteor to try to load them in the both the client/server environment which crashed the Meteor server. Luckily, Meteor will ignore anything in the tests folder so we can install the necessary modules there.</p>
-
-<p><code>bash
-npm install should
-npm install backbone
-mocha *.coffee --compilers coffee:coffee-script
-</code></p>
-
-<p>My goal was to create a very basic Backbone router test. Normally, I&rsquo;d define the router like so:</p>
-
-<p>``` coffeescript
-SampleRouter = @Backbone.Router.extend(
-  routes:</p>
-
-<pre><code>"": "index"
-</code></pre>
-
-<p>  index: &ndash;>
-)
-new SampleRouter
-```</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>This won&rsquo;t work when running the Mocha tests because it assumes the Meteor framework is present to load Backbone. I solved this by creating a factory for the router and injecting the Backbone module.</p>
 
 <p>Note, I need to put this module in tests/lib so Meteor will make sure to load it first</p>
 
 <p>lib/sample_router_factory.coffee:
-<<<<<<< HEAD
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -310,28 +182,6 @@ new SampleRouter
 </span><span class='line'>
 </span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nv">root.SampleRouterFactory = </span><span class="nx">SampleRouterFactory</span>
 </span></code></pre></td></tr></table></div></figure></p>
-=======
-``` coffeescript
-root = exports ? this</p>
-
-<p>class SampleRouterFactory
-  constructor: (@Backbone) &ndash;></p>
-
-<p>  getRouter: () &ndash;></p>
-
-<pre><code>SampleRouter = @Backbone.Router.extend(
-  routes:
-    "": "index"
-
-  index: -&gt;
-    Session.set "test", "test"
-)
-new SampleRouter
-</code></pre>
-
-<p>root.SampleRouterFactory = SampleRouterFactory
-```</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>Exports is a global object accessible in the nodeJS environment that Mocha runs in. See this <a href="http://visionmedia.github.com/masteringnode/book.html">ebook</a> for more details.</p>
 
@@ -340,7 +190,6 @@ new SampleRouter
 <p>Now, let&rsquo;s look at the test case:</p>
 
 <p>tests/sample_router_factory_test.coffee
-<<<<<<< HEAD
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -360,22 +209,6 @@ new SampleRouter
 </span><span class='line'>  <span class="nx">it</span> <span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">should</span> <span class="nx">have</span> <span class="nx">an</span> <span class="nx">index</span> <span class="nx">router</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;,</span> <span class="nf">-&gt;</span>
 </span><span class='line'>    <span class="nx">router</span><span class="p">.</span><span class="nx">routes</span><span class="p">[</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;].</span><span class="nx">should</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="nx">index</span><span class="o">&amp;</span><span class="nx">rsquo</span><span class="p">;)</span>
 </span></code></pre></td></tr></table></div></figure></p>
-=======
-``` coffeescript
-should = require(&lsquo;should&rsquo;)
-Backbone = require(&lsquo;backbone&rsquo;)
-SampleRouterFactory = require(&lsquo;../client/lib/sample_router_factory&rsquo;).SampleRouterFactory</p>
-
-<p>describe &ldquo;SampleRouter&rdquo;, &ndash;>
-  factory = new SampleRouterFactory(Backbone)
-  router = factory.getRouter(Backbone)
-  it &ldquo;should have an index router&rdquo;, &ndash;></p>
-
-<pre><code>router.routes[''].should.equal('index')
-</code></pre>
-
-<p>```</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>Lastly, in the actual Meteor app I create the app a similar way:</p>
 
@@ -393,11 +226,7 @@ Meteor.startup -&gt;
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Testing With Meteor, CoffeeScript and Mocha]]></title>
-=======
-    <title type="html"><![CDATA[Testing with Meteor, CoffeeScript and Mocha]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/"/>
     <updated>2012-08-19T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha</id>
@@ -419,7 +248,6 @@ Meteor.startup -&gt;
 
 <p>Getting everything running:</p>
 
-<<<<<<< HEAD
 <pre><code class="bash">meteor create mocha
 cd mocha
 meteor add coffeescript
@@ -440,69 +268,26 @@ mocha tests/*.coffee -w -G --compilers coffee:coffee-script
       assert.equal -1, [1, 2, 3].indexOf(0)
 </code></pre>
 
-=======
-<p><code>bash
-meteor create mocha
-cd mocha
-meteor add coffeescript
-</code></p>
-
-<p>Setting up Mocha to watch our coffee files and send Growl notifications:</p>
-
-<p>``` bash</p>
-
-<p>mocha tests/*.coffee -w -G &mdash;compilers coffee:coffee-script</p>
-
-<p>```</p>
-
-<p>Now to create a sample test:</p>
-
-<p>``` coffeescript test.coffee
-describe &ldquo;Array&rdquo;, &ndash;>
-  describe &ldquo;#indexOf()&rdquo;, &ndash;></p>
-
-<pre><code>it "should return -1 when the value is not present", -&gt;
-  assert.equal -1, [1, 2, 3].indexOf(1)
-  assert.equal -1, [1, 2, 3].indexOf(0)
-</code></pre>
-
-<p>```</p>
-
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>Mocha should notice the file change and run the tests showing you the passing test.</p>
 
 <p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha">Source code here.</a></p>
 
 <p>Some notes:
-<<<<<<< HEAD
 - The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
 - When using Mocha watch, sometimes a failing test result would be outputted many times
 - <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
-=======
-&ndash; The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
-&ndash; When using Mocha watch, sometimes a failing test result would be outputted many times
-&ndash; <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 ]]></content>
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Creating a Document Sharing Site With Meteor.js]]></title>
-=======
-    <title type="html"><![CDATA[Creating a document sharing site with Meteor.js]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/04/16/creating-a-document-sharing-site-with-meteor-js/"/>
     <updated>2012-04-16T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/04/16/creating-a-document-sharing-site-with-meteor-js</id>
     <content type="html"><![CDATA[<p><strong>Background:</strong></p>
 
 <p>“Meteor is a set of new technologies for building top-quality web apps in a fraction of the time, whether you&rsquo;re an expert developer or just getting started.”
-<<<<<<< HEAD
 - <a href="http://www.meteor.com">Meteor.com</a></p>
-=======
-&ndash; <a href="http://www.meteor.com">Meteor.com</a></p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p><strong>Goal:</strong></p>
 
@@ -540,20 +325,13 @@ describe &ldquo;Array&rdquo;, &ndash;>
 </ul>
 
 
-<<<<<<< HEAD
 <pre><code class="bash">$ curl install.meteor.com | /bin/sh
 </code></pre>
-=======
-<p><code>bash
-$ curl install.meteor.com | /bin/sh
-</code></p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p><strong>Step 1: Getting things started</strong></p>
 
 <p>Lets create the app:</p>
 
-<<<<<<< HEAD
 <pre><code class="bash">meteor create docshare-tutorial
 </code></pre>
 
@@ -562,33 +340,14 @@ $ curl install.meteor.com | /bin/sh
 <pre><code class="bash">cd docshare-tutorial
 meteor
 </code></pre>
-=======
-<p><code>bash
-meteor create docshare-tutorial
-</code></p>
-
-<p>Now, start the meteor server:</p>
-
-<p><code>bash
-cd docshare-tutorial
-meteor
-</code></p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>You should see the default site at <a href="http://localhost:3000/">http://localhost:3000</a>:</p>
 
 <p>Lastly, add the other packages we are going to use</p>
 
-<<<<<<< HEAD
 <pre><code class="bash">meteor add coffeescript
 meteor add backbone
 </code></pre>
-=======
-<p><code>bash
-meteor add coffeescript
-meteor add backbone
-</code></p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p><strong>Step 2: Setting up the project</strong></p>
 
@@ -608,7 +367,6 @@ meteor add backbone
 
 <p>Collections in Meteor are schemaless. We want our documents collection to be available to both the server and the client so we’ll add it to the root level.</p>
 
-<<<<<<< HEAD
 <pre><code class="coffeescript docshare-tutorial.coffee"> @Documents = new Meteor.Collection("documents")
 </code></pre>
 
@@ -625,31 +383,6 @@ meteor add backbone
 
 <pre><code class="javascript console">Documents.findOne()
 </code></pre>
-=======
-<p>``` coffeescript docshare-tutorial.coffee
- @Documents = new Meteor.Collection(&ldquo;documents&rdquo;)</p>
-
-<p>```</p>
-
-<p>Our document object will have two fields: name and text. Let’s create a sample document on startup.</p>
-
-<p>``` coffeescript server.coffee
-Meteor.startup &ndash;>
-  if Documents.find().count() is 0</p>
-
-<pre><code>Documents.insert
-  name: "Sample doc"
-  text: "Write here..."
-</code></pre>
-
-<p>```</p>
-
-<p>Now, if you restart the meteor server, you’ll be able to access that document in the browser. Try this in the developer console:</p>
-
-<p><code>javascript console
-Documents.findOne()
-</code></p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>You will see an object with the properties we just created. This is the only time you should need to restart the meteor server.</p>
 
@@ -657,7 +390,6 @@ Documents.findOne()
 
 <p>Here’s we’ll define our head and body. The body will render two templates: documentList and documentView.</p>
 
-<<<<<<< HEAD
 <pre><code>&lt;head&gt;
   &lt;title&gt;docshare&lt;/title&gt;
 &lt;/head&gt;
@@ -683,47 +415,10 @@ Documents.findOne()
 &lt;/template&gt;
 </code></pre>
 
-=======
-<p>```
-<head>
-  <title>docshare</title>
-</head>
-<body>
-  
-  <hr>
-  
-</body></p>
-
-<p>```</p>
-
-<p>Next, create the two templates needed to display the documents: documentList and document.</p>
-
-<p>```
-<template name="documentList">
-  <h1>Welcome to document sharing!</h1>
-  <div></p>
-
-<pre><code>
-  
-
-</code></pre>
-
-<p>  </div>
-  <div id="createDocument"></p>
-
-<pre><code>Name: &lt;input type="text" id="new-document-name" placeholder="New document" /&gt;&lt;input type="button" id="new-document" value="create"/&gt;
-</code></pre>
-
-<p>  </div>
-</template>
-```</p>
-
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>Here we are using the built in Handlebars iterator #each to render the individual document objects. Finally, there’s a input field and create button to add a new document.</p>
 
 <p>Now add the template to list the documents names each with an edit and delete button. We’ll also use a template method to determine which document is selected.</p>
 
-<<<<<<< HEAD
 <pre><code>&lt;template name="document"&gt;
   &lt;div class="document "&gt;
     &lt;p&gt;
@@ -749,48 +444,12 @@ Documents.findOne()
 &lt;/template&gt;
 </code></pre>
 
-=======
-<p>```
-<template name="document">
-  <div class="document "></p>
-
-<pre><code>&lt;p&gt;
-
-&lt;input type="button" id="edit-document" value="Edit"/&gt;
-&lt;input type="button" id="delete-document" value="Delete"/&gt;
-&lt;/p&gt;
-</code></pre>
-
-<p>   </div>
-</template>
-```</p>
-
-<p>Lastly, let’s add the actual text field that the users can edit.</p>
-
-<p>```
-<template name="documentView">
-  
-  </p>
-
-<pre><code>&lt;div&gt;
-  &lt;p&gt;&lt;/p&gt;
-    &lt;textarea id="document-text" rows="10" cols="80"&gt;&lt;/textarea&gt;
-&lt;/div&gt;
-</code></pre>
-
-<p>   
-   
-</template>
-```</p>
-
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>Note that this will only be rendered if a document is currently selected. Having both an #if and a #with seems redundant, but I didn’t see a better way. Based off the Handlebars documentation, I should only need the #if, but that doesn’t work.</p>
 
 <p><strong>Step 5: Client Coffeescript</strong></p>
 
 <p>First, we’ll setup a Backbone router to allow us to keep track of which document we’re viewing. This will allow us to support page refreshes and permalinking to documents.</p>
 
-<<<<<<< HEAD
 <pre><code class="coffeescript client.coffee">DocumentsRouter = Backbone.Router.extend(
   routes:
     ":document_id": "main"
@@ -808,40 +467,12 @@ Meteor.startup -&gt;
   Backbone.history.start pushState: true
 </code></pre>
 
-=======
-<p>``` coffeescript client.coffee
-DocumentsRouter = Backbone.Router.extend(
-  routes:</p>
-
-<pre><code>":document_id": "main"
-</code></pre>
-
-<p>  main: (document_id) &ndash;></p>
-
-<pre><code>Session.set "document_id", document_id
-</code></pre>
-
-<p>  setDocument: (document_id) &ndash;></p>
-
-<pre><code>@navigate(document_id, true)
-</code></pre>
-
-<p>)</p>
-
-<p>Router = new DocumentsRouter</p>
-
-<p>Meteor.startup &ndash;>
-  Backbone.history.start pushState: true
-```</p>
-
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>Basically this will store the document_id into the Meteor session whenever the user navigates to a URL or form /:document_id. If you’re not familar with Backbone, don’t worry about this, or read up at <a href="http://backbonejs.org/">http://backbonejs.org/</a></p>
 
 <p>We are also using Meteor.startup again here but for a different purpose. On the client side it will run after DOM is loaded every time. I think it would be more clear if this method didn’t mean different things based on context.</p>
 
 <p>Next, we need to define where the documentList template gets its data and handle the create new button</p>
 
-<<<<<<< HEAD
 <pre><code class="coffeescript client.coffee">Template.documentList.documents = -&gt;
   Documents.find({},
     sort:
@@ -858,38 +489,12 @@ Template.documentList.events =
       )
 </code></pre>
 
-=======
-<p>``` coffeescript client.coffee
-Template.documentList.documents = &ndash;>
-  Documents.find({},</p>
-
-<pre><code>sort:
-  name: 1
-</code></pre>
-
-<p>  )</p>
-
-<p>Template.documentList.events =
-  &lsquo;click #new-document&rsquo;: (e) &ndash;></p>
-
-<pre><code>name = $('#new-document-name').val()
-if name
-  Documents.insert(
-    name: name
-    text: ""
-  )
-</code></pre>
-
-<p>```</p>
-
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>Notice that we’re sorting the documents by name. Each time a new document is added it will be correctly injected into the DOM. The entire list is not recreated. There is also a bit of validation to make sure the name exists.</p>
 
 <p>Documents.insert (and all collection operations) are non-blocking when called client side. Meteor will go ahead and insert the data to the local client and can optionally call a callback with an object identifier or error message after the real operation finishes. This is invisible to the user, of course.</p>
 
 <p>Next, define the selected property and event handlers for edit and delete:</p>
 
-<<<<<<< HEAD
 <pre><code class="coffeescript client.coffee">Template.document.events =
   'click #delete-document': (e) -&gt;
     Documents.remove(@_id)
@@ -900,29 +505,10 @@ Template.document.selected = -&gt;
   if Session.equals("document_id", @_id) then "selected" else ""
 </code></pre>
 
-=======
-<p>``` coffeescript client.coffee
-Template.document.events =
-  &lsquo;click #delete-document&rsquo;: (e) &ndash;></p>
-
-<pre><code>Documents.remove(@_id)
-</code></pre>
-
-<p>  &lsquo;click #edit-document&rsquo;: (e) &ndash;></p>
-
-<pre><code>Router.setDocument(@_id)
-</code></pre>
-
-<p>Template.document.selected = &ndash;>
-  if Session.equals(&ldquo;document_id&rdquo;, @_id) then &ldquo;selected&rdquo; else &ldquo;&rdquo;
-```</p>
-
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>Note that in handlers for events the this object is the actual Document object.</p>
 
 <p>Next, define the selectedDocument using the id stored in the session and update the text of that document when the user presses a key.</p>
 
-<<<<<<< HEAD
 <pre><code class="coffeescript client.coffee">Template.documentView.selectedDocument = -&gt;
   document_id = Session.get("document_id")
   Documents.findOne(
@@ -937,29 +523,6 @@ Template.documentView.events =
     Documents.update(sel, mod)
 </code></pre>
 
-=======
-<p>``` coffeescript client.coffee
-Template.documentView.selectedDocument = &ndash;>
-  document_id = Session.get(&ldquo;document_id&rdquo;)
-  Documents.findOne(</p>
-
-<pre><code>_id: document_id
-</code></pre>
-
-<p>  )</p>
-
-<p>Template.documentView.events =
-  &lsquo;keyup #document-text&rsquo;: (e) &ndash;></p>
-
-<pre><code># @_id should work here, but it doesn't
-sel = _id: Session.get("document_id")
-mod = $set: text: $('#document-text').val()
-Documents.update(sel, mod)
-</code></pre>
-
-<p>```</p>
-
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>Meteor acknowledges in their docs: “For now, the event handler gets the template data from the top level of the current template, not the template data from the template context of the element that triggered the event. This will be changing.” This is why we have to pull the id from the session.</p>
 
 <p>Lastly, add the css style for the selected div:

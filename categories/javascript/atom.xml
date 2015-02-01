@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-<<<<<<< HEAD
   <title><![CDATA[Category: Javascript | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/javascript/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
-  <updated>2015-01-31T14:16:33-08:00</updated>
-=======
-  <title><![CDATA[Category: JavaScript | skalb.com]]></title>
-  <link href="http://www.skalb.com/categories/javascript/atom.xml" rel="self"/>
-  <link href="http://www.skalb.com/"/>
-  <updated>2014-07-13T14:55:20-07:00</updated>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
+  <updated>2015-01-31T18:56:54-08:00</updated>
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -21,11 +14,7 @@
 
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Simpleshop: Pure JavaScript Photo Editing]]></title>
-=======
-    <title type="html"><![CDATA[Simpleshop: pure JavaScript photo editing]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing/"/>
     <updated>2013-07-04T17:00:00-07:00</updated>
     <id>http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing</id>
@@ -52,11 +41,7 @@
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Server Side Airport Autocomplete Using NodeJS]]></title>
-=======
-    <title type="html"><![CDATA[Server side airport autocomplete using NodeJS]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/"/>
     <updated>2013-04-23T15:47:00-07:00</updated>
     <id>http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs</id>
@@ -79,7 +64,6 @@
 
 <p>The easiest way to add jQueryUI is to include a reference in our layout:</p>
 
-<<<<<<< HEAD
 <pre><code class="html layout.jade">!!!
 html
   head
@@ -115,54 +99,6 @@ html
 <p>The dataset for this example is going to be airports and their codes. I wanted to be able to intelligently handle for the case where the user enters either the airport code or the name since most travel sites operate this way.</p>
 
 <p><a href="/assets/airports.dat">Airports.dat</a> - format name|code</p>
-=======
-<p>``` html layout.jade
-!!!
-html
-  head</p>
-
-<pre><code>title= title
-link(rel='stylesheet', href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css')
-link(rel='stylesheet', href='http://www.skalb.com/stylesheets/style.css')
-script(src='http://code.jquery.com/jquery-1.8.3.min.js')
-script(src='http://code.jquery.com/ui/1.9.2/jquery-ui.min.js')
-script(src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js ')
-script(src='/javascripts/index.js')
-</code></pre>
-
-<p>  body!= body
-```</p>
-
-<p>node-autocomplete and other necessary libraries can be added to package.json. Note: I&rsquo;m required to use older verions of some packages because Heroku does not support the latest version of Express.</p>
-
-<p>``` json package.json
-{
-  &ldquo;name&rdquo;: &ldquo;airport-autocomplete&rdquo;,
-  &ldquo;version&rdquo;: &ldquo;0.0.1&rdquo;,
-  &ldquo;dependencies&rdquo;: {</p>
-
-<pre><code>"express": "2.5.x",
-"jade": "*",
-"autocomplete": "*",
-"underscore": "*",
-"jquery": "*"
-</code></pre>
-
-<p>  },
-  &ldquo;engines&rdquo;: {</p>
-
-<pre><code>"node": "0.8.x",
-"npm": "1.1.x"
-</code></pre>
-
-<p>  }
-}
-```</p>
-
-<p>The dataset for this example is going to be airports and their codes. I wanted to be able to intelligently handle for the case where the user enters either the airport code or the name since most travel sites operate this way.</p>
-
-<p><a href="/assets/airports.dat">Airports.dat</a> &ndash; format name|code</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>We need to keep lookups in memory to present the user with the properly capitalized airport name. During the actual autocomplete search, we will only use lowercased entries and input. Therefore, we need to keep track of three things:</p>
 
@@ -173,7 +109,6 @@ script(src='/javascripts/index.js')
 </ul>
 
 
-<<<<<<< HEAD
 <pre><code class="javascript routes/index.js">fs.readFile('data/airport-codes.dat', function(err, data) {
   var airports = [];
 
@@ -252,115 +187,11 @@ script(src='/javascripts/index.js')
   });
 })();
 </code></pre>
-=======
-<p>``` javascript routes/index.js
-fs.readFile(&lsquo;data/airport-codes.dat&rsquo;, function(err, data) {
-  var airports = [];</p>
-
-<p>  _.each(data.toString().split(&lsquo;\n&rsquo;), function(a) {</p>
-
-<pre><code>var parts = a.trim().split("|"),
-    airportName = parts[0],
-    airportNameLower = airportName.toLowerCase(),
-    airportCode = parts[1];
-    airportCodeLower = airportCode.toLowerCase(),
-    fullName = airportCode + " - " + airportName;
-
-airportNames[airportNameLower] = fullName;
-airportCodes[airportCodeLower] = fullName;
-
-airports.push(airportNameLower);
-airports.push(airportCodeLower);
-</code></pre>
-
-<p>  });</p>
-
-<p>  namesAC.initialize(function(onReady) {</p>
-
-<pre><code>onReady(airports);
-</code></pre>
-
-<p>  });
-});
-```</p>
-
-<p>In the nodeJS route that returns the airport data, we&rsquo;ll use the input to test if it matched either an airport name or an aiport code and return those results.</p>
-
-<p>``` javascript routes/index.js
-exports.airports = function(req, res) {
-  var airport = req.query[&ldquo;term&rdquo;].toLowerCase(),</p>
-
-<pre><code>  results = namesAC.search(airport);
-</code></pre>
-
-<p>  var airportResults = _.map(results, function(a) {</p>
-
-<pre><code>return airportNames[a] || airportCodes[a];
-</code></pre>
-
-<p>  });</p>
-
-<p>  res.send(airportResults);
-};
-```
-Here&rsquo;s what a <a href="http://airport-autocomplete.herokuapp.com/airports?term=RIO">sample request</a> for RIO would return:</p>
-
-<p>``` json
-[</p>
-
-<pre><code>"RBR - Rio Branco, AC, Brazil",
-"RCU - Rio Cuarto, CD, Argentina",
-"GIG - Rio De Janeiro, RJ, Brazil",
-"RGL - Rio Gallegos, Argentina - Internacional",
-"RIG - Rio Grande, RS, Brazil",
-"RGA - Rio Grande, TF, Argentina",
-"ROY - Rio Mayo, CB, Argentina",
-"RVD - Rio Verde, GO, Brazil",
-"RCH - Riohacha, Colombia"
-</code></pre>
-
-<p>]
-```</p>
-
-<p>The last part is to wire up the actual jQuery UI autocomplete. I&rsquo;ve also added a handler on the open to highlight the term from the search.</p>
-
-<p>``` javascript public/javascripts/index.js
-(function () {
-  var termTemplate = &ldquo;<span class='ui-autocomplete-term'>$1</span>&rdquo;;</p>
-
-<p>  $(document).ready(function() {</p>
-
-<pre><code>$("#origin").autocomplete({
-  source: "/airports",
-  minLength: 2,
-  open: function(e,ui) {
-        var acData = $(this).data('autocomplete');
-        acData
-            .menu
-            .element
-            .find('a')
-            .each(function() {
-                var me = $(this);
-                var regex = new RegExp( '(' + acData.term + ')', 'gi' );
-                me.html( me.text().replace(regex, termTemplate) );
-            });
-    }
-});
-</code></pre>
-
-<p>  });
-})();
-```</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 ]]></content>
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Multi-color Heat Map in JavaScript]]></title>
-=======
-    <title type="html"><![CDATA[Multi-color heat map in JavaScript]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2013/01/20/multi-color-heat-map-in-javascript/"/>
     <updated>2013-01-20T00:00:00-08:00</updated>
     <id>http://www.skalb.com/2013/01/20/multi-color-heat-map-in-javascript</id>
@@ -373,11 +204,7 @@ Here&rsquo;s what a <a href="http://airport-autocomplete.herokuapp.com/airports?
 <!--more-->
 
 
-<<<<<<< HEAD
 <p>&#8220;` javascript</p>
-=======
-<p>``` javascript</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <script type="text/JavaScript">
 $(document).ready(function(){
@@ -415,22 +242,14 @@ $(document).ready(function(){
 </script>
 
 
-<<<<<<< HEAD
 <p>&#8220;`</p>
-=======
-<p>```</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>Here&rsquo;s a working <a href="http://www.skalb.com/assets/jquery-data-heat-map.html">example</a>.</p>
 ]]></content>
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Using Sinon Spys With Meteor Collections]]></title>
-=======
-    <title type="html"><![CDATA[Using Sinon Spys with Meteor Collections]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections/"/>
     <updated>2012-08-25T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections</id>
@@ -443,7 +262,6 @@ $(document).ready(function(){
 
 <p>Add the new module we need:</p>
 
-<<<<<<< HEAD
 <pre><code class="bash">npm install sinon
 </code></pre>
 
@@ -486,63 +304,11 @@ root.SampleRouterFactory = SampleRouterFactory
   silent: true
   pushState: true
 </code></pre>
-=======
-<p><code>bash
-npm install sinon
-</code></p>
-
-<p>Here&rsquo;s how to use the spy:</p>
-
-<p><code>coffeescript lib/sample_router_factory.coffee
-items =
-  find: sinon.spy()
-</code></p>
-
-<p>Now, let&rsquo;s write our test:</p>
-
-<p><code>coffeescript tests/sample_router_factory_test.coffee
-it "should retrieve all items", -&gt;
-  router.navigate('', true)
-  items.find.called.should.equal true
-</code></p>
-
-<p>This will fail, since we need to first modify our Router to accept a collection as an argument and then call find on it.</p>
-
-<p>``` coffeescript lib/sample_router_factory.coffee
-root = exports ? this</p>
-
-<p>class SampleRouterFactory
-  constructor: (@Backbone, @Items) &ndash;></p>
-
-<p>  getRouter: () &ndash;></p>
-
-<pre><code>SampleRouter = @Backbone.Router.extend(
-  routes:
-    "": "index"
-
-  index: =&gt;
-    items = @Items.find()
-)
-new SampleRouter
-</code></pre>
-
-<p>root.SampleRouterFactory = SampleRouterFactory
-```</p>
-
-<p>This <em>should</em> pass, but yet doesn&rsquo;t. Why? Thinking about the assumption our test is making when using the a Backbone router, it likely depends on Backbone initialization. We can try this in our test, also:</p>
-
-<p><code>coffeescript
-Backbone.history.start
-  silent: true
-  pushState: true
-</code></p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>This doesn&rsquo;t work either because Backbone assumes we are in the browser when accessing <strong>window</strong>. I&rsquo;m pretty sure this is not the approach I want. We don&rsquo;t need to add a dependency on Backbone&rsquo;s internal behavior to test a method of my Router. My previous test verifies that the root path will call an index method, so now I only need to call that index method and validate that behavior. This has the added benefit of simplifying the test.</p>
 
 <p>Here&rsquo;s the final version of my tests:</p>
 
-<<<<<<< HEAD
 <pre><code class="coffeescript tests/sample_router_factory_test.coffee">util = require('util')
 should = require('should')
 Backbone = require('backbone')
@@ -564,47 +330,12 @@ describe "SampleRouter", -&gt;
     items.find.called.should.equal true
 </code></pre>
 
-=======
-<p>``` coffeescript tests/sample_router_factory_test.coffee
-util = require(&lsquo;util&rsquo;)
-should = require(&lsquo;should&rsquo;)
-Backbone = require(&lsquo;backbone&rsquo;)
-sinon = require(&lsquo;sinon&rsquo;)
-SampleRouterFactory = require(&lsquo;../client/lib/sample_router_factory&rsquo;).SampleRouterFactory</p>
-
-<p>describe &ldquo;SampleRouter&rdquo;, &ndash;>
-  items =</p>
-
-<pre><code>find: sinon.spy()
-</code></pre>
-
-<p>  factory = new SampleRouterFactory(Backbone, items)
-  router = factory.getRouter(Backbone)</p>
-
-<p>  it &ldquo;should have an index route&rdquo;, &ndash;></p>
-
-<pre><code>router.routes[''].should.equal('index')
-</code></pre>
-
-<p>  it &ldquo;should retrieve all items when navigating to index&rdquo;, &ndash;></p>
-
-<pre><code>router.index()
-items.find.called.should.equal true
-</code></pre>
-
-<p>```</p>
-
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>A bit roundabout, but in the end what I was trying to accomplish. Source <a href="https://github.com/skalb/meteor-examples/tree/master/mocha-router">here</a>.</p>
 ]]></content>
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Testing With Meteor, CoffeeScript and Mocha]]></title>
-=======
-    <title type="html"><![CDATA[Testing with Meteor, CoffeeScript and Mocha]]></title>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/"/>
     <updated>2012-08-19T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha</id>
@@ -626,7 +357,6 @@ items.find.called.should.equal true
 
 <p>Getting everything running:</p>
 
-<<<<<<< HEAD
 <pre><code class="bash">meteor create mocha
 cd mocha
 meteor add coffeescript
@@ -647,49 +377,14 @@ mocha tests/*.coffee -w -G --compilers coffee:coffee-script
       assert.equal -1, [1, 2, 3].indexOf(0)
 </code></pre>
 
-=======
-<p><code>bash
-meteor create mocha
-cd mocha
-meteor add coffeescript
-</code></p>
-
-<p>Setting up Mocha to watch our coffee files and send Growl notifications:</p>
-
-<p>``` bash</p>
-
-<p>mocha tests/*.coffee -w -G &mdash;compilers coffee:coffee-script</p>
-
-<p>```</p>
-
-<p>Now to create a sample test:</p>
-
-<p>``` coffeescript test.coffee
-describe &ldquo;Array&rdquo;, &ndash;>
-  describe &ldquo;#indexOf()&rdquo;, &ndash;></p>
-
-<pre><code>it "should return -1 when the value is not present", -&gt;
-  assert.equal -1, [1, 2, 3].indexOf(1)
-  assert.equal -1, [1, 2, 3].indexOf(0)
-</code></pre>
-
-<p>```</p>
-
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>Mocha should notice the file change and run the tests showing you the passing test.</p>
 
 <p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha">Source code here.</a></p>
 
 <p>Some notes:
-<<<<<<< HEAD
 - The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
 - When using Mocha watch, sometimes a failing test result would be outputted many times
 - <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
-=======
-&ndash; The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
-&ndash; When using Mocha watch, sometimes a failing test result would be outputted many times
-&ndash; <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
->>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 ]]></content>
   </entry>
   
