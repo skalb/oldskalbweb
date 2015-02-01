@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: 
+Disallow:
 
-Sitemap: http://www.skalb.com/sitemap.xml 
+Sitemap: http://www.skalb.com/sitemap.xml
