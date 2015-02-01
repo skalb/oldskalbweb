@@ -4,7 +4,11 @@
   <title><![CDATA[Category: Books | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/books/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
+<<<<<<< HEAD
   <updated>2015-01-31T14:16:33-08:00</updated>
+=======
+  <updated>2014-07-13T14:55:20-07:00</updated>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -29,7 +33,11 @@
 
 <p>My biggest complaint is that for a book with a chapter titled <span style="text-decoration: underline;">Content Is King</span>, I would have expected a larger part devoted to actually writing content. Since the author runs a successful programming blog, I would have loved to see an analysis of which posts were popular and why they were popular. Or alternatively an analysis of current popular technical blogs and what they do well. I could see that the author felt people shouldn&rsquo;t clone other popular sites and instead &ldquo;develop your own voice&rdquo; as he puts it, but I think there could have been a better balance.</p>
 
+<<<<<<< HEAD
 <p>Although this book does have &ldquo;technical&rdquo; in it, I definitely think it&rsquo;s broader than that. As I mentioned, it&rsquo;s more targeted to technical people but not necessarily writing technical content. Most of the recommendations are really just about good blogging.</p>
+=======
+<p>Although this book does have &ldquo;technical&rdquo; in it, I definitely think it&rsquo;s broader than that. As I mentioned, it&rsquo;s more targeted to technical people but not necessarily writing technical content. Most of the recommendations are really just about good blogging.</p>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>I would definitely recommend this <a href="http://www.amazon.com/gp/product/1934356883/ref=as_li_qf_sp_asin_tl?ie=UTF8&amp;tag=skalbontechno-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1934356883">book</a><img style="border: none !important; margin: 0px !important;" src="http://www.assoc-amazon.com/e/ir?t=skalbontechno-20&amp;l=as2&amp;o=1&amp;a=1934356883" alt="" width="1" height="1" border="0" /> to anyone interested in blogging. Above all, I think it will make you excited to start a blog.</p>
 ]]></content>

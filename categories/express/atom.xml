@@ -4,7 +4,11 @@
   <title><![CDATA[Category: Express | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/express/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
+<<<<<<< HEAD
   <updated>2015-01-31T14:16:33-08:00</updated>
+=======
+  <updated>2014-07-13T14:55:20-07:00</updated>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -14,7 +18,11 @@
 
   
   <entry>
+<<<<<<< HEAD
     <title type="html"><![CDATA[Simpleshop: Pure JavaScript Photo Editing]]></title>
+=======
+    <title type="html"><![CDATA[Simpleshop: pure JavaScript photo editing]]></title>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing/"/>
     <updated>2013-07-04T17:00:00-07:00</updated>
     <id>http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing</id>
@@ -41,7 +49,11 @@
   </entry>
   
   <entry>
+<<<<<<< HEAD
     <title type="html"><![CDATA[Server Side Airport Autocomplete Using NodeJS]]></title>
+=======
+    <title type="html"><![CDATA[Server side airport autocomplete using NodeJS]]></title>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/"/>
     <updated>2013-04-23T15:47:00-07:00</updated>
     <id>http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs</id>
@@ -64,6 +76,7 @@
 
 <p>The easiest way to add jQueryUI is to include a reference in our layout:</p>
 
+<<<<<<< HEAD
 <pre><code class="html layout.jade">!!!
 html
   head
@@ -99,6 +112,54 @@ html
 <p>The dataset for this example is going to be airports and their codes. I wanted to be able to intelligently handle for the case where the user enters either the airport code or the name since most travel sites operate this way.</p>
 
 <p><a href="/assets/airports.dat">Airports.dat</a> - format name|code</p>
+=======
+<p>``` html layout.jade
+!!!
+html
+  head</p>
+
+<pre><code>title= title
+link(rel='stylesheet', href='http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css')
+link(rel='stylesheet', href='http://www.skalb.com/stylesheets/style.css')
+script(src='http://code.jquery.com/jquery-1.8.3.min.js')
+script(src='http://code.jquery.com/ui/1.9.2/jquery-ui.min.js')
+script(src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js ')
+script(src='/javascripts/index.js')
+</code></pre>
+
+<p>  body!= body
+```</p>
+
+<p>node-autocomplete and other necessary libraries can be added to package.json. Note: I&rsquo;m required to use older verions of some packages because Heroku does not support the latest version of Express.</p>
+
+<p>``` json package.json
+{
+  &ldquo;name&rdquo;: &ldquo;airport-autocomplete&rdquo;,
+  &ldquo;version&rdquo;: &ldquo;0.0.1&rdquo;,
+  &ldquo;dependencies&rdquo;: {</p>
+
+<pre><code>"express": "2.5.x",
+"jade": "*",
+"autocomplete": "*",
+"underscore": "*",
+"jquery": "*"
+</code></pre>
+
+<p>  },
+  &ldquo;engines&rdquo;: {</p>
+
+<pre><code>"node": "0.8.x",
+"npm": "1.1.x"
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>The dataset for this example is going to be airports and their codes. I wanted to be able to intelligently handle for the case where the user enters either the airport code or the name since most travel sites operate this way.</p>
+
+<p><a href="/assets/airports.dat">Airports.dat</a> &ndash; format name|code</p>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 
 <p>We need to keep lookups in memory to present the user with the properly capitalized airport name. During the actual autocomplete search, we will only use lowercased entries and input. Therefore, we need to keep track of three things:</p>
 
@@ -109,6 +170,7 @@ html
 </ul>
 
 
+<<<<<<< HEAD
 <pre><code class="javascript routes/index.js">fs.readFile('data/airport-codes.dat', function(err, data) {
   var airports = [];
 
@@ -187,6 +249,106 @@ html
   });
 })();
 </code></pre>
+=======
+<p>``` javascript routes/index.js
+fs.readFile(&lsquo;data/airport-codes.dat&rsquo;, function(err, data) {
+  var airports = [];</p>
+
+<p>  _.each(data.toString().split(&lsquo;\n&rsquo;), function(a) {</p>
+
+<pre><code>var parts = a.trim().split("|"),
+    airportName = parts[0],
+    airportNameLower = airportName.toLowerCase(),
+    airportCode = parts[1];
+    airportCodeLower = airportCode.toLowerCase(),
+    fullName = airportCode + " - " + airportName;
+
+airportNames[airportNameLower] = fullName;
+airportCodes[airportCodeLower] = fullName;
+
+airports.push(airportNameLower);
+airports.push(airportCodeLower);
+</code></pre>
+
+<p>  });</p>
+
+<p>  namesAC.initialize(function(onReady) {</p>
+
+<pre><code>onReady(airports);
+</code></pre>
+
+<p>  });
+});
+```</p>
+
+<p>In the nodeJS route that returns the airport data, we&rsquo;ll use the input to test if it matched either an airport name or an aiport code and return those results.</p>
+
+<p>``` javascript routes/index.js
+exports.airports = function(req, res) {
+  var airport = req.query[&ldquo;term&rdquo;].toLowerCase(),</p>
+
+<pre><code>  results = namesAC.search(airport);
+</code></pre>
+
+<p>  var airportResults = _.map(results, function(a) {</p>
+
+<pre><code>return airportNames[a] || airportCodes[a];
+</code></pre>
+
+<p>  });</p>
+
+<p>  res.send(airportResults);
+};
+```
+Here&rsquo;s what a <a href="http://airport-autocomplete.herokuapp.com/airports?term=RIO">sample request</a> for RIO would return:</p>
+
+<p>``` json
+[</p>
+
+<pre><code>"RBR - Rio Branco, AC, Brazil",
+"RCU - Rio Cuarto, CD, Argentina",
+"GIG - Rio De Janeiro, RJ, Brazil",
+"RGL - Rio Gallegos, Argentina - Internacional",
+"RIG - Rio Grande, RS, Brazil",
+"RGA - Rio Grande, TF, Argentina",
+"ROY - Rio Mayo, CB, Argentina",
+"RVD - Rio Verde, GO, Brazil",
+"RCH - Riohacha, Colombia"
+</code></pre>
+
+<p>]
+```</p>
+
+<p>The last part is to wire up the actual jQuery UI autocomplete. I&rsquo;ve also added a handler on the open to highlight the term from the search.</p>
+
+<p>``` javascript public/javascripts/index.js
+(function () {
+  var termTemplate = &ldquo;<span class='ui-autocomplete-term'>$1</span>&rdquo;;</p>
+
+<p>  $(document).ready(function() {</p>
+
+<pre><code>$("#origin").autocomplete({
+  source: "/airports",
+  minLength: 2,
+  open: function(e,ui) {
+        var acData = $(this).data('autocomplete');
+        acData
+            .menu
+            .element
+            .find('a')
+            .each(function() {
+                var me = $(this);
+                var regex = new RegExp( '(' + acData.term + ')', 'gi' );
+                me.html( me.text().replace(regex, termTemplate) );
+            });
+    }
+});
+</code></pre>
+
+<p>  });
+})();
+```</p>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 ]]></content>
   </entry>
   

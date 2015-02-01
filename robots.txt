@@ -1,4 +1,8 @@
 User-agent: *
 Disallow: 
 
+<<<<<<< HEAD
 Sitemap: http://www.skalb.com/sitemap.xml 
+=======
+Sitemap: http://www.skalb.com/sitemap.xml 
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71

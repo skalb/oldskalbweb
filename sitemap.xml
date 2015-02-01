@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -79,3 +80,74 @@
     <priority>0.6</priority>
   </url>
 </urlset>
+=======
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
+    <url>
+        <loc>
+            http://www.skalb.com/2012/04/16/creating-a-document-sharing-site-with-meteor-js/
+        </loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.skalb.com/2012/04/23/how-to-easily-handle-model-relationships-in-rails-and-backbone-js/
+        </loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/2012/04/26/extending-and-refactoring-views-in-backbone/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://www.skalb.com/2012/04/30/handling-permalinks-in-backbone-js-with-routers/
+        </loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/2012/05/02/book-review-technical-blogging/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/2012/08/20/testing-backbone-routers-in-meteor-with-mocha/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/2012/08/25/using-sinon-spys-with-meteor-collections/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/2013/01/20/multi-color-heat-map-in-javascript/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/2013/04/23/server-side-auto-complete-using-nodejs/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/2013/07/04/simpleshop-pure-javascript-photo-editing/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/about/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/blog/archives/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/</loc>
+        <lastmod>2014-07-13T14:19:53-07:00</lastmod>
+    </url>
+    <url>
+        <loc>http://www.skalb.com/robots.txt</loc>
+        <lastmod>2014-07-13T14:19:54-07:00</lastmod>
+    </url>
+</urlset>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71

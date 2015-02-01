@@ -17,7 +17,15 @@ function addSidebarToggler() {
     $('#content').append('<span class="toggle-sidebar"></span>');
     $('.toggle-sidebar').bind('click', function(e) {
       e.preventDefault();
+<<<<<<< HEAD
       $('body').toggleClass('collapse-sidebar');
+=======
+      if ($('body').hasClass('collapse-sidebar')) {
+        $('body').removeClass('collapse-sidebar');
+      } else {
+        $('body').addClass('collapse-sidebar');
+      }
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     });
   }
   var sections = $('aside.sidebar > section');

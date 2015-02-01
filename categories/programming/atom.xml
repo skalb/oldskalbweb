@@ -4,7 +4,11 @@
   <title><![CDATA[Category: Programming | skalb.com]]></title>
   <link href="http://www.skalb.com/categories/programming/atom.xml" rel="self"/>
   <link href="http://www.skalb.com/"/>
+<<<<<<< HEAD
   <updated>2015-01-31T14:16:33-08:00</updated>
+=======
+  <updated>2014-07-13T14:55:20-07:00</updated>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
   <id>http://www.skalb.com/</id>
   <author>
     <name><![CDATA[Sameer Kalburgi]]></name>
@@ -14,7 +18,11 @@
 
   
   <entry>
+<<<<<<< HEAD
     <title type="html"><![CDATA[Testing With Meteor, CoffeeScript and Mocha]]></title>
+=======
+    <title type="html"><![CDATA[Testing with Meteor, CoffeeScript and Mocha]]></title>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
     <link href="http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha/"/>
     <updated>2012-08-19T00:00:00-07:00</updated>
     <id>http://www.skalb.com/2012/08/19/testing-with-meteor-coffeescript-and-mocha</id>
@@ -36,6 +44,7 @@
 
 <p>Getting everything running:</p>
 
+<<<<<<< HEAD
 <pre><code class="bash">meteor create mocha
 cd mocha
 meteor add coffeescript
@@ -56,14 +65,49 @@ mocha tests/*.coffee -w -G --compilers coffee:coffee-script
       assert.equal -1, [1, 2, 3].indexOf(0)
 </code></pre>
 
+=======
+<p><code>bash
+meteor create mocha
+cd mocha
+meteor add coffeescript
+</code></p>
+
+<p>Setting up Mocha to watch our coffee files and send Growl notifications:</p>
+
+<p>``` bash</p>
+
+<p>mocha tests/*.coffee -w -G &mdash;compilers coffee:coffee-script</p>
+
+<p>```</p>
+
+<p>Now to create a sample test:</p>
+
+<p>``` coffeescript test.coffee
+describe &ldquo;Array&rdquo;, &ndash;>
+  describe &ldquo;#indexOf()&rdquo;, &ndash;></p>
+
+<pre><code>it "should return -1 when the value is not present", -&gt;
+  assert.equal -1, [1, 2, 3].indexOf(1)
+  assert.equal -1, [1, 2, 3].indexOf(0)
+</code></pre>
+
+<p>```</p>
+
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 <p>Mocha should notice the file change and run the tests showing you the passing test.</p>
 
 <p><a href="https://github.com/skalb/meteor-examples/tree/master/mocha">Source code here.</a></p>
 
 <p>Some notes:
+<<<<<<< HEAD
 - The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
 - When using Mocha watch, sometimes a failing test result would be outputted many times
 - <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
+=======
+&ndash; The growl notification didn&rsquo;t work for me, but I assume that&rsquo;s because I&rsquo;m using an old version.
+&ndash; When using Mocha watch, sometimes a failing test result would be outputted many times
+&ndash; <a href="https://github.com/pivotal/jasmine">Jasmine</a> should also work fine</p>
+>>>>>>> e8a7200851be11b9841409b7bfa3f7f2d19c6c71
 ]]></content>
   </entry>
   
